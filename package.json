@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.0.14",
     "next": "13.5.4",
     "next-auth": "^4.24.4",
     "react": "^18",

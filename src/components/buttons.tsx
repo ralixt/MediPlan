@@ -6,7 +6,7 @@ type PropsDefaultButton = {
     text: string;
     href: string;
   };
-function primaryButton({text, href}: PropsDefaultButton){
+export function PrimaryButton({text, href}: PropsDefaultButton){
     return (
         <Link href={href}>
             {text}
@@ -19,7 +19,7 @@ type PropsOneIconButton = {
     href: string;
     icon: React.ReactNode
   };
-function oneIconButton({text,href,icon}: PropsOneIconButton){
+export function OneIconButton({text,href,icon}: PropsOneIconButton){
     return(
         <Link href={href}>
             <div>
@@ -37,7 +37,7 @@ type PropsTwoIconButton = {
     icon2: React.ReactNode;
   };
 
-function twoIconButton ({text,href,icon1, icon2}: PropsTwoIconButton){
+export function TwoIconButton ({text,href,icon1, icon2}: PropsTwoIconButton){
     return(
         <Link href={href}>
             <div>
@@ -49,7 +49,7 @@ function twoIconButton ({text,href,icon1, icon2}: PropsTwoIconButton){
     )
 }
 
-function secondaryButton ({text, href}: PropsDefaultButton){
+export function SecondaryButton ({text, href}: PropsDefaultButton){
     return (
         <Link href={href}>
             {text}
@@ -61,10 +61,10 @@ type PropsNavBarButton = {
     text: string;
     href: string;
     icon: React.ReactNode
-    extend: boolean;
+    extend?: boolean;
   };
 
-function navBarButton ({text, href, icon, extend}: PropsNavBarButton){
+export function NavBarButton ({text, href, icon, extend = false}: PropsNavBarButton){
     const [extended, setExtended] = useState(extend)
     return(
         <Link href={href}>

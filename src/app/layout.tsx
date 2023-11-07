@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { NextAuthProvider } from './providers'
-
+import "./globals.css"
 export const metadata: Metadata = {
   title: 'MediPlan - Accueil',
   description: 'Bienvenue sur MediPlan',

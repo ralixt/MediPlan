@@ -1,7 +1,8 @@
+import NavBar from "@/components/navBar";
+
 export default function ConnectedLayout({children,}: {children: React.ReactNode}) {
     return (
-      <header>
-             
-      </header>
+      <NavBar/>
+
     )
   }

@@ -3,8 +3,8 @@ import {
   LogoutButton,
   ProfileButton,
   RegisterButton,
-} from "@/components/buttons.component";
-import { User } from "@/components/user.component";
+} from "@/components.temporary/buttons.component";
+import { User } from "@/components.temporary/user.component";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 

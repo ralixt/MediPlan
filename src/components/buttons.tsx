@@ -1,4 +1,6 @@
+"use client"
 import Link from "next/link";
+import { useState } from "react";
 
 type PropsDefaultButton = {
     text: string;
@@ -51,6 +53,25 @@ function secondaryButton ({text, href}: PropsDefaultButton){
     return (
         <Link href={href}>
             {text}
+        </Link>
+    )
+}
+
+type PropsNavBarButton = {
+    text: string;
+    href: string;
+    icon: React.ReactNode
+    extend: boolean;
+  };
+
+function navBarButton ({text, href, icon, extend}: PropsNavBarButton){
+    const [extended, setExtended] = useState(extend)
+    return(
+        <Link href={href}>
+            <div>
+                {icon}
+                {extended ? text : ""}
+            </div>
         </Link>
     )
 }

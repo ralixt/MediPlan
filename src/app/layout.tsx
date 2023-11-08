@@ -6,7 +6,11 @@ export const metadata: Metadata = {
   title: 'MediPlan - Accueil',
   description: 'Bienvenue sur MediPlan',
 }
-const montserrat_alternates = Montserrat_Alternates({weight: "500",subsets:["latin"]})
+const montserrat_alternates = Montserrat_Alternates({
+    weight: "500",
+    subsets:["latin"],
+    variable:'--font-montserrat_alternates'
+})
 export default function RootLayout({children,}: {children: React.ReactNode}) {
 
   

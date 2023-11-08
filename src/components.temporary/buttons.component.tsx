@@ -9,7 +9,7 @@ export const LoginButton = () => {
     //   Sign in
     // </button>
 
-    <button type="submit" className="bg-dark-blue text-white">
+    <button type="submit" className="bg-dark-blue text-white rounded hover:rounded-xl">
         Connexion
     </button>
   );

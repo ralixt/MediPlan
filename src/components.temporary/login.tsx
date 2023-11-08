@@ -3,6 +3,7 @@ import React, {useRef} from "react";
 import {signIn} from "next-auth/react";
 import {LoginButton} from "@/components.temporary/buttons.component";
 import {Password, User} from "@phosphor-icons/react";
+import Image from "next/image";
 
 
 type Props = {
@@ -27,7 +28,15 @@ export const Login = (props: Props) => {
     return (
         <main className="bg-light-blue h-screen w-screen flex">
             <div className={'${props.className} bg-white h-full w-1/2 rounded-r-1_25rem flex-row'}>
-                <div className="w-full">
+
+                <Image
+                    src="/mediplanLogo.svg"
+                    alt="Mediplan Logo"
+                    width={200}
+                    height={200}
+                />
+
+                <div className="w-full flex justify-center font-bold text-4xl mb-24 mt-8">
                     <h1>Connexion a votre compte</h1>
                 </div>
                 <form method="POST" onSubmit={onSubmit} className="flex flex-col w-4/5 mx-auto">
@@ -54,7 +63,7 @@ export const Login = (props: Props) => {
 
                 </form>
             </div>
-            <div className="bg-light-blue h-full w-1/2">
+            <div className="bg-light-blue h-full w-1/2 flex text-9xl">
                 <h1>Bienvenue !</h1>
             </div>
 

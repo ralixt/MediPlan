@@ -1,5 +1,5 @@
-"use client"
-import { Bell, Calendar, ChartBar, CirclesThree, Gear, House } from "@phosphor-icons/react";
+
+import { Bell, Calendar, ChartBar, CirclesThree, Gear, House } from "@phosphor-icons/react/dist/ssr";
 import { NavBarButton } from "./buttons";
 
 export default function NavBar(){

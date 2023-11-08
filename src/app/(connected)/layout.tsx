@@ -1,8 +1,18 @@
 import NavBar from "@/components/navBar";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth/next";
+import { RedirectType, redirect } from 'next/navigation';
 
-export default function ConnectedLayout({children,}: {children: React.ReactNode}) {
-    return <>
+export default async function ConnectedLayout({children,}: {children: React.ReactNode}) {
+    const session = await getServerSession(authOptions);
+    if(!session?.user)
+    redirect("/", RedirectType.replace)
+    return( 
+    <div className="flex flex-row">
       <NavBar/>
-      {children}
-    </>
+      <main className="flex flex-col w-full items-center">  
+        {children}
+      </main>
+    </div>
+    )
   }

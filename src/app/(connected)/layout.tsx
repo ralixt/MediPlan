@@ -1,8 +1,8 @@
 import NavBar from "@/components/navBar";
 
 export default function ConnectedLayout({children,}: {children: React.ReactNode}) {
-    return (
+    return <>
       <NavBar/>
-
-    )
+      {children}
+    </>
   }

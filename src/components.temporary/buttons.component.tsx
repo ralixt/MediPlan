@@ -5,8 +5,12 @@ import Link from "next/link";
 
 export const LoginButton = () => {
   return (
-    <button style={{ marginRight: 10 }} onClick={() => signIn()}>
-      Sign in
+    // <button style={{ marginRight: 10 }} onClick={() => signIn()}>
+    //   Sign in
+    // </button>
+
+    <button type="submit" className="bg-dark-blue text-white">
+        Connexion
     </button>
   );
 };

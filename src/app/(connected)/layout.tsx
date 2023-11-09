@@ -5,6 +5,7 @@ import { RedirectType, redirect } from 'next/navigation';
 
 export default async function ConnectedLayout({children,}: {children: React.ReactNode}) {
     const session = await getServerSession(authOptions);
+    console.log(session)
     if(!session?.user)
     redirect("/", RedirectType.replace)
     return( 

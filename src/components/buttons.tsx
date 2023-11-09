@@ -2,10 +2,21 @@
 import Link from "next/link";
 import { useState } from "react";
 
+
+export const LoginButton = () => {
+    return (
+        <button type="submit" className="bg-dark-blue text-white rounded-lg p-2 w-4/5 mx-auto hover:rounded-3xl mt-8">
+            Connexion
+        </button>
+    );
+};
+
+
 type PropsDefaultButton = {
     text: string;
     href: string;
   };
+
 export function PrimaryButton({text, href}: PropsDefaultButton){
     return (
         <Link href={href}>

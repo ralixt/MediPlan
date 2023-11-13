@@ -143,11 +143,9 @@ type PropsWorkshopButton = {
 export function WorkshopButton ({text, href}: PropsWorkshopButton){
 
     return(
-        <Link href={href} className="bg-white flex p-12">
-            <div>
+        <Link href={href} className="bg-white flex flex-row p-8 font-bold justify-between rounded-xl shadow-sm my-4">
                 <p>{text}</p>
                 <CaretRight size={32} />
-            </div>
         </Link>
     )
 }

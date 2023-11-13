@@ -75,7 +75,9 @@ export default async function ModelingWorkshop() {
 
             <div className="w-[95%] m-auto">
 
-                <WorkshopButton text="Modele A" href="/modele-A"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-A"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-A"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-A"></WorkshopButton>
 
             </div>
         </div>

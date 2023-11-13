@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link";
 import { useState } from "react";
+import {MagnifyingGlass} from "@phosphor-icons/react";
 
 
 export const LoginButton = () => {
@@ -87,3 +88,15 @@ export function NavBarButton ({text, href, icon, extend = false}: PropsNavBarBut
     )
 }
 
+
+//modeling workshop button
+
+export const ModelingSearchButton = () => {
+    return (
+        <button type="submit"
+                className="bg-white flex content-center justify-items-center rounded-lg p-2  hover:rounded-3xl mt-8">
+            Rechercher
+            <MagnifyingGlass size={32} />
+        </button>
+    );
+};

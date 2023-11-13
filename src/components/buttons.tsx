@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import {MagnifyingGlass} from "@phosphor-icons/react";
+import { signOut } from "next-auth/react";
 
 
 export const LoginButton = () => {
@@ -72,18 +73,18 @@ export function SecondaryButton ({text, href}: PropsDefaultButton){
 type PropsNavBarButton = {
     text: string;
     href: string;
-    icon: React.ReactNode
-    extend?: boolean;
+    icon: React.ReactNode;
+    extend: boolean;
   };
 
-export function NavBarButton ({text, href, icon, extend = false}: PropsNavBarButton){
-    const [extended, setExtended] = useState(extend)
+export function NavBarButton ({text, href, icon, extend}: PropsNavBarButton){
     return(
-        <Link href={href}>
-            <div>
-                {icon}
-                {extended ? text : ""}
-            </div>
+        <Link href={href} className={`flex flex-row content-center ${extend ? 'gap-5' : 'gap-0'}`}>
+            {icon}
+            <span className={`whitespace-nowrap text-sm opacity-0 transition-opacity duration-0 ease-in-out ${extend ? 'opacity-100 w-fit' : 'w-0'}`}>
+                {text}
+            </span>
+            
         </Link>
     )
 }
@@ -100,3 +101,22 @@ export const ModelingSearchButton = () => {
         </button>
     );
 };
+type PropsLogOutButton = {
+    text: string;
+    icon: React.ReactNode
+    extend: boolean;
+  };
+export function LogOutButton ({text, icon, extend}: PropsLogOutButton){
+    return(
+        <button onClick={() => signOut()} className={`flex flex-row content-center ${extend ? 'gap-5' : 'gap-0'}`}>
+            {icon}
+            <span className={`whitespace-nowrap text-sm opacity-0 transition-all duration-0 ease-in-out ${extend ? 'opacity-100 w-fit' : 'w-0'}`}>
+                {text}
+            </span>
+            
+        </button>
+    )
+}
+
+
+

@@ -12,7 +12,7 @@ export default async function ConnectedLayout({children,}: {children: React.Reac
     return( 
     <div className="flex flex-row">
       <NavBar/>
-      <main className="flex flex-col w-full items-center">  
+      <main className="flex flex-col items-center w-full">  
         {children}
       </main>
     </div>

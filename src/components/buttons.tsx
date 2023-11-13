@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import {MagnifyingGlass} from "@phosphor-icons/react";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 
 export const LoginButton = () => {
@@ -79,9 +80,9 @@ type PropsNavBarButton = {
 
 export function NavBarButton ({text, href, icon, extend}: PropsNavBarButton){
     return(
-        <Link href={href} className={`flex flex-row content-center transition-[gap] duration-300 ease-in-out ${extend ? 'gap-5' : 'gap-0'}`}>
+        <Link href={href} className={`flex flex-row items-center transition-all duration-300 ease-in-out ${extend ? 'gap-5' : 'gap-0'}  hover:text-dark-blue`}>
             {icon}
-            <span className={`whitespace-nowrap text-sm  transition-opacity duration-300 ease-in-out ${extend ? 'opacity-100' : 'opacity-0'}`}>
+            <span className={`whitespace-nowrap text-sm  transition-opacity  duration-300 ease-in-out ${extend ? 'opacity-100' : 'opacity-0'} `}>
                 {text}
             </span>
             
@@ -108,7 +109,7 @@ type PropsLogOutButton = {
   };
 export function LogOutButton ({text, icon, extend}: PropsLogOutButton){
     return(
-        <button onClick={() => signOut()} className={`flex flex-row content-center transition-[gap] duration-300 ease-in-out ${extend ? 'gap-5' : 'gap-0'}`}>
+        <button onClick={() => signOut()} className={`flex flex-row items-center transition-[gap] duration-300 ease-in-out ${extend ? 'gap-5' : 'gap-0'} transition-colors hover:text-negative`}>
             {icon}
             <span className={`whitespace-nowrap text-sm  transition-opacity duration-300 ease-in-out ${extend ? 'opacity-100' : 'opacity-0'}`}>
                 {text}

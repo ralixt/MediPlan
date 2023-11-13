@@ -8,8 +8,9 @@ import { useState } from "react";
 export default function NavBar(){
     const [isHovered, setIsHovered] = useState(false);
     return(
-        <header className={`flex flex-col h-[100vh] justify-self-center pl-5 pr-6 py-[1.30rem] justify-between gap-64 bg-white rounded-r-[20px] shadow transition-all duration-300 ${isHovered ? 'w-[300px]' : 'w-[80px]'}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={()=> setIsHovered(false)}>
+        <header className={`flex flex-col h-[100vh] justify-self-center pl-5 pr-6 py-[1.30rem] justify-between gap-64 bg-white rounded-r-[20px] shadow transition-all duration-300 fixed ${isHovered ? 'w-[230px]' : 'w-[80px]'}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={()=> setIsHovered(false)}>
             <div className="flex flex-col gap-11" >
+                <div className="flex flex-row gap-1 items-end">
                 <Image
                     src="/MediplanIcon.svg"
                     alt="Mediplan Icon"
@@ -17,6 +18,15 @@ export default function NavBar(){
                     height={110}
                     className="rotate-[25deg]"
                 />
+                <Image 
+                    src="/MediplanText.svg" 
+                    alt="Mepliplan Text" 
+                    width={100} 
+                    height={30}
+                    className={`transition-[display] duration-300 ease-in-out ${isHovered ? "block" : "hidden"}`}
+                    />
+                </div>
+                
                 <div className="flex flex-col gap-10">
                     <NavBarButton text="Accueil" href="/home" icon={<House size={24} className="shrink-0"/>} extend={isHovered}/>
                     <NavBarButton text="Atelier" href="/modeling-workshop-menu" icon={<CirclesThree size={24} className="shrink-0"/>} extend={isHovered} />

@@ -79,9 +79,9 @@ type PropsNavBarButton = {
 
 export function NavBarButton ({text, href, icon, extend}: PropsNavBarButton){
     return(
-        <Link href={href} className={`flex flex-row content-center ${extend ? 'gap-5' : 'gap-0'}`}>
+        <Link href={href} className={`flex flex-row content-center transition-[gap] duration-300 ease-in-out ${extend ? 'gap-5' : 'gap-0'}`}>
             {icon}
-            <span className={`whitespace-nowrap text-sm opacity-0 transition-opacity duration-0 ease-in-out ${extend ? 'opacity-100 w-fit' : 'w-0'}`}>
+            <span className={`whitespace-nowrap text-sm  transition-opacity duration-300 ease-in-out ${extend ? 'opacity-100' : 'opacity-0'}`}>
                 {text}
             </span>
             
@@ -111,9 +111,9 @@ type PropsLogOutButton = {
   };
 export function LogOutButton ({text, icon, extend}: PropsLogOutButton){
     return(
-        <button onClick={() => signOut()} className={`flex flex-row content-center ${extend ? 'gap-5' : 'gap-0'}`}>
+        <button onClick={() => signOut()} className={`flex flex-row content-center transition-[gap] duration-300 ease-in-out ${extend ? 'gap-5' : 'gap-0'}`}>
             {icon}
-            <span className={`whitespace-nowrap text-sm opacity-0 transition-all duration-0 ease-in-out ${extend ? 'opacity-100 w-fit' : 'w-0'}`}>
+            <span className={`whitespace-nowrap text-sm  transition-opacity duration-300 ease-in-out ${extend ? 'opacity-100' : 'opacity-0'}`}>
                 {text}
             </span>
             

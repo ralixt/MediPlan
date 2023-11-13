@@ -9,12 +9,10 @@ export default async function ConnectedLayout({children,}: {children: React.Reac
     console.log(session)
     if(!session?.user)
     redirect("/", RedirectType.replace)
-    return( 
-    <div className="flex flex-row">
+    return<div className="flex flex-row">
       <NavBar/>
-      <main className="flex flex-col items-center w-full">  
+      <main className="w-full">  
         {children}
       </main>
-    </div>
-    )
+    </div> 
   }

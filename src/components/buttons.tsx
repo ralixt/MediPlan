@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import {CaretRight, MagnifyingGlass, Plus} from "@phosphor-icons/react";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from 'next/navigation';
 
 
 export const LoginButton = () => {
@@ -53,12 +53,14 @@ type PropsTwoIconButton = {
 
 export function TwoIconButton ({text,href,icon1, icon2}: PropsTwoIconButton){
     return(
-        <Link href={href}>
-            <div>
-                {icon1} 
-                {text}
-                {icon2} 
+        <Link href={href} className="rounded-[10px] bg-dark-blue">
+            <div className="flex flex-row gap-8 px-5 py-7 bg-white rounded-[10px] hover:translate-x-[-0.5rem] hover:translate-y-[-0.5rem] transition-all duration-200 ease-in-out active:translate-x-0 active:translate-y-0">
+                <div className="flex flex-row gap-2">{icon1} 
+                <p>{text}</p>
+                </div>
+                {icon2}
             </div>
+                
         </Link>
     )
 }
@@ -79,10 +81,12 @@ type PropsNavBarButton = {
   };
 
 export function NavBarButton ({text, href, icon, extend}: PropsNavBarButton){
+    const router = usePathname()
+    const isActive = router == href
     return(
-        <Link href={href} className={`flex flex-row items-center transition-all duration-300 ease-in-out ${extend ? 'gap-5' : 'gap-0'}  hover:text-dark-blue`}>
+        <Link href={isActive ? {} : href} className={`flex flex-row items-center transition-all duration-200 ease-in-out ${extend ? 'gap-5' : 'gap-0'} ${isActive? "text-dark-blue font-bold" : "hover:text-light-blue"} `}>
             {icon}
-            <span className={`whitespace-nowrap text-sm  transition-opacity  duration-300 ease-in-out ${extend ? 'opacity-100' : 'opacity-0'} `}>
+            <span className={`whitespace-nowrap text-sm  transition-opacity  duration-200 ease-in-out ${extend ? 'opacity-100 w-full' : 'opacity-0 w-0'} `}>
                 {text}
             </span>
             
@@ -112,9 +116,9 @@ type PropsLogOutButton = {
   };
 export function LogOutButton ({text, icon, extend}: PropsLogOutButton){
     return(
-        <button onClick={() => signOut()} className={`flex flex-row items-center transition-[gap] duration-300 ease-in-out ${extend ? 'gap-5' : 'gap-0'} transition-colors hover:text-negative`}>
+        <button onClick={() => signOut()} className={`flex flex-row items-center transition-all duration-200 ease-in-out ${extend ? 'gap-5' : 'gap-0'} hover:text-negative`}>
             {icon}
-            <span className={`whitespace-nowrap text-sm  transition-opacity duration-300 ease-in-out ${extend ? 'opacity-100' : 'opacity-0'}`}>
+            <span className={`whitespace-nowrap text-sm transition-opacity duration-200 ease-in-out ${extend ? 'opacity-100' : 'opacity-0'}`}>
                 {text}
             </span>
             

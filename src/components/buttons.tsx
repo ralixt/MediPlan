@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link";
 import { useState } from "react";
-import {MagnifyingGlass} from "@phosphor-icons/react";
+import {CaretRight, MagnifyingGlass, Plus} from "@phosphor-icons/react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -96,12 +96,15 @@ export function NavBarButton ({text, href, icon, extend}: PropsNavBarButton){
 export const ModelingSearchButton = () => {
     return (
         <button type="submit"
-                className="bg-white flex content-center justify-items-center rounded-lg p-2  hover:rounded-3xl mt-8">
+                className="w-40 bg-white flex items-center justify-items-center justify-between rounded-lg p-2 ">
             Rechercher
             <MagnifyingGlass size={32} />
         </button>
     );
 };
+
+
+
 type PropsLogOutButton = {
     text: string;
     icon: React.ReactNode
@@ -120,4 +123,31 @@ export function LogOutButton ({text, icon, extend}: PropsLogOutButton){
 }
 
 
+
+
+export const NewWorkshopButton = () => {
+    return (
+        <Link href="/new-workshop" className=" bg-white rounded-lg p-2 flex items-center justify-items-center justify-between">
+                <p>Nouveau parcours</p>
+                <Plus size={32} />
+        </Link>
+    );
+};
+
+
+type PropsWorkshopButton = {
+    text: string;
+    href: string;
+
+};
+
+export function WorkshopButton ({text, href}: PropsWorkshopButton){
+
+    return(
+        <Link href={href} className="bg-white flex flex-row p-8 font-bold justify-between rounded-xl shadow-sm my-4">
+                <p>{text}</p>
+                <CaretRight size={32} />
+        </Link>
+    )
+}
 

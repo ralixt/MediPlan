@@ -26,7 +26,7 @@ export default async function SignInPage() {
 
             </div>
             <div className="bg-light-blue h-full w-1/2 flex text-8xl font-bold flex-col justify-center items-center">
-                <Image src="/logoAnimated.gif" alt="Logo gif" height={600} width={600} className=" rotate-[60deg] absolute -top-[10vh] left-[35vw]"/>
+                <Image src="/logoAnimated.gif" alt="Logo gif" height={400} width={400} className=" rotate-[60deg] absolute -top-[3rem] right-[32rem]"/>
                 <h1>Bienvenue !</h1>
             </div>
 

@@ -1,7 +1,7 @@
-import { TwoIconButton } from "@/components/buttons";
+import { OneIconButton, TwoIconButton } from "@/components/buttons";
 import NavBar from "@/components/navBar";
 import { authOptions } from "@/lib/auth";
-import { ArrowRight, Calendar, ChartBar, CirclesThree } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, Calendar, ChartBar, CirclesThree, MagnifyingGlass } from "@phosphor-icons/react/dist/ssr";
 import { getServerSession } from "next-auth/next";
 import type { Metadata } from 'next'
 
@@ -30,6 +30,7 @@ export default async function Home(){
         <section className="h-[50vh]">
             <div className="ml-5 flex flex-col items-center justify-around h-full">
                 <p className=" text-left justify-self-start">WIP</p>
+                
             </div>
         </section>
     </>

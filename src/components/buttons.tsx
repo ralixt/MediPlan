@@ -35,7 +35,7 @@ type PropsOneIconButton = {
   };
 export function OneIconButton({text,href,icon}: PropsOneIconButton){
     return(
-        <Link href={href} className="rounded-[10px] bg-dark-blue">
+        <Link href={href} className="flex rounded-[10px] bg-dark-blue">
             <div className="flex flex-row gap-8 px-5 py-7 bg-white rounded-[10px] hover:translate-x-[-0.5rem] hover:translate-y-[-0.5rem] transition-all duration-200 ease-in-out active:translate-x-0 active:translate-y-0">
                 <div className="flex flex-row gap-2">
                     <p>{text}</p>
@@ -55,7 +55,7 @@ type PropsTwoIconButton = {
 
 export function TwoIconButton ({text,href,icon1, icon2}: PropsTwoIconButton){
     return(
-        <Link href={href} className="rounded-[10px] bg-dark-blue">
+        <Link href={href} className=" flex rounded-[10px] bg-dark-blue">
             <div className="flex flex-row gap-8 px-5 py-7 bg-white rounded-[10px] hover:translate-x-[-0.5rem] hover:translate-y-[-0.5rem] transition-all duration-200 ease-in-out active:translate-x-0 active:translate-y-0">
                 <div className="flex flex-row gap-2">{icon1} 
                 <p>{text}</p>

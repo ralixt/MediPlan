@@ -18,12 +18,6 @@ export default async function ModelingWorkshop() {
             <section className="w-full bg-light-blue h-[50vh] flex justify-between">
 
                 <div>
-                    {/*<Image src="/vector1.png"*/}
-                    {/*       alt="Arrow design"*/}
-                    {/*       width={200}*/}
-                    {/*       height={200}*/}
-                    {/*       // className={}*/}
-                    {/*></Image>*/}
                     <Image src="/vector1.svg"
                            alt="Arrow design"
                            width={200}
@@ -37,11 +31,9 @@ export default async function ModelingWorkshop() {
                     <h1 className="text-4xl">Atelier de modélisation</h1>
 
                     <div className="flex">
-                        <form method="POST"
-                            // onSubmit={onSubmit}
-                              className="">
+                        <form method="POST">
 
-                            {/*<div className={` border-b-2 mb-8 ${modelingSearchFocused || modelingSearch.current ? 'border-black' : ''}`}>*/}
+                            {/* <div className={` border-b-2 mb-8 ${modelingSearchFocused || modelingSearch.current ? 'border-black' : ''}`}>*/}
                             {/*<div className={` border-b-2 mb-8 `}>*/}
                             {/*    <input type="text"*/}
                             {/*           name="search-modeling-workshop"*/}
@@ -51,17 +43,19 @@ export default async function ModelingWorkshop() {
                             {/*        //     modelingSearch.current = e.target.value}*/}
                             {/*           onFocus={() => setModelingSearchFocused(true)}*/}
                             {/*           onBlur={() => setModelingSearchFocused(false)}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
+                            {/*    /> */}
+                            {/* </div> */}
+                            <input type="text" />
                             <OneIconButton text="Rechercher"
                                            icon={<MagnifyingGlass size={32} />}
                                            href="rechercher"/>
 
                         </form>
                         <div>
-                            <OneIconButton text="Nouveau parcours"
+                        <OneIconButton text="Nouveau parcours"
                                            icon={<Plus size={32} />}
                                            href="rechercher"/>
+                            
                         </div>
                     </div>
 
@@ -81,7 +75,7 @@ export default async function ModelingWorkshop() {
             </section>
 
             <section className="w-[95%] m-auto">
-
+           
                 <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
                 <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
                 <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>

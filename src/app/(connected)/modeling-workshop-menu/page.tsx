@@ -1,7 +1,8 @@
-// "use client"
+"use client"
 import Image from "next/image";
 // import React, {useRef, useState} from "react";
-import {ModelingSearchButton, NewWorkshopButton, WorkshopButton} from "@/components/buttons";
+import {ModelingSearchButton, NewWorkshopButton, OneIconButton, WorkshopButton} from "@/components/buttons";
+import {MagnifyingGlass, Plus} from "@phosphor-icons/react";
 
 
 export default async function ModelingWorkshop() {
@@ -13,7 +14,9 @@ export default async function ModelingWorkshop() {
     return (
 
         <div className="w-full">
-            <div className="bg-light-blue w-full flex justify-between">
+
+            <section className="w-full bg-light-blue h-[50vh] flex justify-between">
+
                 <div>
                     {/*<Image src="/vector1.png"*/}
                     {/*       alt="Arrow design"*/}
@@ -50,11 +53,15 @@ export default async function ModelingWorkshop() {
                             {/*           onBlur={() => setModelingSearchFocused(false)}*/}
                             {/*    />*/}
                             {/*</div>*/}
-                            <ModelingSearchButton/>
+                            <OneIconButton text="Rechercher"
+                                           icon={<MagnifyingGlass size={32} />}
+                                           href="rechercher"/>
 
                         </form>
                         <div>
-                            <NewWorkshopButton/>
+                            <OneIconButton text="Nouveau parcours"
+                                           icon={<Plus size={32} />}
+                                           href="rechercher"/>
                         </div>
                     </div>
 
@@ -71,15 +78,24 @@ export default async function ModelingWorkshop() {
                 </div>
 
 
-            </div>
+            </section>
 
-            <div className="w-[95%] m-auto">
+            <section className="w-[95%] m-auto">
 
-                <WorkshopButton text="Modéle A" href="/modele-A"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-A"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-A"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
 
-            </div>
+            </section>
         </div>
 
     )

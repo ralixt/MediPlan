@@ -3,8 +3,11 @@ import { NextAuthProvider } from './providers'
 import "./globals.css"
 import { Montserrat_Alternates } from 'next/font/google'
 export const metadata: Metadata = {
-  title: 'MediPlan - Accueil',
+  title: 'MediPlan',
   description: 'Bienvenue sur MediPlan',
+  icons: {
+    icon: '/icon.ico',
+  },
 }
 const montserrat_alternates = Montserrat_Alternates({
     weight: "500",

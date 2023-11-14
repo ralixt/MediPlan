@@ -3,6 +3,15 @@ import NavBar from "@/components/navBar";
 import { authOptions } from "@/lib/auth";
 import { ArrowRight, Calendar, ChartBar, CirclesThree } from "@phosphor-icons/react/dist/ssr";
 import { getServerSession } from "next-auth/next";
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'MediPlan - Accueil',
+    description: 'Accueil',
+    icons: {
+        icon: '/icon.ico',
+      },
+  }
 
 export default async function Home(){
     const session = await getServerSession(authOptions);

@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function NavBar(){
     const [isHovered, setIsHovered] = useState(false);
     return(
-        <header className={`flex flex-col h-[100vh] justify-self-center pl-5 pr-6 py-[1.30rem] justify-between gap-64 bg-white rounded-r-[20px] shadow transition-all duration-300 sticky z-10 ${isHovered ? 'w-[230px]' : 'w-[68px]'}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={()=> setIsHovered(false)}>
+        <header className={`flex flex-col h-[100vh] justify-self-center pl-5 pr-6 py-[1.30rem] justify-between gap-64 bg-white rounded-r-[20px] shadow transition-all duration-300 fixed z-10 ${isHovered ? 'w-[230px]' : 'w-[68px]'}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={()=> setIsHovered(false)}>
             <div className="flex flex-col gap-11" >
                 <div className="flex flex-row gap-1 items-end">
                 <Image

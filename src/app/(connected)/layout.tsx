@@ -6,12 +6,10 @@ import Image from "next/image";
 
 export default async function ConnectedLayout({children,}: {children: React.ReactNode}) {
     const session = await getServerSession(authOptions);
-    console.log(session)
-    if(!session?.user)
-    redirect("/", RedirectType.replace)
+    if(!session?.user) redirect("/", RedirectType.replace)
     return<div className="flex flex-row">
       <NavBar/>
-      <main className="w-full">  
+      <main className="w-full ml-12">  
         {children}
       </main>
     </div> 

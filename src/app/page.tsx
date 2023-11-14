@@ -10,6 +10,7 @@ import { getServerSession } from "next-auth";
 import {Login} from "@/components/login";
 import Image from "next/image";
 import React from "react";
+import { RedirectType, redirect } from "next/navigation";
 
 // export default async function Home() {
 //   const session = await getServerSession(authOptions);
@@ -37,6 +38,8 @@ import React from "react";
 
 
 export default async function SignInPage() {
+    const session = await getServerSession(authOptions);
+    if(session?.user) redirect("/home", RedirectType.replace)
     return(
 
         <main className="bg-light-blue h-screen w-screen flex">

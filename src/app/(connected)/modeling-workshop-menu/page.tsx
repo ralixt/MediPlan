@@ -1,7 +1,8 @@
-// "use client"
+"use client"
 import Image from "next/image";
 // import React, {useRef, useState} from "react";
-import {ModelingSearchButton, NewWorkshopButton, WorkshopButton} from "@/components/buttons";
+import {ModelingSearchButton, NewWorkshopButton, OneIconButton, WorkshopButton} from "@/components/buttons";
+import {MagnifyingGlass, Plus} from "@phosphor-icons/react";
 
 
 export default async function ModelingWorkshop() {
@@ -13,14 +14,10 @@ export default async function ModelingWorkshop() {
     return (
 
         <div className="w-full">
-            <div className="bg-light-blue w-full flex justify-between">
+
+            <section className="w-full bg-light-blue h-[50vh] flex justify-between">
+
                 <div>
-                    {/*<Image src="/vector1.png"*/}
-                    {/*       alt="Arrow design"*/}
-                    {/*       width={200}*/}
-                    {/*       height={200}*/}
-                    {/*       // className={}*/}
-                    {/*></Image>*/}
                     <Image src="/vector1.svg"
                            alt="Arrow design"
                            width={200}
@@ -34,11 +31,9 @@ export default async function ModelingWorkshop() {
                     <h1 className="text-4xl">Atelier de modélisation</h1>
 
                     <div className="flex">
-                        <form method="POST"
-                            // onSubmit={onSubmit}
-                              className="">
+                        <form method="POST">
 
-                            {/*<div className={` border-b-2 mb-8 ${modelingSearchFocused || modelingSearch.current ? 'border-black' : ''}`}>*/}
+                            {/* <div className={` border-b-2 mb-8 ${modelingSearchFocused || modelingSearch.current ? 'border-black' : ''}`}>*/}
                             {/*<div className={` border-b-2 mb-8 `}>*/}
                             {/*    <input type="text"*/}
                             {/*           name="search-modeling-workshop"*/}
@@ -48,13 +43,19 @@ export default async function ModelingWorkshop() {
                             {/*        //     modelingSearch.current = e.target.value}*/}
                             {/*           onFocus={() => setModelingSearchFocused(true)}*/}
                             {/*           onBlur={() => setModelingSearchFocused(false)}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            <ModelingSearchButton/>
+                            {/*    /> */}
+                            {/* </div> */}
+                            <input type="text" />
+                            <OneIconButton text="Rechercher"
+                                           icon={<MagnifyingGlass size={32} />}
+                                           href="rechercher"/>
 
                         </form>
                         <div>
-                            <NewWorkshopButton/>
+                        <OneIconButton text="Nouveau parcours"
+                                           icon={<Plus size={32} />}
+                                           href="rechercher"/>
+                            
                         </div>
                     </div>
 
@@ -71,15 +72,24 @@ export default async function ModelingWorkshop() {
                 </div>
 
 
-            </div>
+            </section>
 
-            <div className="w-[95%] m-auto">
+            <section className="w-[95%] m-auto">
+           
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
 
-                <WorkshopButton text="Modéle A" href="/modele-A"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-A"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-A"></WorkshopButton>
-
-            </div>
+            </section>
         </div>
 
     )

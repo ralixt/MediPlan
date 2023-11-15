@@ -5,7 +5,7 @@ import {CaretRight, MagnifyingGlass, Plus} from "@phosphor-icons/react";
 import { signOut } from "next-auth/react";
 import { usePathname, useRouter } from 'next/navigation';
 
-
+// Bouton qui permet de se connecter avec NextAuthJS
 export const LoginButton = () => {
     return (
         <button type="submit" className="bg-dark-blue text-white rounded-lg p-2 w-4/5 mx-auto hover:rounded-3xl mt-8">
@@ -19,7 +19,7 @@ type PropsDefaultButton = {
     text: string;
     href: string;
   };
-
+// bouton principal
 export function PrimaryButton({text, href}: PropsDefaultButton){
     return (
         <Link href={href}>
@@ -33,6 +33,7 @@ type PropsOneIconButton = {
     href: string;
     icon: React.ReactNode
   };
+// Bouton avec une icone sur la droite
 export function OneIconButton({text,href,icon}: PropsOneIconButton){
     return(
         <Link href={href} className="flex rounded-[10px] bg-dark-blue">
@@ -52,7 +53,7 @@ type PropsTwoIconButton = {
     icon1: React.ReactNode;
     icon2: React.ReactNode;
   };
-
+// Bouton avec deux icones
 export function TwoIconButton ({text,href,icon1, icon2}: PropsTwoIconButton){
     return(
         <Link href={href} className=" flex rounded-[10px] bg-dark-blue">
@@ -67,6 +68,7 @@ export function TwoIconButton ({text,href,icon1, icon2}: PropsTwoIconButton){
     )
 }
 
+// bouton secondaire
 export function SecondaryButton ({text, href}: PropsDefaultButton){
     return (
         <Link href={href}>
@@ -81,7 +83,7 @@ type PropsNavBarButton = {
     icon: React.ReactNode;
     extend: boolean;
   };
-
+ // Bouton de la bar de Navigation
 export function NavBarButton ({text, href, icon, extend}: PropsNavBarButton){
     const router = usePathname()
     const isActive = router == href
@@ -97,18 +99,6 @@ export function NavBarButton ({text, href, icon, extend}: PropsNavBarButton){
 }
 
 
-//modeling workshop button
-
-export const ModelingSearchButton = () => {
-    return (
-        <button type="submit"
-                className="w-40 bg-white flex items-center justify-items-center justify-between rounded-lg p-2 ">
-            Rechercher
-            <MagnifyingGlass size={32} />
-        </button>
-    );
-};
-
 
 
 type PropsLogOutButton = {
@@ -116,6 +106,7 @@ type PropsLogOutButton = {
     icon: React.ReactNode
     extend: boolean;
   };
+  //Bouton de deconnexion de la bar de navigation
 export function LogOutButton ({text, icon, extend}: PropsLogOutButton){
     return(
         <button onClick={() => signOut()} className={`flex flex-row items-center transition-all duration-200 ease-in-out ${extend ? 'gap-5' : 'gap-0'} hover:text-negative`}>
@@ -128,17 +119,6 @@ export function LogOutButton ({text, icon, extend}: PropsLogOutButton){
     )
 }
 
-
-
-
-export const NewWorkshopButton = () => {
-    return (
-        <Link href="/new-workshop" className=" bg-white rounded-lg p-2 flex items-center justify-items-center justify-between">
-                <p>Nouveau parcours</p>
-                <Plus size={32} />
-        </Link>
-    );
-};
 
 
 type PropsWorkshopButton = {

@@ -17,11 +17,11 @@ export default async function ModelingWorkshop() {
 
             <section className="w-full bg-light-blue h-[50vh] flex justify-between">
 
-                <div>
+                <div className="flex justify-center content-center">
                     <Image src="/vector1.svg"
                            alt="Arrow design"
-                           width={200}
-                           height={200}
+                           width={150}
+                           height={150}
                         // className={}
                     ></Image>
 

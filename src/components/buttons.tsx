@@ -86,7 +86,7 @@ export function NavBarButton ({text, href, icon, extend}: PropsNavBarButton){
     return(
         <Link href={isActive ? {} : href} className={`flex flex-row items-center transition-all duration-200 ease-in-out ${extend ? 'gap-5' : 'gap-0'} ${isActive? "text-dark-blue font-bold" : "hover:text-light-blue"} `}>
             {icon}
-            <span className={`whitespace-nowrap text-sm  transition-opacity  duration-200 ease-in-out ${extend ? 'opacity-100 w-full' : 'opacity-0 w-0'} `}>
+            <span className={`whitespace-nowrap text-sm  transition-opacity duration-200 ease-in-out ${extend ? 'opacity-100 w-full' : 'opacity-0 w-0'} `}>
                 {text}
             </span>
             

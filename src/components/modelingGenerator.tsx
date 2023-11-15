@@ -4,9 +4,9 @@ import { promises as fs } from 'fs';
 
 
 const getParcours = cache(async () => {
-    const file = await fs.readFile(process.cwd() + '/temporary/BDD.json', 'utf8');
-    const data :parcours = JSON.parse(file);
-    return data
+    const response = await fetch('/temporary/BDD.json');
+    const data: parcoursList  = await response.json();
+    return data[0]
 })
 
 const generate = ((parcours : parcours) => {

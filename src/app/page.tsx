@@ -7,8 +7,12 @@ import { RedirectType, redirect } from "next/navigation";
 
 
 export default async function SignInPage() {
+    
+    //nous regardons si il y a deja une session ou pas, si oui on la redirige vers /home
     const session = await getServerSession(authOptions);
     if(session?.user) redirect("/home", RedirectType.replace)
+
+
     return(
 
         <main className="bg-light-blue h-screen w-screen flex">

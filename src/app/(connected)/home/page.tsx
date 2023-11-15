@@ -14,7 +14,9 @@ export const metadata: Metadata = {
   }
 
 export default async function Home(){
+    // nous appelons une session afin d'avoir le nom de la personne connecté
     const session = await getServerSession(authOptions);
+
     return<>
         <section className="w-full bg-light-blue h-[50vh] ">
             <div className="ml-5 flex flex-col items-center justify-around h-full">

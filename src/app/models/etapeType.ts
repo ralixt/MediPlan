@@ -1,27 +1,29 @@
 import mongoose, { Schema, Document } from 'mongoose';
+import { Types } from 'mongoose';
 import { Competence } from './competence';
 import { Ressource } from './ressource';
 
 interface IEtapeType extends Document {
-  uid: string;
   name: string;
   type: string;
   duree: number;
   Competence: Competence['_id'][];
-  Ressource: Ressource['_id'][];
-  Materiel: string[];
+  Lieu: Ressource['_id'][];
+  Materiel: Ressource['_id'][]; // materiel dépend du type
   a_jeun: boolean;
+  Etapes : Types.ObjectId[];
 }
 
 const etapeTypeSchema = new Schema<IEtapeType>({
 
   name: { type: String, required: true },
-  type: { type: String, required: true },
-  duree: { type: Number, required: true },
+  type: { type: String, required: true , enum : ['EtapeType','GroupeEtapeType']},
+  duree: { type: Number },
   Competence: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Competence' }],
-  Ressource: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ressource' }],
-  Materiel: { type: [String], default: ['Materiel_non_defini'] },
-  a_jeun: { type: Boolean, required: true },
+  Lieu: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ressource' }],
+  Materiel:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ressource' }],
+  a_jeun: { type: Boolean },
+  Etapes : [ {type: Schema.Types.ObjectId, ref: 'EtapeType'}]
 });
 
 const EtapeType = mongoose.model<IEtapeType>('EtapeType', etapeTypeSchema);

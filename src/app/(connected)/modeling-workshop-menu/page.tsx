@@ -1,18 +1,43 @@
 "use client"
 import Image from "next/image";
-// import React, {useRef, useState} from "react";
-import {ModelingSearchButton, NewWorkshopButton, OneIconButton, WorkshopButton} from "@/components/buttons";
+import { useEffect, useState } from "react";
+import {OneIconButton, WorkshopButton} from "@/components/buttons";
 import {MagnifyingGlass, Plus} from "@phosphor-icons/react";
 
+let cachedParcours = null; // Variable pour stocker les données mises en cache
 
-export default async function ModelingWorkshop() {
+export default function ModelingWorkshop() {
+    const [parcours, setParcours] = useState([]); // État pour stocker les données des parcours
 
-    // const modelingSearch = useRef("")
-    // const modelingSearch = useState("")
-    // const [modelingSearchFocused, setModelingSearchFocused] = useState(false);
+    useEffect(() => {
+        const fetchParcours = async () => {
+            try {
+                let data = null;
+
+                // Vérifier si les données sont déjà en cache
+                if (cachedParcours) {
+                    data = cachedParcours;
+                } else {
+                    const response = await fetch('/temporary/BDD.json');
+                    data = await response.json();
+                    cachedParcours = data; // Mettre les données en cache
+                }
+
+                setParcours(data);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des données des parcours:", error);
+                // Gérer l'erreur ici
+            }
+        };
+
+        fetchParcours();
+    }, []);
+
+    console.log("jkjkjdsksdjd")
+    console.log(parcours)
+    console.log("okkkkk")
 
     return (
-
         <div className="w-full">
 
             <section className="w-full bg-light-blue h-[50vh] flex justify-between">
@@ -57,7 +82,7 @@ export default async function ModelingWorkshop() {
                                        placeholder="Nom de la modélisation"
                                        className=" border-b-2 outline-none bg-white w-full"
                                 />
-                             </div>
+                            </div>
 
                             <OneIconButton text="Rechercher"
                                            icon={<MagnifyingGlass size={32} />}
@@ -69,7 +94,7 @@ export default async function ModelingWorkshop() {
                                 text="Nouveau parcours"
                                 icon={<Plus size={32} />}
                                 href="rechercher"/>
-                            
+
                         </div>
                     </div>
 
@@ -89,23 +114,16 @@ export default async function ModelingWorkshop() {
             </section>
 
             <section className="w-[95%] m-auto">
-           
-                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
-                <WorkshopButton text="Modéle A" href="/modele-a"></WorkshopButton>
+
+                {parcours.map((parcour, index) =>
+                    (
+                        <WorkshopButton index={index} text={parcour.name} href="/modele-a" />
+                    )
+
+                )}
+
 
             </section>
         </div>
-
-    )
-
+    );
 }

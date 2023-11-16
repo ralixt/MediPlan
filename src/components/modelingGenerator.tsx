@@ -10,6 +10,16 @@ const getParcours = cache(async () => {
 })
 
 const generate = ((parcours : parcours) => {
+    const etapesTypes = []
+    const groupesEtapesType = []
+    for(let sequencable of parcours.sequencables as sequencable[]){
+        if(sequencable.type == "EtapeType"){
+            etapesTypes.push(sequencable)
+        }
+        else{
+            groupesEtapesType
+        }
+    }
     
 })
 

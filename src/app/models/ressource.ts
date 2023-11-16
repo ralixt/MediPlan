@@ -15,11 +15,12 @@ const ressourceSchema = new Schema<IResource>({
     type: {
         type: String,
         required: true,
+        enum:['lieu', 'materiel' , 'personel']
     },
 });
 
 
-const Ressource = mongoose.model<IResource>('Lieu', ressourceSchema);
+const Ressource = mongoose.model<IResource>('Ressource', ressourceSchema);
 
 
 export default Ressource;

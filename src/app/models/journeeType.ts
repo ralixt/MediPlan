@@ -2,7 +2,8 @@ import mongoose, { Schema, Document, Types } from 'mongoose';
 import { ParcoursType } from './parcoursType';
 
 interface IItem {
-    id: string;
+  
+    id_comp : Types.ObjectId;
     nb_h_cible: number;
     nb_p_cible: number;
     nb_h_actuel: number;
@@ -10,7 +11,7 @@ interface IItem {
 }
 
 interface IJourneeType extends Document {
-    id: number;
+    
     nom: string;
     parcours: {
         parcours_id: Types.ObjectId;
@@ -21,7 +22,8 @@ interface IJourneeType extends Document {
 }
 
 const itemSchema = new Schema<IItem>({
-    id: { type: String, required: true },
+
+    id_comp:{type: Schema.Types.ObjectId, ref: 'Competence', required: true},
     nb_h_cible: { type: Number, required: true },
     nb_p_cible: { type: Number, required: true },
     nb_h_actuel: { type: Number, required: true },
@@ -29,7 +31,6 @@ const itemSchema = new Schema<IItem>({
 });
 
 const journeeTypeSchema = new Schema<IJourneeType>({
-    id: { type: Number, required: true },
     nom: { type: String, required: true },
     parcours: [
         {

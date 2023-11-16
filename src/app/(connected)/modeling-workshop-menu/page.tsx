@@ -17,7 +17,7 @@ export default async function ModelingWorkshop() {
 
             <section className="w-full bg-light-blue h-[50vh] flex justify-between">
 
-                <div className="flex justify-center content-center">
+                <div className="flex justify-center content-center w-[15%] h-full">
                     <Image src="/vector1.svg"
                            alt="Arrow design"
                            width={150}
@@ -27,11 +27,14 @@ export default async function ModelingWorkshop() {
 
 
                 </div>
-                <div className="text-center font-bold">
-                    <h1 className="text-4xl">Atelier de modélisation</h1>
+                <div className="text-center font-bold w-[70%] h-full flex flex-col justify-center content-center items-center">
+                    <div className="text-4xl mb-20">
+                        <h1 >Atelier de modélisation </h1>
+                        <h1>des parcours</h1>
+                    </div>
 
-                    <div className="flex">
-                        <form method="POST">
+                    <div className="flex flex-row justify-around items-center content-center w-full">
+                        <form method="POST" className="h-full flex flex-col justify-center items-center content-center">
 
                             {/* <div className={` border-b-2 mb-8 ${modelingSearchFocused || modelingSearch.current ? 'border-black' : ''}`}>*/}
                             {/*<div className={` border-b-2 mb-8 `}>*/}
@@ -45,16 +48,27 @@ export default async function ModelingWorkshop() {
                             {/*           onBlur={() => setModelingSearchFocused(false)}*/}
                             {/*    /> */}
                             {/* </div> */}
-                            <input type="text" />
+
+
+
+                            <div className=" bg-white mb-8 p-4 rounded w-96">
+                                <input type="text"
+                                       name="search-modeling-workshop"
+                                       placeholder="Nom de la modélisation"
+                                       className=" border-b-2 outline-none bg-white w-full"
+                                />
+                             </div>
+
                             <OneIconButton text="Rechercher"
                                            icon={<MagnifyingGlass size={32} />}
                                            href="rechercher"/>
 
                         </form>
-                        <div>
-                        <OneIconButton text="Nouveau parcours"
-                                           icon={<Plus size={32} />}
-                                           href="rechercher"/>
+                        <div className="h-full flex justify-center items-center content-center">
+                            <OneIconButton
+                                text="Nouveau parcours"
+                                icon={<Plus size={32} />}
+                                href="rechercher"/>
                             
                         </div>
                     </div>
@@ -62,11 +76,11 @@ export default async function ModelingWorkshop() {
 
                 </div>
 
-                <div>
+                <div className="w-[15%] h-full flex justify-center content-center items-center">
                     <Image src="/vector2.svg"
                            alt="Arrow design"
-                           width={200}
-                           height={200}
+                           width={350}
+                           height={350}
                         // className={}
                     ></Image>
                 </div>

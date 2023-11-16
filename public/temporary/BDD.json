@@ -1,270 +1,328 @@
 [
-  {
-    "uid": "33f18275-6da3-47a5-8e02-c2bbcad47a52",
-    "name": "Obesité Sévère Diagnostique (P1)",
-    "type": "ParcoursType",
-    "Sequençable": [
-      [
-        {
-          "uid": "742f730e-9d94-47a4-9285-ba8e497de11c",
-          "name": "RdVParamedical",
-          "type": "EtapeType",
-          "duree": 20,
-          "Competence": [
-            "idCompétence2"
-          ],
-          "Lieu": [
-            "idLieu4"
-          ],
-          "Materiel": [
-            "Materiel_non_defini"
-          ],
-          "a_jeun": "False"
-        },
-        {
-          "uid": "e1c0a307-890b-4150-b324-9ac195f817b5",
-          "name": "ECG",
-          "type": "EtapeType",
-          "duree": 15,
-          "Competence": [
-            "idCompétence2"
-          ],
-          "Lieu": [
-            "idLieu4"
-          ],
-          "Materiel": [
-            "Materiel_non_defini"
-          ],
-          "a_jeun": "False"
-        },
-        {
-          "uid": "a5e0f033-0c0c-4752-ba37-5889c0c70b5d",
-          "name": "BilanBiologique",
-          "type": "EtapeType",
-          "duree": 15,
-          "Competence": [
-            "idCompétence2"
-          ],
-          "Lieu": [
-            "idLieu4"
-          ],
-          "Materiel": [
-            "Materiel_non_defini"
-          ],
-          "a_jeun": "True"
-        },
-        {
-          "uid": "e4739e0c-9d26-4814-9831-5e797cff18d7",
-          "name": "TOGD",
-          "type": "EtapeType",
-          "duree": 15,
-          "Competence": [
-            "idCompétence2"
-          ],
-          "Lieu": [
-            "idLieu4"
-          ],
-          "Materiel": [
-            "Materiel_non_defini"
-          ],
-          "a_jeun": "True"
-        },
-        {
-          "uid": "917f58f4-71a3-4cca-9a94-dace5dbd5b65",
-          "name": "EchoHépathique",
-          "type": "EtapeType",
-          "duree": 15,
-          "Competence": [
-            "idCompétence2"
-          ],
-          "Lieu": [
-            "idLieu4"
-          ],
-          "Materiel": [
-            "Materiel_non_defini"
-          ],
-          "a_jeun": "False"
-        },
-        {
-          "uid": "19cbb371-7cbc-4323-b82e-c2c8aa909da0",
-          "name": "Calorimétrie",
-          "type": "EtapeType",
-          "duree": 30,
-          "Competence": [
-            "idCompétence2"
-          ],
-          "Lieu": [
-            "idLieu4"
-          ],
-          "Materiel": [
-            "Materiel_non_defini"
-          ],
-          "a_jeun": "True"
-        },
-        {
-          "uid": "ac939c4b-b0d4-4ebc-a79e-22696b0747c1",
-          "name": "Collation",
-          "type": "EtapeType",
-          "duree": 30,
-          "Competence": [
-            "idCompétence2"
-          ],
-          "Lieu": [
-            "idLieu4"
-          ],
-          "Materiel": [
-            "Materiel_non_defini"
-          ],
-          "a_jeun": "False"
-        },
-        {
-          "uid": "8c093712-7c6d-4038-9fd1-a3c3cb1ebe0f",
-          "name": "EntretienPsy",
-          "type": "EtapeType",
-          "duree": 40,
-          "Competence": [
-            "idCompétence2"
-          ],
-          "Lieu": [
-            "idLieu4"
-          ],
-          "Materiel": [
-            "Materiel_non_defini"
-          ],
-          "a_jeun": "False"
-        },
-        {
-          "uid": "e5362e1e-78b6-4bf7-bc34-73e9fd6dd388",
-          "name": "EntretienInfirmier",
-          "type": "EtapeType",
-          "duree": 30,
-          "Competence": [
-            "idCompétence2"
-          ],
-          "Lieu": [
-            "idLieu4"
-          ],
-          "Materiel": [
-            "Materiel_non_defini"
-          ],
-          "a_jeun": "False"
-        },
-        {
-          "uid": "bb039d59-8ebd-4a49-a0f9-92d7789e7225",
-          "name": "BilanAnthropométrique",
-          "type": "EtapeType",
-          "duree": 15,
-          "Competence": [
-            "idCompétence2"
-          ],
-          "Lieu": [
-            "idLieu4"
-          ],
-          "Materiel": [
-            "Materiel_non_defini"
-          ],
-          "a_jeun": "False"
-        },
-        {
-          "uid": "945aa73a-0fd1-4108-81a7-7e6790928c2e",
-          "name": "EntretienDiet",
-          "type": "EtapeType",
-          "duree": 60,
-          "Competence": [
-            "idCompétence2"
-          ],
-          "Lieu": [
-            "idLieu4"
-          ],
-          "Materiel": [
-            "Materiel_non_defini"
-          ],
-          "a_jeun": "False"
-        },
-        {
-          "uid": "9584a566-cacb-4a77-8d51-7f841231ab93",
-          "name": "Synthèse",
-          "type": "EtapeType",
-          "duree": 30,
-          "Competence": [
-            "idCompétence2"
-          ],
-          "Lieu": [
-            "idLieu4"
-          ],
-          "Materiel": [
-            "Materiel_non_defini"
-          ],
-          "a_jeun": "False"
-        },
-        {
-          "uid": "9e92a8e9-ffb0-47a2-bbe4-3b96aebb2f21",
-          "name": "Groupe1",
-          "type": "GroupeEtapeType",
-          "Etape": [
-            "idEtape1",
-            "idEtape2",
-            "idEtape3",
-            "idEtape4"
-          ]
-        },
-        {
-          "uid": "61e149b5-43b2-417c-9f13-9338dd6fb624",
-          "name": "Groupe2",
-          "type": "GroupeEtapeType",
-          "Etape": [
-            "idEtape1",
-            "idEtape2",
-            "idEtape3"
-          ]
-        }
+    {
+      "uid": "33f18275-6da3-47a5-8e02-c2bbcad47a52",
+      "name": "ObesitéSévèreDiagnostique(P1)",
+      "type": "ParcoursType",
+      "sequencables" :[
+            {
+              
+                "uid": "742f730e-9d94-47a4-9285-ba8e497de11c",
+                "name": "RdVParamedical",
+                "type": "EtapeType",
+                "duree" : 20,
+                "Competence" : [
+                  "idCompétence2" 
+                ],
+                "Lieu" : [
+                  "idLieu4"
+                ],
+                "Materiel" : [
+                  "Materiel_non_defini"
+                ],
+                "a_jeun" :"False"
+            },
+            {
+                "uid": "e1c0a307-890b-4150-b324-9ac195f817b5",
+                "name": "ECG",
+                "type": "EtapeType",
+                "duree" : 15,
+                "Competence" : [
+                  "idCompétence2"
+                ],
+                "Lieu" : [
+                  "idLieu4"
+                ],
+                "Materiel" : [
+                  "Materiel_non_defini"
+                ],
+                "a_jeun" :"False"
+            },
+            {
+                "uid": "a5e0f033-0c0c-4752-ba37-5889c0c70b5d",
+                "name": "BilanBiologique",
+                "type": "EtapeType",
+                "duree" : 15,
+                "Competence" : [
+                  "idCompétence2"
+                ],
+                "Lieu" : [
+                  "idLieu4"
+                ],
+                "Materiel" : [
+                  "Materiel_non_defini"
+                ],
+                "a_jeun" :"True"
+            },
+            {
+                "uid": "917f58f4-71a3-4cca-9a94-dace5dbd5b65",
+                "name": "EchoHépathique",
+                "type": "EtapeType",
+                "duree" : 15,
+                "Competence" : [
+                  "idCompétence2"
+                ],
+                "Lieu" : [
+                  "idLieu4"
+                ],
+                "Materiel" : [
+                  "Materiel_non_defini"
+                ],
+                "a_jeun" :"False"
+            },
+            {
+                "uid": "19cbb371-7cbc-4323-b82e-c2c8aa909da0",
+                "name": "Calorimétrie",
+                "type": "EtapeType",
+                "duree" : 30,
+                "Competence" : [
+                  "idCompétence2"
+                ],
+                "Lieu" : [
+                  "idLieu4"
+                ],
+                "Materiel" : [
+                  "Materiel_non_defini"
+                ],
+                "a_jeun" :"True"
+            },
+            {
+                "uid": "ac939c4b-b0d4-4ebc-a79e-22696b0747c1",
+                "name": "Collation",
+                "type": "EtapeType",
+                "duree" : 30,
+                "Competence" : [
+                  "idCompétence2"
+                ],
+                "Lieu" : [
+                  "idLieu4"
+                ],
+                "Materiel" : [
+                  "Materiel_non_defini"
+                ],
+                "a_jeun" :"False"
+            },
+            {
+                "uid": "8c093712-7c6d-4038-9fd1-a3c3cb1ebe0f",
+                "name": "EntretienPsy",
+                "type": "EtapeType",
+                "duree" : 40,
+                "Competence" : [
+                  "idCompétence2"
+                ],
+                "Lieu" : [
+                  "idLieu4"
+                ],
+                "Materiel" : [
+                  "Materiel_non_defini"
+                ],
+                "a_jeun" :"False"
+            },
+            {
+                "uid": "e5362e1e-78b6-4bf7-bc34-73e9fd6dd388",
+                "name": "EntretienInfirmier",
+                "type": "EtapeType",
+                "duree" : 30,
+                "Competence" : [
+                  "idCompétence2"
+                ],
+                "Lieu" : [
+                  "idLieu4"
+                ],
+                "Materiel" : [
+                  "Materiel_non_defini"
+                ],
+                "a_jeun" :"False"
+            },
+            {
+                "uid": "945aa73a-0fd1-4108-81a7-7e6790928c2e",
+                "name": "EntretienDiet",
+                "type": "EtapeType",
+                "duree" : 60,
+                "Competence" : [
+                  "idCompétence2"
+                ],
+                "Lieu" : [
+                  "idLieu4"
+                ],
+                "Materiel" : [
+                  "Materiel_non_defini"
+                ],
+                "a_jeun" :"False"
+            },
+            {
+                "uid": "9584a566-cacb-4a77-8d51-7f841231ab93",
+                "name": "Synthèse",
+                "type": "EtapeType",
+                "duree" : 30,
+                "Competence" : [
+                  "idCompétence2"
+                ],
+                "Lieu" : [
+                  "idLieu4"
+                ],
+                "Materiel" : [
+                  "Materiel_non_defini"
+                ],
+                "a_jeun" :"False"
+            },
+            {
+                "uid": "9e92a8e9-ffb0-47a2-bbe4-3b96aebb2f21",
+                "name": "Groupe1",
+                "type": "GroupeEtapeType",
+                "Etapes" : [
+                  {
+                    "uid": "e1c0a307-890b-4150-b324-9ac195f817b5",
+                    "name": "ECG",
+                    "type": "EtapeType",
+                    "duree" : 15,
+                    "Competence" : [
+                      "idCompétence2"
+                    ],
+                    "Lieu" : [
+                      "idLieu4"
+                    ],
+                    "Materiel" : [
+                      "Materiel_non_defini"
+                    ],
+                    "a_jeun" :"False"
+                  },
+                  {
+                      "uid": "a5e0f033-0c0c-4752-ba37-5889c0c70b5d",
+                      "name": "BilanBiologique",
+                      "type": "EtapeType",
+                      "duree" : 15,
+                      "Competence" : [
+                        "idCompétence2"
+                      ],
+                      "Lieu" : [
+                        "idLieu4"
+                      ],
+                      "Materiel" : [
+                        "Materiel_non_defini"
+                      ],
+                      "a_jeun" :"True"
+                  },
+                  {
+                      "uid": "917f58f4-71a3-4cca-9a94-dace5dbd5b65",
+                      "name": "EchoHépathique",
+                      "type": "EtapeType",
+                      "duree" : 15,
+                      "Competence" : [
+                        "idCompétence2"
+                      ],
+                      "Lieu" : [
+                        "idLieu4"
+                      ],
+                      "Materiel" : [
+                        "Materiel_non_defini"
+                      ],
+                      "a_jeun" :"False"
+                  },
+                  {
+                      "uid": "19cbb371-7cbc-4323-b82e-c2c8aa909da0",
+                      "name": "Calorimétrie",
+                      "type": "EtapeType",
+                      "duree" : 30,
+                      "Competence" : [
+                        "idCompétence2"
+                      ],
+                      "Lieu" : [
+                        "idLieu4"
+                      ],
+                      "Materiel" : [
+                        "Materiel_non_defini"
+                      ],
+                      "a_jeun" :"True"
+                  }
+                ]
+            },
+            {
+              "uid": "61e149b5-43b2-417c-9f13-9338dd6fb624",
+              "name": "Groupe2",
+              "type": "GroupeEtapeType",
+              "Etapes" : [
+                {
+                  "uid": "8c093712-7c6d-4038-9fd1-a3c3cb1ebe0f",
+                  "name": "EntretienPsy",
+                  "type": "EtapeType",
+                  "duree" : 40,
+                  "Competence" : [
+                    "idCompétence2"
+                  ],
+                  "Lieu" : [
+                    "idLieu4"
+                  ],
+                  "Materiel" : [
+                    "Materiel_non_defini"
+                  ],
+                  "a_jeun" :"False"
+              },
+              {
+                  "uid": "e5362e1e-78b6-4bf7-bc34-73e9fd6dd388",
+                  "name": "EntretienInfirmier",
+                  "type": "EtapeType",
+                  "duree" : 30,
+                  "Competence" : [
+                    "idCompétence2"
+                  ],
+                  "Lieu" : [
+                    "idLieu4"
+                  ],
+                  "Materiel" : [
+                    "Materiel_non_defini"
+                  ],
+                  "a_jeun" :"False"
+              },
+              {
+                  "uid": "945aa73a-0fd1-4108-81a7-7e6790928c2e",
+                  "name": "EntretienDiet",
+                  "type": "EtapeType",
+                  "duree" : 60,
+                  "Competence" : [
+                    "idCompétence2"
+                  ],
+                  "Lieu" : [
+                    "idLieu4"
+                  ],
+                  "Materiel" : [
+                    "Materiel_non_defini"
+                  ],
+                  "a_jeun" :"False"
+              }
+              ]
+            }
+      ],
+      "precedences": [
+          {
+              "uid": "94bceb94-3911-4c34-b40e-73e8be4049de",
+              "name": "prec1",
+              "antecedent": "742f730e-9d94-47a4-9285-ba8e497de11c",
+              "successeur":  "9e92a8e9-ffb0-47a2-bbe4-3b96aebb2f21" ,
+              "type": "Precedence"
+          },
+          {
+              "uid": "a4df5a32-9f09-4922-b165-4ff877cab6ee",
+              "name": "prec2",
+              "antecedent": "9e92a8e9-ffb0-47a2-bbe4-3b96aebb2f21",
+              "successeur": "ac939c4b-b0d4-4ebc-a79e-22696b0747c1",
+              "type": "Precedence"
+          },
+          {
+              "uid": "7570513e-9329-4a49-bf87-3f8c3485d547",
+              "name": "prec3",
+              "antecedent": "ac939c4b-b0d4-4ebc-a79e-22696b0747c1",
+              "successeur": "61e149b5-43b2-417c-9f13-9338dd6fb624",
+              "type": "Precedence"
+          },
+          {
+              "uid": "abdea9bd-f538-4393-9510-e16407ccb0a3",
+              "name": "prec4",
+              "antecedent": "61e149b5-43b2-417c-9f13-9338dd6fb624",
+              "successeur": "9584a566-cacb-4a77-8d51-7f841231ab93",
+              "type": "Precedence"
+          }
+        
       ]
-    ],
-    "precedences": [
-      {
-        "uid": "94bceb94-3911-4c34-b40e-73e8be4049de",
-        "name": "prec1",
-        "antecedent": {
-          "uid": "742f730e-9d94-47a4-9285-ba8e497de11c"
-        },
-        "successeur": {
-          "uid": "9e92a8e9-ffb0-47a2-bbe4-3b96aebb2f21"
-        },
-        "type": "Precedence"
-      },
-      {
-        "uid": "a4df5a32-9f09-4922-b165-4ff877cab6ee",
-        "name": "prec2",
-        "antecedent": {
-          "uid": "9e92a8e9-ffb0-47a2-bbe4-3b96aebb2f21"
-        },
-        "successeur": {
-          "uid": "ac939c4b-b0d4-4ebc-a79e-22696b0747c1"
-        },
-        "type": "Precedence"
-      },
-      {
-        "uid": "7570513e-9329-4a49-bf87-3f8c3485d547",
-        "name": "prec3",
-        "antecedent": {
-          "uid": "ac939c4b-b0d4-4ebc-a79e-22696b0747c1"
-        },
-        "successeur": {
-          "uid": "61e149b5-43b2-417c-9f13-9338dd6fb624"
-        },
-        "type": "Precedence"
-      },
-      {
-        "uid": "abdea9bd-f538-4393-9510-e16407ccb0a3",
-        "name": "prec4",
-        "antecedent": {
-          "uid": "61e149b5-43b2-417c-9f13-9338dd6fb624"
-        },
-        "successeur": {
-          "uid": "9584a566-cacb-4a77-8d51-7f841231ab93"
-        },
-        "type": "Precedence"
-      }
     ]
   },
   {

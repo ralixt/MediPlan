@@ -11,7 +11,11 @@ export function GroupeEtapeType(GroupeEtapeType:sequencable){
     if(GroupeEtapeType.type != "GroupeEtapeType")
         return <p>error</p>
     return (
-        <p>Groupe Etape Type: {GroupeEtapeType.name}</p>
+        <div>
+            <p>Groupe Etape Type: {GroupeEtapeType.name} :</p>
+            {GroupeEtapeType.Etapes?.map((etape:sequencable) => <p>{etape.name}</p>)}
+            <p>fin Groupe Etape</p>
+        </div> 
     )
 }
 

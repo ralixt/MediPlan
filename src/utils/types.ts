@@ -1,14 +1,23 @@
-type sequencable = {
+type sequencable = EtapeType | GroupeEtapeType
+
+type EtapeType = {
     uid: string,
     name: string,
-    type: "EtapeType" | "GroupeEtapeType",
-    duree?: number,
-    competences?: competence[],
-    lieux? : ressource[],
-    materiels?: ressource[],
-    aJeun?:boolean
-    Etapes?:sequencable[]
+    type: "EtapeType",
+    duree: number,
+    competences: competence[],
+    lieux : ressource[],
+    materiels: ressource[],
+    aJeun:boolean
 }
+
+type GroupeEtapeType = {
+    uid: string,
+    name: string,
+    type: "GroupeEtapeType",
+    Etapes:sequencable[]
+}
+
 type precedence = {
     uid: string,
     name: string,

@@ -15,7 +15,7 @@ const ressourceSchema = new Schema<IResource>({
     type: {
         type: String,
         required: true,
-        enum:['lieu', 'materiel' , 'personel']
+        enum:['lieu', 'materiel' , 'personnel']
     },
 });
 

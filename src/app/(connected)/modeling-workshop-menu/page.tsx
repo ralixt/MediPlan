@@ -5,9 +5,11 @@ import {OneIconButton, WorkshopButton} from "@/components/buttons";
 import {MagnifyingGlass, Plus} from "@phosphor-icons/react";
 import {cache} from 'react'
 
-// let cachedParcours = null; // Variable pour stocker les données mises en cache
-
-let cachedParcours = cache.get('cachedParcours') || null;
+const getParcours = cache(async () => {
+    const response = await fetch('/temporary/BDD.json');
+    const data = await response.json();
+    return data;
+});
 
 
 export default function ModelingWorkshop() {
@@ -16,30 +18,12 @@ export default function ModelingWorkshop() {
     useEffect(() => {
         const fetchParcours = async () => {
             try {
-                let data = null;
-
-                // Vérifier si les données sont déjà en cache
-                console.log("cached Parcours")
-                // const cachedParcours = localStorage.getItem('cachedParcours');
-                console.log(cachedParcours)
-                if (cachedParcours) {
-                    data = cachedParcours;
-                    // data = JSON.parse(cachedParcours);
-                } else {
-                    const response = await fetch('/temporary/BDD.json');
-                    data = await response.json();
-                    cachedParcours = data; // Mettre les données en cache
-                    cache.set('cachedParcours', data);
-                    // localStorage.setItem('cachedParcours', JSON.stringify(data));
-
-                    console.log("cached Parcours messss")
-                    console.log(cachedParcours)
-                }
-
+                const data = await getParcours();
+                console.log("cache : " ,data)
                 setParcours(data);
+
             } catch (error) {
                 console.error("Erreur lors de la récupération des données des parcours:", error);
-                // Gérer l'erreur ici
             }
         };
 
@@ -48,10 +32,6 @@ export default function ModelingWorkshop() {
 
 
 
-
-    console.log("jkjkjdsksdjd")
-    console.log(parcours)
-    console.log("okkkkk")
 
     return (
         <div className="w-full">
@@ -133,7 +113,7 @@ export default function ModelingWorkshop() {
 
                 {parcours.map((parcour, index) =>
                     (
-                        <WorkshopButton index={index} text={parcour.name} href="/modele-a" />
+                        <WorkshopButton index={index} text={parcour.name} href="modele-a" />
                     )
 
                 )}

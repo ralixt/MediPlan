@@ -1,7 +1,7 @@
 import ModelingGenerator from "@/components/modelingGenerator";
 import { cache } from "react";
 import fs from 'fs/promises';
-import { precedence } from "@/components/modelingComponents";
+import { EtapeType, GroupeEtapeType, Precedence } from "@/components/modelingComponents";
 
 type props = {
     uid : string
@@ -27,55 +27,55 @@ const getParcours = cache(async () => {
 })
 
 const generate = ((parcours : parcours) => {
-    let etapesTypes :EtapeType[] = parcours.sequencables.filter((sequencable): sequencable is EtapeType => sequencable.type == "EtapeType")
-    let groupesEtapesType :GroupeEtapeType[] = parcours.sequencables.filter((sequencable): sequencable is GroupeEtapeType => sequencable.type == "GroupeEtapeType")
-    
-    for(let groupeEtapeType of groupesEtapesType){
-        const groupEtapeTypeIds = groupeEtapeType.Etapes.map((etape) => etape.uid);
-        etapesTypes = etapesTypes.filter((etapeType) => !groupEtapeTypeIds.includes(etapeType.uid))
-    }
-    let sequencables : sequencable[] = etapesTypes
-    sequencables.concat(groupesEtapesType)
-
-    let precedences: precedence[] = parcours.precedences
-    
-    let element: (sequencable | precedence)[] = []
+    const precedences : precedence[]= parcours.precedences
+    const sequencables : (GroupeEtapeType|EtapeType)[] = parcours.sequencables
+    const elements : (GroupeEtapeType| EtapeType | precedence)[] = []
     for(let precedence of precedences){
-        const antecedant = sequencables.find((sequencable) => precedence.antecedent === sequencable.uid)
-        const successeur = sequencables.find((sequencable) => precedence.successeur === sequencable.uid)
-        if (antecedant !== undefined && successeur !== undefined){
-            if(element.indexOf(antecedant) > -1){
-                if(element.indexOf(successeur) > -1){
-                    element.push(antecedant,precedence,successeur)
-                }
-                else{
-                    const index = element.indexOf(successeur)
-                    element.splice(index,0,antecedant,precedence)
-                }
-            }
-            else{
-                if(element.indexOf(successeur) > -1){
-                    const index = element.indexOf(antecedant)
-                    element.splice(index+1,0,precedence,successeur)
-                }
-                else{
-                    const indexA = element.indexOf(antecedant)
-                    const indexS = element.indexOf(successeur)
-                    
-                }
+        const indexS = elements.findIndex(x => x.uid === precedence.successeur);
+        const indexA = elements.findIndex(x => x.uid === precedence.antecedent);
+        if(indexS == -1 && indexA == -1){
+            const antecedant  = sequencables.find((sequencable) => sequencable.uid == precedence.antecedent)
+            const successeur = sequencables.find((sequencable) => sequencable.uid == precedence.successeur)
+            if (antecedant !== undefined && successeur !== undefined) {
+                elements.push(antecedant, precedence, successeur);
             }
         }
-        
+        else if (indexS == -1 && indexA > -1){
+            const successeur = sequencables.find((sequencable) => sequencable.uid == precedence.successeur)
+            if(successeur !== undefined){
+                elements.splice(indexA+1,0, precedence, successeur)
+            }
+        }
+        else if (indexS > -1 && indexA == -1){
+            const antecedant = sequencables.find((sequencable) => sequencable.uid == precedence.antecedent)
+            if(antecedant !== undefined){
+                elements.splice(indexS,0, antecedant,precedence)
+            }
+        }
     }
-    console.log(etapesTypes)
-    console.log(groupesEtapesType) 
+    const elementNode: React.ReactNode[] = []
+    for(const element of elements){
+        if(element.type === "EtapeType"){
+            const newElement : EtapeType = element
+            elementNode.push(<EtapeType etapeType={newElement}/>)
+        }
+        else if (element.type == "GroupeEtapeType"){
+            const newElement : GroupeEtapeType = element
+            elementNode.push(<GroupeEtapeType groupeEtapeType={newElement} />)
+        }
+        else{
+            const newElement : precedence = element
+            elementNode.push(<Precedence precedence={newElement} />)
+        }
+    }
+    return elementNode
 })
 
 export default async function ModelingWorkshop({params}: NextPageProps<props>){
     const parcours = await getParcours()
-    generate(parcours)
+    const elements = generate(parcours)
     return (
-        <ModelingGenerator element={[]} parcour={parcours}/>
+        <ModelingGenerator element={elements} parcour={parcours}/>
     )
 }
 

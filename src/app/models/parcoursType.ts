@@ -23,6 +23,6 @@ const parcoursTypeSchema = new Schema<IParcoursType>({
     }],
 });
 
-const ParcoursType = mongoose.model<IParcoursType>('ParcoursType', parcoursTypeSchema);
+const ParcoursType = mongoose.models.ParcoursType||mongoose.model<IParcoursType>('ParcoursType', parcoursTypeSchema);
 
 export default ParcoursType;

@@ -7,16 +7,26 @@ import {connectMongodb} from "@/lib/mongoConnect";
 export default  function test() {
     const [name,setName]=useState("")
 
-    const handleCreateOrder = useCallback(async () => {
-        await connectMongodb();
-        await createComp("bla");
 
-    }, []);
+
+    const handleCreateOrder=async ()=>{
+
+
+
+        await createComp(name);
+    }
+
+    const handleNameChange = (event) => {
+        setName(event.target.value);
+    };
     return(<>
 
 
+        <form action={handleCreateOrder} >
+            <input type="text" value={name} onChange={handleNameChange}    />
+            <button  type={"submit"}>Envoyer</button>
+        </form>
 
-            <button onClick={handleCreateOrder} type={"submit"}>Envoyer</button>
 
 
 

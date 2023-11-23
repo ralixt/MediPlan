@@ -20,7 +20,7 @@ const ressourceSchema = new Schema<IResource>({
 });
 
 
-const Ressource = mongoose.model<IResource>('Ressource', ressourceSchema);
+const Ressource = mongoose.models.Ressource||mongoose.model<IResource>('Ressource', ressourceSchema);
 
 
 export default Ressource;

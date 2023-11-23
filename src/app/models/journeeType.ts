@@ -42,6 +42,6 @@ const journeeTypeSchema = new Schema<IJourneeType>({
     liste_Comp: { type: [itemSchema], required: true },
 });
 
-const JourneeType = mongoose.model<IJourneeType>('JourneeType', journeeTypeSchema);
+const JourneeType = mongoose.models.JourneeType||mongoose.model<IJourneeType>('JourneeType', journeeTypeSchema);
 
 export default JourneeType;

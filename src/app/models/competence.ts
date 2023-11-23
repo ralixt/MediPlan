@@ -8,6 +8,6 @@ const competenceSchema = new Schema<ICompetence>({
     nom: { type: String, required: true },
 });
 
-const Competence = mongoose.model<ICompetence>('competences', competenceSchema);
+const Competence =mongoose.models.Competence|| mongoose.model<ICompetence>('Competence', competenceSchema);
 
 export default Competence;

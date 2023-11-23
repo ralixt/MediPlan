@@ -26,6 +26,6 @@ const etapeTypeSchema = new Schema<IEtapeType>({
   Etapes : [ {type: Schema.Types.ObjectId, ref: 'EtapeType'}]
 });
 
-const EtapeType = mongoose.model<IEtapeType>('EtapeType', etapeTypeSchema);
+const EtapeType = mongoose.models.EtapeType||mongoose.model<IEtapeType>('EtapeType', etapeTypeSchema);
 
 export default EtapeType;

@@ -3,8 +3,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import {OneIconButton, WorkshopButton} from "@/components/buttons";
 import {MagnifyingGlass, Plus} from "@phosphor-icons/react";
+import {cache} from 'react'
 
-let cachedParcours = null; // Variable pour stocker les données mises en cache
+// let cachedParcours = null; // Variable pour stocker les données mises en cache
+
+let cachedParcours = cache.get('cachedParcours') || null;
+
 
 export default function ModelingWorkshop() {
     const [parcours, setParcours] = useState([]); // État pour stocker les données des parcours
@@ -15,12 +19,21 @@ export default function ModelingWorkshop() {
                 let data = null;
 
                 // Vérifier si les données sont déjà en cache
+                console.log("cached Parcours")
+                // const cachedParcours = localStorage.getItem('cachedParcours');
+                console.log(cachedParcours)
                 if (cachedParcours) {
                     data = cachedParcours;
+                    // data = JSON.parse(cachedParcours);
                 } else {
                     const response = await fetch('/temporary/BDD.json');
                     data = await response.json();
                     cachedParcours = data; // Mettre les données en cache
+                    cache.set('cachedParcours', data);
+                    // localStorage.setItem('cachedParcours', JSON.stringify(data));
+
+                    console.log("cached Parcours messss")
+                    console.log(cachedParcours)
                 }
 
                 setParcours(data);
@@ -32,6 +45,9 @@ export default function ModelingWorkshop() {
 
         fetchParcours();
     }, []);
+
+
+
 
     console.log("jkjkjdsksdjd")
     console.log(parcours)

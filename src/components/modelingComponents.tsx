@@ -1,25 +1,31 @@
 
-export function EtapeType(etapeType:sequencable){
-    if(etapeType.type != "EtapeType")
-        return <p>error</p>
+type propsET = {
+    etapeType : EtapeType
+}
+export function EtapeType({etapeType}: propsET){
     return(
         <p>Etape type: {etapeType.name}</p>
     )
 }
 
-export function GroupeEtapeType(GroupeEtapeType:sequencable){
-    if(GroupeEtapeType.type != "GroupeEtapeType")
-        return <p>error</p>
+type propsGET = {
+    groupeEtapeType:GroupeEtapeType
+}
+export function GroupeEtapeType({groupeEtapeType}:propsGET){
     return (
         <div>
-            <p>Groupe Etape Type: {GroupeEtapeType.name} :</p>
-            {GroupeEtapeType.Etapes?.map((etape:sequencable) => <p>{etape.name}</p>)}
+            <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
+            {groupeEtapeType.Etapes.map((etape:sequencable) => <p>{etape.name}</p>)}
             <p>fin Groupe Etape</p>
         </div> 
     )
 }
 
-export function precedence(precedence : precedence){
+type propsP = {
+    precedence : precedence
+}
+
+export function Precedence({precedence} : propsP){
     return(
         <p>precedence: {precedence.name}</p>
     )

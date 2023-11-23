@@ -11,7 +11,10 @@ type props = {
 
 export default function ModelingGenerator({element, parcour}: props){
     const [elements, setElement] = useState(element)
-    let parcours = parcour
-    return(<p>bonjour</p>)
+    return(
+        <div className="flex flex-col gap-3 m-10">
+            {elements.map((element)=> element)}
+        </div>
+    )
 
 }

@@ -37,9 +37,10 @@ export default  function test() {
 
     const handleCreateOrderComp=async ()=>{
 
+            const formData=new FormData();
+            formData.append('nom',nameComp)
 
-
-        await createComp(nameComp);
+        await createComp(formData);
 
 
 

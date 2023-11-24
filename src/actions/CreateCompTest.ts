@@ -11,10 +11,10 @@ export async function createRessou(name:String,type:String) {
    }))
 }
 
-export async function createComp(name:String) {
+export async function createComp(formData:FormData) {
     await connectMongodb()
     console.log(await Competence.create({
-        nom:name,
+        nom:formData.get('nom'),
 
     }))
 }
@@ -23,3 +23,4 @@ export async function getComp(){
     await connectMongodb()
     return await Ressource.find();
 }
+

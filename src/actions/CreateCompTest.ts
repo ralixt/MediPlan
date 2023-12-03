@@ -21,6 +21,16 @@ export async function createComp(formData:FormData) {
 
 export async function getComp(){
     await connectMongodb()
-    return await Ressource.find();
+    return await Competence.find();
+}
+
+export async function getLieu(){
+    await connectMongodb()
+    return await Ressource.find({type:"lieu"});
+}
+
+export async function getMateriel(){
+    await connectMongodb()
+    return await Ressource.find({type:"materiel"});
 }
 

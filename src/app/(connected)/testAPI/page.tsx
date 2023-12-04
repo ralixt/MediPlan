@@ -3,7 +3,13 @@ import {useCallback, useEffect, useState} from "react";
 import {createComp, createRessou, getComp, getLieu, getMateriel} from "@/actions/CreateCompTest";
 import {Ressource} from "@/app/models/ressource"
 import {connectMongodb} from "@/lib/mongoConnect";
-import {createEtapeType, getCompetenceByName, getRessourceByName} from "@/actions/EtapeType";
+import {
+    createEtapeType,
+    deleteEtapeType,
+    getAllEtapeType,
+    getCompetenceByName,
+    getRessourceByName
+} from "@/actions/EtapeType";
 
 
 export default  function test() {
@@ -18,6 +24,7 @@ export default  function test() {
     const [competenceId, setCompetenceId] = useState('');
     const [lieuId, setLieuId] = useState('');
     const [materielId, setMaterielId] = useState('');
+    const [etapeType,setEtapeType]=useState([]);
 
 
 
@@ -50,9 +57,20 @@ export default  function test() {
             }
         };
 
+        const fetchDataEtapeType = async () => {
+            try {
+                const fetchedEtapeType = await getAllEtapeType();
+                setEtapeType(fetchedEtapeType);
+            } catch (error) {
+                console.error("Erreur de fetch Etape type :", error);
+            }
+        };
+
+
         fetchDataComp();
         fetchDataLieu();
-        fetchDataMateriel()
+        fetchDataMateriel();
+        fetchDataEtapeType();
     }, []);
 
     const handleCreateOrder=async ()=>{
@@ -195,9 +213,20 @@ export default  function test() {
                 <button type={"submit"}>Envoyer</button>
 
             </form>
+            <div>
+                <h2>Etape Type</h2>
+                {etapeType.map((c) => (
+                    <div key={c._id}>
+                        <p>{c.name}</p>
+
+                        <button onClick={() => deleteEtapeType(c._id)}>supprimer</button>
+                    </div>
+                ))}
+            </div>
 
 
-        {console.log(materiel.map((c) => c))};
+
+            {console.log(materiel.map((c) => c))};
 
 
 

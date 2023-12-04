@@ -1,8 +1,9 @@
 "use server";
-import EtapeType from "@/app/models/etapeType"; // Assurez-vous d'ajuster le chemin d'importation selon votre structure de projet
+import EtapeType from "@/app/models/etapeType";
 import { connectMongodb } from "@/lib/mongoConnect";
 import Competence from "@/app/models/competence";
 import Ressource from "@/app/models/ressource";
+import exp from "constants";
 
 export async function getCompetenceByName(name:string) {
     await connectMongodb();
@@ -12,6 +13,11 @@ export async function getCompetenceByName(name:string) {
 export async function getRessourceByName(name:string) {
     await connectMongodb();
     return await Ressource.findOne({ nom: name });
+}
+
+export async function getAllEtapeType(){
+    await connectMongodb();
+    return await EtapeType.find();
 }
 export async function createEtapeType(formData: FormData) {
     await connectMongodb();
@@ -39,5 +45,36 @@ export async function createEtapeType(formData: FormData) {
         console.log("EtapeType créer:", newEtapeType);
     } catch (error) {
         console.error("Erreur de création  EtapeType:", error);
+    }
+}
+
+
+
+export async function deleteEtapeType(id:string) {
+    await connectMongodb()
+
+    try {
+      const etapeType = await EtapeType.findByIdAndDelete(id,);
+      console.log("EtapeType supprimé", etapeType)
+    } catch (error) {
+        console.log("Erreur de suppression EtapeType")
+    }
+
+}
+
+export async function updateEtapeType(id:string, formData:FormData){
+    await connectMongodb()
+    try {
+        const etapeTypeUpdated = await EtapeType.findByIdAndUpdate(id,formData)
+        if(etapeTypeUpdated){
+            console.log("EtapeType mis à jour", etapeTypeUpdated)
+            return etapeTypeUpdated
+        }
+        else {
+            console.log("Aucune etape type trouvé")
+        }
+
+    } catch (error){
+    console.log("Erreur de mise à jour")
     }
 }

@@ -28,7 +28,7 @@ export default function NavBar(){
                     <Link href='/home'>
                         <Image 
                             src="/MediplanText.svg" 
-                            alt="Mepliplan Text" 
+                            alt="Mediplan Text" 
                             width={100} 
                             height={30}
                             className={`transition-[display] duration-300 ease-in-out ${isHovered ? "block" : "hidden"}`}

@@ -10,6 +10,8 @@ import {
     getCompetenceByName,
     getRessourceByName
 } from "@/actions/EtapeType";
+import {createParcoursType} from "@/actions/ParcoursType";
+import "./test.css"
 
 
 export default  function test() {
@@ -25,6 +27,33 @@ export default  function test() {
     const [lieuId, setLieuId] = useState('');
     const [materielId, setMaterielId] = useState('');
     const [etapeType,setEtapeType]=useState([]);
+    const [selectedEtapes, setSelectedEtapes] = useState([]);
+    const [precedences, setPrecedences] = useState([]);
+    const [parcoursName, setParcoursName] = useState('');
+
+    const handleAddEtapeToParcours = (etapeId) => {
+        console.log('Ajout etape to parcours:', etapeId);
+        setSelectedEtapes([...selectedEtapes, etapeId]);
+    };
+
+    const handleAddPrecedence = () => {
+        if (selectedEtapes.length === 2) {
+            const [antecedent, successeur] = selectedEtapes;
+            setPrecedences([...precedences, { antecedent, successeur }]);
+            setSelectedEtapes([]);
+        }
+    };
+
+    const handleCreateParcoursType = async () => {
+        // Crée le parcours type avec les étapes et les précédences
+        const formData = new FormData();
+        formData.append('name', parcoursName);
+        formData.append('type', 'ParcoursType');
+        formData.append('sequencables', JSON.stringify(selectedEtapes));
+        formData.append('precedences', JSON.stringify(precedences));
+
+        await createParcoursType(formData);
+    };
 
 
 
@@ -229,7 +258,49 @@ export default  function test() {
             {console.log(materiel.map((c) => c))};
 
 
+            <div className="container">
 
+                <form className="form" action={handleCreateParcoursType}>
+
+
+                    <h2>Étapes Type</h2>
+                    <div className="etapes-list">
+                        {etapeType.map((c) => (
+                            <div key={c._id} className="etape-item">
+                                <p>{c.name}</p>
+                                <button type="button" onClick={() => handleAddEtapeToParcours(c._id)}>Ajouter à Parcours</button>
+                            </div>
+                        ))}
+                    </div>
+
+                    {selectedEtapes.length > 0 &&
+                        <div>
+                            <h3>Étapes Sélectionnées</h3>
+                            {selectedEtapes.map((etapeId) => (
+                                <p key={etapeId} className="selected-etape">{etapeId}</p>
+                            ))}
+                        </div>
+                    }
+
+                    {selectedEtapes.length === 2 &&
+                        <div>
+                            <button type="button" onClick={handleAddPrecedence} className="add-precedence-btn">Ajouter Précédence</button>
+                        </div>
+                    }
+
+                    {precedences.length > 0 &&
+                        <div>
+                            <h3>Précédences</h3>
+                            {precedences.map((precedence, index) => (
+                                <p key={index} className="precedence">{precedence.antecedent} précède {precedence.successeur}</p>
+                            ))}
+                        </div>
+                    }
+
+                    <button type="submit" className="submit-btn">Créer Parcours</button>
+                </form>
+
+            </div>
 
 
         </>

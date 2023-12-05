@@ -28,9 +28,11 @@ export async function createEtapeType(formData: FormData) {
         const competenceId = formData.get("competenceId");
         const lieuId = formData.get("lieuId");
         const materielId= formData.get("materielId")
+        const etapeId = formData.get("etapeId")
         const competence = await Competence.findById(competenceId);
         const lieu = await Ressource.findById(lieuId);
         const materiel = await Ressource.findById(materielId);
+        const groupeEtape =await EtapeType.findById(etapeId)
         const newEtapeType = await EtapeType.create({
             name,
             type,
@@ -39,7 +41,7 @@ export async function createEtapeType(formData: FormData) {
             Lieu: lieu ? [lieu._id] : [],
             Materiel: materiel ? [materiel._id] : [],
             a_jeun: false,
-            Etapes: [],
+            Etapes: groupeEtape?[groupeEtape._id]:[],
         });
 
         console.log("EtapeType créer:", newEtapeType);

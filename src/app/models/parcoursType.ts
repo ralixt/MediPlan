@@ -13,13 +13,13 @@ interface IParcoursType extends Document {
 }
 
 const parcoursTypeSchema = new Schema<IParcoursType>({
-    name: { type: String, required: true },
-    type: { type: String, required: true },
+    name: { type: String },
+    type: { type: String },
     sequencables: [{ type: Schema.Types.ObjectId, ref: 'EtapeType' }],
     precedences: [{
-        name: { type: String, required: true },
-        antecedent: { type: Schema.Types.ObjectId, ref: 'EtapeType', required: true },
-        successeur: { type: Schema.Types.ObjectId, ref: 'EtapeType', required: true },
+        name: { type: String },
+        antecedent: { type: Schema.Types.ObjectId, ref: 'EtapeType' },
+        successeur: { type: Schema.Types.ObjectId, ref: 'EtapeType' },
     }],
 });
 

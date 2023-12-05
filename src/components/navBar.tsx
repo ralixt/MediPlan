@@ -4,6 +4,7 @@ import { Bell, Calendar, ChartBar, CirclesThree, Gear, House, SignOut } from "@p
 import { LogOutButton, NavBarButton } from "./buttons";
 import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
 
 //Composant de la barre de navigation sur la gauche de l'écran
 export default function NavBar(){
@@ -15,20 +16,24 @@ export default function NavBar(){
     
             <div className="flex flex-col gap-11" >
                 <div className="flex flex-row gap-1 items-end">
-                    <Image
-                        src="/MediplanIcon.svg"
-                        alt="Mediplan Icon"
-                        width={20}
-                        height={110}
-                        className="rotate-[25deg]"
-                    />
-                    <Image 
-                        src="/MediplanText.svg" 
-                        alt="Mepliplan Text" 
-                        width={100} 
-                        height={30}
-                        className={`transition-[display] duration-300 ease-in-out ${isHovered ? "block" : "hidden"}`}
+                    <Link href='/home'>
+                        <Image
+                            src="/MediplanIcon.svg"
+                            alt="Mediplan Icon"
+                            width={20}
+                            height={110}
+                            className="rotate-[25deg]"
                         />
+                    </Link>
+                    <Link href='/home'>
+                        <Image 
+                            src="/MediplanText.svg" 
+                            alt="Mepliplan Text" 
+                            width={100} 
+                            height={30}
+                            className={`transition-[display] duration-300 ease-in-out ${isHovered ? "block" : "hidden"}`}
+                        />
+                    </Link>
                 </div>
                 
                 <div className="flex flex-col gap-10">

@@ -145,3 +145,17 @@ export function WorkshopButton ({index, text, href}: PropsWorkshopButton){
     )
 }
 
+type PropsWorkshopOneIconButton = {
+    icon: React.ReactNode
+    href: string;
+    classname?:string;
+
+};
+export function WorkshopButtonOneIcon ({icon, href, classname}: PropsWorkshopOneIconButton){
+    return (
+        <Link href={href} className={classname}>
+            {icon}
+        </Link>
+    )
+}
+

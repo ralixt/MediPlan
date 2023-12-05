@@ -21,6 +21,7 @@ const config: Config = {
                 'black' : '#061013',
                 'grey':'#7995A0',
                 'lightgrey':'#C4D0D4',
+                'lightlightgrey' : '#EAEEF0',
             },
             borderRadius: {
                 '1_25rem': '1.25rem',

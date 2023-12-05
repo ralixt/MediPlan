@@ -1,15 +1,16 @@
 "use client"
-import { cache, useEffect, useState } from "react";
-
-
+import {cache, useEffect, useState} from "react";
+import {usePathname} from "next/navigation";
+import Link from "next/link";
+import {Clock, Door, DotsThreeOutlineVertical, ForkKnife} from "@phosphor-icons/react";
 
 
 type props = {
-    element : React.ReactNode[],
-    parcour : parcours
+    element: React.ReactNode[],
+    parcour: parcours
 }
 
-export default function ModelingGenerator({element, parcour}: props){
+export default function ModelingGenerator({element, parcour}: props) {
     const [elements, setElement] = useState(element)
     return(
         <div 

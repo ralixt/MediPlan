@@ -1,4 +1,4 @@
-import { EtapeType, GroupeEtapeType, Precedence } from "../components/modelingComponents"
+import { EtapeType, GroupeEtapeType, Precedence } from "@/components/modelingComponents"
 
 const findIndex = ((tableaux : (Array<GroupeEtapeType | EtapeType | precedence>)[], uid : String) => {
     for(let indexG = 0; indexG< tableaux.length; indexG++){

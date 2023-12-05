@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import {OneIconButton, WorkshopButton} from "@/components/buttons";
 import {MagnifyingGlass, Plus} from "@phosphor-icons/react";
 import {cache} from 'react'
+import { usePathname } from 'next/navigation'
+
 
 const getParcours = cache(async () => {
     const response = await fetch('/temporary/BDD.json');
@@ -14,6 +16,7 @@ const getParcours = cache(async () => {
 
 export default function ModelingWorkshop() {
     const [parcours, setParcours] = useState([]); // État pour stocker les données des parcours
+    const pathname = usePathname()
 
     useEffect(() => {
         const fetchParcours = async () => {
@@ -113,7 +116,7 @@ export default function ModelingWorkshop() {
 
                 {parcours.map((parcour, index) =>
                     (
-                        <WorkshopButton index={index} text={parcour.name} href="modele-a" />
+                        <WorkshopButton index={index} text={parcour.name} href={pathname+"/"+parcour.name} />
                     )
 
                 )}

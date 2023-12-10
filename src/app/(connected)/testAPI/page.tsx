@@ -30,9 +30,17 @@ export default  function test() {
     const [selectedEtapes, setSelectedEtapes] = useState([]);
     const [precedences, setPrecedences] = useState([]);
     const [parcoursName, setParcoursName] = useState('');
+    const [etapesSelect,setEtapesSelect]=useState([])
 
     const handleAddEtapeToParcours = (etapeId) => {
         console.log('Ajout etape to parcours:', etapeId);
+        setSelectedEtapes([...selectedEtapes, etapeId]);
+       const d = selectedEtapes
+
+            setEtapesSelect([...etapesSelect, etapesSelect.includes(etapeId)? null:etapeId])
+
+    };
+    const handleAddSquencable = (etapeId) => {
         setSelectedEtapes([...selectedEtapes, etapeId]);
     };
 
@@ -40,20 +48,31 @@ export default  function test() {
         if (selectedEtapes.length === 2) {
             const [antecedent, successeur] = selectedEtapes;
             setPrecedences([...precedences, { antecedent, successeur }]);
-            setSelectedEtapes([]);
+            setSelectedEtapes([])
+
+
         }
+
+
     };
+
 
     const handleCreateParcoursType = async () => {
         // Crée le parcours type avec les étapes et les précédences
         const formData = new FormData();
         formData.append('name', parcoursName);
         formData.append('type', 'ParcoursType');
-        formData.append('sequencables', JSON.stringify(selectedEtapes));
+        formData.append('sequencables', JSON.stringify(etapesSelect));
         formData.append('precedences', JSON.stringify(precedences));
 
         await createParcoursType(formData);
+
+        // Après la création, réinitialisez les séquencables et les précédences sélectionnées
+        //setSelectedEtapes([]);
+        setEtapesSelect([])
+        setPrecedences([]);
     };
+
 
 
 
@@ -268,7 +287,10 @@ export default  function test() {
                         {etapeType.map((c) => (
                             <div key={c._id} className="etape-item">
                                 <p>{c.name}</p>
-                                <button type="button" onClick={() => handleAddEtapeToParcours(c._id)}>Ajouter à Parcours</button>
+                                <button type="button" onClick={() => handleAddEtapeToParcours(c._id)}>Ajouter à
+                                    Parcours
+                                </button><br/>
+
                             </div>
                         ))}
                     </div>
@@ -282,7 +304,7 @@ export default  function test() {
                         </div>
                     }
 
-                    {selectedEtapes.length === 2 &&
+                    {selectedEtapes.length == 2 &&
                         <div>
                             <button type="button" onClick={handleAddPrecedence} className="add-precedence-btn">Ajouter Précédence</button>
                         </div>

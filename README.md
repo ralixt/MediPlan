@@ -2,12 +2,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+Tout d'abord, il faut lancer le serveur local:
 
 ```bash
-npm i
+npm i #pour installer les dépendances
 
-then
+puis
 
 npm run dev
 # or
@@ -15,10 +15,10 @@ yarn dev
 # or
 pnpm dev
 # or
-bun dev
+bun dev #pour lancer le serveur
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrez le projet sur [http://localhost:3000](http://localhost:3000) avec votre navigateur.
 
 
 - une fois sur localhost vous devriez voir une page de connexion.

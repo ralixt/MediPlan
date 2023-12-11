@@ -26,4 +26,32 @@ export async function createParcoursType(formData: FormData) {
         console.error("Erreur de création ParcoursType :", error);
     }
 }
+export async function deleteParcoursType(id:string){
+    await connectMongodb()
+
+    try {
+        const parcoursType = await ParcoursType.findByIdAndDelete(id);
+        console.log("ParcoursType supprimé", parcoursType)
+    } catch (error) {
+        console.log("Erreur de suppression ParcoursType"+error)
+    }
+}
+
+export async function getParcoursType(id:string){
+    await connectMongodb()
+    try {
+        return await ParcoursType.findById(id);
+        console.log(" Obtention de Parcours réussi ")
+    }catch (error){
+        console.log("erreur d'obtention parcours type")
+    }
+}
+
+export async function getAllParcoursType(){
+    try {
+        return await ParcoursType.find()
+    }catch (error){
+        console.log("Erreur d'obtention des parcours ")
+    }
+}
 

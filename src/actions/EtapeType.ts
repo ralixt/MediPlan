@@ -19,6 +19,11 @@ export async function getAllEtapeType(){
     await connectMongodb();
     return await EtapeType.find();
 }
+
+export async function getEtapeType(id:string){
+    await connectMongodb();
+    return EtapeType.findById(id);
+}
 export async function createEtapeType(formData: FormData) {
     await connectMongodb();
 

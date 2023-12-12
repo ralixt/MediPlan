@@ -30,5 +30,3 @@ ouvrez le projet sur [localhost:3000](http://localhost:3000) avec votre navigate
     - rentrer les informations de connexion si vous en avez
     - ne rien rentrez et cliquer sur connexion.
 Cependant pour se connecter sans rien il est nécessaire d'avoir le fichier .env à la racine du projet.
-
-Si vous n'avez pas ce fichier merci de nous contacter pour l'obtenir.

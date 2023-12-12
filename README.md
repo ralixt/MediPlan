@@ -4,7 +4,7 @@ Tout d'abord, il faut lancer le serveur local:
 
 Pour cela vous allez avoir besoin d'avoir [Node JS](https://nodejs.org/en/download)
 
-Après l'installation de Node JS, ouvrez par la suite un terminal dans la racine (la racine correspond à l'intérieur du dossier MediPlan et utiliser les commandes
+Après l'installation de Node JS, ouvrez par la suite un terminal dans la racine (la racine correspond à l'intérieur du dossier MediPlan) et utiliser les commandes
 
 ```bash
 npm i #pour installer les dépendances

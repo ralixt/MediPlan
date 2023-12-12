@@ -5,6 +5,7 @@ import generate from "@/utils/generator";
 import { WorkshopButtonOneIcon } from "@/components/buttons";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import './scrollbar.css'
+import { deleteAllParcoursType, getAllParcoursType } from "@/actions/ParcoursType";
 
 type props = {
   uid: string;
@@ -24,10 +25,19 @@ export type NextPageProps<T = Record<string, string>> = {
 };
 
 const getParcours = cache(async () => {
+
+  const responseBDD = await getAllParcoursType()
+  // console.log(responseBDD)
   const response = await fs.readFile("./public/temporary/BDD.json", "utf-8");
+  console.log("response"+responseBDD)
   const data: parcoursList = JSON.parse(response);
+  // console.log(data)
   return data[0];
+ 
 });
+
+
+
 
 export default async function ModelingWorkshop({
   params,

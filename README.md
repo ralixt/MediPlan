@@ -13,7 +13,7 @@ puis
 
 npm run dev  #pour lancer le serveur
 ```
-Une fois les commandes effectuez, créer un fichier .env dans la racine du projet si ce n'est pas déjà fait.
+Une fois les commandes effectuées, créer un fichier .env dans la racine du projet si ce n'est pas déjà fait.
 
 Ce fichier contiendra les données suivantes : 
 ```

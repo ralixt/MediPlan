@@ -13,7 +13,15 @@ puis
 
 npm run dev  #pour lancer le serveur
 ```
-Une fois les commandes effectuez,
+Une fois les commandes effectuez, créer un fichier .env dans la racine du projet si ce n'est pas déjà fait.
+
+Ce fichier contiendra les données suivantes : 
+```
+NEXTAUTH_SECRET=my_ultra_secure_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
+MONGO_URI=mongodb+srv://letscodebutinfo:6tRWAVN7DoVwtGKk@cluster0.vihedg3.mongodb.net/
+```
+
 ouvrez le projet sur [localhost:3000](http://localhost:3000) avec votre navigateur.
 
 

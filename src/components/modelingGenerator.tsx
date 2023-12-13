@@ -3,6 +3,7 @@ import {cache, useEffect, useState} from "react";
 import {usePathname} from "next/navigation";
 import Link from "next/link";
 import {Clock, Door, DotsThreeOutlineVertical, ForkKnife} from "@phosphor-icons/react";
+import {DndContext} from "@dnd-kit/core"
 
 
 type props = {
@@ -13,7 +14,7 @@ type props = {
 export default function ModelingGenerator({element, parcour}: props) {
     const [elements, setElement] = useState(element)
     return(
-        <div 
+        <div
             className="flex flex-row gap-56 w-full overflow-x-scroll px-48 h-full items-center"
             onWheel={(e) => {
                 e.preventDefault();
@@ -22,8 +23,12 @@ export default function ModelingGenerator({element, parcour}: props) {
                 container.scrollLeft += delta * 100; // Ajustez la valeur pour contrôler la vitesse du défilement horizontal
               }}
         >
-            {elements.map((element)=> element)}
+            <DndContext>
+                {elements.map((element)=> element)}
+            </DndContext>
         </div>
+
+
     )
 
 }

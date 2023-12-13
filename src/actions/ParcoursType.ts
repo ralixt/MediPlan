@@ -2,6 +2,7 @@
 
 import {connectMongodb, disconnectMongodb} from "@/lib/mongoConnect";
 import ParcoursType from "@/app/models/parcoursType";
+import "@/app/models/etapeType"
 import EtapeType from "@/app/models/etapeType";
 import mongoose from "mongoose";
 import { disconnect } from "process";
@@ -26,15 +27,15 @@ export async function createParcoursType(formData: FormData) {
         //     })
         // );
 
-        const sequencables = await Promise.all(
-            sequencablesIds.map(async (id:string) => {
-                const etapeType = await EtapeType.findById(id);
-                if (!etapeType) {
-                    throw new Error(`Étape type avec l'ID ${id} introuvable`);
-                }
-                return etapeType;
-            })
-        );
+        // const sequencables = await Promise.all(
+        //     sequencablesIds.map(async (id:string) => {
+        //         const etapeType = await EtapeType.findById(id);
+        //         if (!etapeType) {
+        //             throw new Error(`Étape type avec l'ID ${id} introuvable`);
+        //         }
+        //         return etapeType;
+        //     })
+        // );
 
         
 
@@ -44,7 +45,7 @@ export async function createParcoursType(formData: FormData) {
         const newParcoursType = await ParcoursType.create({
             name,
             type,
-            sequencables: sequencables,
+            sequencables: sequencablesIds,
             precedences:precedencesIds,
         });
 
@@ -74,17 +75,23 @@ export async function getParcoursType(id:string){
     }
 }
 
-export async function getAllParcoursType(){
-    await connectMongodb()
+export async function getAllParcoursType() {
+    await connectMongodb();
     try {
-        return await ParcoursType.find().populate("sequencables");
-        
-      
-        
-    }catch (error){
-        console.log("Erreur d'obtention des parcours ")
+        const parcoursType = await ParcoursType.find()
+            .populate('sequencables' )
+            .populate('precedences.antecedent')
+            .populate('precedences.successeur');
+
+        return parcoursType
+
+
+
+    } catch (error) {
+        console.error("Erreur d'obtention des parcours :", error);
+    } finally {
+        await disconnectMongodb();
     }
-    await disconnectMongodb()
 }
 export async function updateParcoursType(id:string, formData:FormData){
     await connectMongodb()

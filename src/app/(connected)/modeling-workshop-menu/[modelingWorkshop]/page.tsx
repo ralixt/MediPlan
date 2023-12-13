@@ -29,9 +29,8 @@ const getParcours = cache(async () => {
   const responseBDD = await getAllParcoursType()
   // console.log(responseBDD)
   const response = await fs.readFile("./public/temporary/BDD.json", "utf-8");
-  console.log("response"+responseBDD)
   const data: parcoursList = JSON.parse(response);
-  // console.log(data)
+  console.log(responseBDD)
   return data[0];
  
 });

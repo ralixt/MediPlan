@@ -6,7 +6,6 @@ interface IParcoursType extends Document {
     type: string;
     sequencables: Types.ObjectId[];
     precedences: {
-        name: string;
         antecedent: Types.ObjectId;
         successeur: Types.ObjectId;
     }[];
@@ -17,7 +16,6 @@ const parcoursTypeSchema = new Schema<IParcoursType>({
     type: { type: String },
     sequencables: [{ type: Schema.Types.ObjectId, ref: 'EtapeType' }],
     precedences: [{
-        name: { type: String },
         antecedent: { type: Schema.Types.ObjectId, ref: 'EtapeType' },
         successeur: { type: Schema.Types.ObjectId, ref: 'EtapeType' },
     }],

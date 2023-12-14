@@ -10,7 +10,7 @@ import {
     getCompetenceByName,
     getRessourceByName
 } from "@/actions/EtapeType";
-import {createParcoursType} from "@/actions/ParcoursType";
+import {createParcoursType, getAllParcoursType} from "@/actions/ParcoursType";
 import "./test.css"
 
 
@@ -27,6 +27,7 @@ export default  function test() {
     const [lieuId, setLieuId] = useState('');
     const [materielId, setMaterielId] = useState('');
     const [etapeType,setEtapeType]=useState([]);
+    const [parcoursType,setParcoursType]=useState([]);
     const [selectedEtapes, setSelectedEtapes] = useState([]);
     const [precedences, setPrecedences] = useState([]);
     const [parcoursName, setParcoursName] = useState('');
@@ -57,19 +58,42 @@ export default  function test() {
     };
 
 
+    // const handleCreateParcoursType = async () => {
+    //     // Crée le parcours type avec les étapes et les précédences
+    //     const formData = new FormData();
+    //     formData.append('name', parcoursName);
+    //     formData.append('type', 'ParcoursType');
+    //     formData.append('sequencables', JSON.stringify(etapesSelect)) ;
+    //     formData.append('precedences', JSON.stringify(precedences) );
+    //
+    //     await createParcoursType(formData);
+    //
+    //     // Après la création, réinitialisez les séquencables et les précédences sélectionnées
+    //     setSelectedEtapes([]);
+    //     setEtapesSelect([])
+    //     setPrecedences([]);
+    // };
+
     const handleCreateParcoursType = async () => {
         // Crée le parcours type avec les étapes et les précédences
         const formData = new FormData();
         formData.append('name', parcoursName);
         formData.append('type', 'ParcoursType');
-        formData.append('sequencables', JSON.stringify(etapesSelect));
-        formData.append('precedences', JSON.stringify(precedences));
+
+        // Ajoutez les étapes et les précédences directement, sans JSON.stringify
+        etapesSelect.forEach((etapeId) => {
+            formData.append('sequencables', etapeId);
+        });
+
+        precedences.forEach((precedenceId) => {
+            formData.append('precedences', precedenceId);
+        });
 
         await createParcoursType(formData);
 
         // Après la création, réinitialisez les séquencables et les précédences sélectionnées
-        //setSelectedEtapes([]);
-        setEtapesSelect([])
+        setSelectedEtapes([]);
+        setEtapesSelect([]);
         setPrecedences([]);
     };
 
@@ -113,12 +137,23 @@ export default  function test() {
                 console.error("Erreur de fetch Etape type :", error);
             }
         };
+        const fetchDataParcoursType = async () => {
+            try {
+                const fetchedParcoursType = await getAllParcoursType();
+                setParcoursType(fetchedParcoursType);
+            } catch (error) {
+                console.error("Erreur de fetch Parcours type :", error);
+            }
+        };
+
+
 
 
         fetchDataComp();
         fetchDataLieu();
         fetchDataMateriel();
         fetchDataEtapeType();
+        fetchDataParcoursType();
     }, []);
 
     const handleCreateOrder=async ()=>{
@@ -274,7 +309,7 @@ export default  function test() {
 
 
 
-            {console.log(materiel.map((c) => c))};
+            {console.log(parcoursType.map((c) => c))};
 
 
             <div className="container">

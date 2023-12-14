@@ -1,6 +1,6 @@
-"use client"
-import {cache, useEffect, useState} from "react";
-import {usePathname} from "next/navigation";
+"use client";
+import { cache, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import {Clock, Door, DotsThreeOutlineVertical, ForkKnife} from "@phosphor-icons/react";
 import {DndContext, closestCenter, DragEndEvent} from "@dnd-kit/core"
@@ -14,7 +14,7 @@ type props = {
 export default function ModelingGenerator({element, parcour}: props) {
     const [elements, setElement] = useState(element)
 
-    return(
+    return (
         <div
             className="flex flex-row gap-56 w-full overflow-x-scroll px-48 h-full items-center"
             onWheel={(e) => {
@@ -22,7 +22,7 @@ export default function ModelingGenerator({element, parcour}: props) {
                 const container = e.currentTarget;
                 const delta = Math.max(-1, Math.min(1, e.deltaY));
                 container.scrollLeft += delta * 100; // Ajustez la valeur pour contrôler la vitesse du défilement horizontal
-              }}
+            }}
 
         >
             <DndContext
@@ -30,7 +30,7 @@ export default function ModelingGenerator({element, parcour}: props) {
                 onDragEnd={handleDragEnd}
             >
                 <SortableContext items={}>
-                  {elements.map((element)=> element)}
+                    {elements.map((element) => element)}
                 </SortableContext>
 
             </DndContext>
@@ -39,9 +39,8 @@ export default function ModelingGenerator({element, parcour}: props) {
 
     )
 
-    function handleDragEnd(event:DragEndEvent) {
+    function handleDragEnd(event: DragEndEvent) {
 
         console.log(event.over)
     }
-
 }

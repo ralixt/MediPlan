@@ -12,6 +12,7 @@ import {
 } from "@/actions/EtapeType";
 import {createParcoursType, getAllParcoursType} from "@/actions/ParcoursType";
 import "./test.css"
+import {flatted} from "flatted";
 
 
 export default  function test() {
@@ -49,13 +50,12 @@ export default  function test() {
         if (selectedEtapes.length === 2) {
             const [antecedent, successeur] = selectedEtapes;
             setPrecedences([...precedences, { antecedent, successeur }]);
-            setSelectedEtapes([])
-
-
+            setSelectedEtapes([]);
         }
-
-
     };
+
+
+
 
 
     // const handleCreateParcoursType = async () => {
@@ -76,26 +76,25 @@ export default  function test() {
 
     const handleCreateParcoursType = async () => {
         // Crée le parcours type avec les étapes et les précédences
-        const formData = new FormData();
-        formData.append('name', parcoursName);
-        formData.append('type', 'ParcoursType');
+        const data = {
+            name: '',
+            type: 'ParcoursType',
+            sequencables: etapesSelect,
+            precedences: precedences
+        };
 
-        // Ajoutez les étapes et les précédences directement, sans JSON.stringify
-        etapesSelect.forEach((etapeId) => {
-            formData.append('sequencables', etapeId);
-        });
+        try {
+            await createParcoursType(data);
 
-        precedences.forEach((precedenceId) => {
-            formData.append('precedences', precedenceId);
-        });
-
-        await createParcoursType(formData);
-
-        // Après la création, réinitialisez les séquencables et les précédences sélectionnées
-        setSelectedEtapes([]);
-        setEtapesSelect([]);
-        setPrecedences([]);
+            // Après la création, réinitialisez les séquencables et les précédences sélectionnées
+            // setSelectedEtapes([]);
+            // setEtapesSelect([]);
+            // setPrecedences([]);
+        } catch (error) {
+            console.error('Erreur lors de la création du ParcoursType:', error);
+        }
     };
+
 
 
 

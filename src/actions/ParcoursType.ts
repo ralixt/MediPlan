@@ -37,41 +37,34 @@ import { disconnect } from "process";
 //         console.error("Erreur de création ParcoursType :", error);
 //     }
 // }
-export async function createParcoursType(formData: FormData) {
-    await connectMongodb();
 
+
+export async function createParcoursType(data) {
+
+    const { name, type, sequencables, precedences } = data;
+
+    // Créer un nouveau ParcoursType
+    const newParcoursType = new ParcoursType({
+        name,
+        type,
+        sequencables,
+        precedences
+    });
+
+    // Enregistrer le ParcoursType dans la base de données
     try {
-        const name = formData.get("name") as string;
-        const type = formData.get("type") as string;
-
-        // Récupérer les données sérialisées sans les convertir en JSON
-        const sequencablesRaw = formData.get("sequencables") as string;
-        console.log("sequencablesRaw:", sequencablesRaw);
-
-        // Utiliser directement l'identifiant ObjectId dans le tableau
-        const sequencables = sequencablesRaw ? [sequencablesRaw] : [];
-        const precedencesRaw = formData.get("precedences") as string;
-        const precedences = precedencesRaw ? [precedencesRaw] : [];
-
-
-
-        console.log("name:", name);
-        console.log("type:", type);
-        console.log("sequencables:", sequencables);
-        console.log("precedences:", precedences);
-
-        const newParcoursType = await ParcoursType.create({
-            name,
-            type,
-            sequencables,
-            precedences,
-        });
-
-        console.log("ParcoursType créé :", newParcoursType);
+        await connectMongodb()
+        const savedParcoursType = await newParcoursType.save();
+        console.log('ParcoursType créé avec succès:', savedParcoursType);
+        return savedParcoursType;
     } catch (error) {
-        console.error("Erreur de création Par",error)
+        console.error('Erreur lors de la création du ParcoursType:', error);
+        throw error;
+    }finally {
+      await  disconnectMongodb()
     }
 }
+
 
 
 
@@ -115,10 +108,19 @@ export async function getParcoursType(id:string){
 //     }
 // }
 
-export async function getAllParcoursType(){
+export async function getAllParcoursType() {
     await connectMongodb();
-    return await ParcoursType.find();
+
+    try {
+        // Limitez le nombre de documents renvoyés à 100
+        const parcoursTypes = await ParcoursType.find().limit(100);
+        return parcoursTypes;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des ParcoursType:', error);
+        throw error;
+    }
 }
+
 export async function updateParcoursType(id:string, formData:FormData){
     await connectMongodb()
     try {

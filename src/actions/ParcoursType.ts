@@ -44,9 +44,21 @@ export async function createParcoursType(formData: FormData) {
         const name = formData.get("name") as string;
         const type = formData.get("type") as string;
 
-        // Supposons que sequencables et precedences soient déjà des tableaux
-        const sequencables = formData.getAll("sequencables") as string[];
-        const precedences = formData.getAll("precedences") as string[];
+        // Récupérer les données sérialisées sans les convertir en JSON
+        const sequencablesRaw = formData.get("sequencables") as string;
+        console.log("sequencablesRaw:", sequencablesRaw);
+
+        // Utiliser directement l'identifiant ObjectId dans le tableau
+        const sequencables = sequencablesRaw ? [sequencablesRaw] : [];
+        const precedencesRaw = formData.get("precedences") as string;
+        const precedences = precedencesRaw ? [precedencesRaw] : [];
+
+
+
+        console.log("name:", name);
+        console.log("type:", type);
+        console.log("sequencables:", sequencables);
+        console.log("precedences:", precedences);
 
         const newParcoursType = await ParcoursType.create({
             name,
@@ -57,9 +69,10 @@ export async function createParcoursType(formData: FormData) {
 
         console.log("ParcoursType créé :", newParcoursType);
     } catch (error) {
-        console.error("Erreur de création ParcoursType :", error);
+        console.error("Erreur de création Par",error)
     }
 }
+
 
 
 export async function deleteParcoursType(id:string){

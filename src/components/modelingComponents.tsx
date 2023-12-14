@@ -2,6 +2,7 @@
 import {Clock, Door, DotsThreeOutlineVertical, ForkKnife, User} from "@phosphor-icons/react";
 import {useDraggable, useDroppable} from '@dnd-kit/core';
 import {set} from "mongoose";
+import {CSS} from '@dnd-kit/utilities';
 
 type propsET = {
     etapeType : EtapeType
@@ -10,9 +11,12 @@ export function EtapeType({etapeType}: propsET){
     const {attributes, listeners, setNodeRef, transform} = useDraggable({
         id: etapeType.uid,
     });
+    const style = {
+        transform: CSS.Translate.toString(transform),
+    }
     return(
 
-    <div className="bg-white shadow-md rounded-3xl p-4 w-52 h-64" ref={setNodeRef} {...listeners} {...attributes}>
+    <div className="bg-white shadow-md rounded-3xl p-4 w-52 h-64" ref={setNodeRef} {...listeners} {...attributes} style={style} >
         <h1>{etapeType.name}</h1>
 
         <div>
@@ -74,7 +78,10 @@ export function Precedence({precedence} : propsP){
     const {attributes, listeners, setNodeRef, transform} = useDraggable({
         id: precedence.uid,
     });
+    const style = {
+        transform: CSS.Translate.toString(transform),
+    }
     return(
-        <p ref={setNodeRef} {...listeners} {...attributes}>precedence: {precedence.name}</p>
+        <p ref={setNodeRef} {...listeners} {...attributes} style={style}>precedence: {precedence.name}</p>
     )
 }

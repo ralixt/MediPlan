@@ -5,6 +5,7 @@ import {OneIconButton, WorkshopButton} from "@/components/buttons";
 import {MagnifyingGlass, Plus} from "@phosphor-icons/react";
 import {cache} from 'react'
 import { usePathname } from 'next/navigation'
+import {getAllParcoursType} from "@/actions/ParcoursType";
 
 
 const getParcours = cache(async () => {
@@ -12,6 +13,12 @@ const getParcours = cache(async () => {
     const data = await response.json();
     return data;
 });
+
+const getParcoursBDD = cache(async () => {
+    const response = await getAllParcoursType();
+    return response;
+});
+
 
 
 export default function ModelingWorkshop() {
@@ -21,7 +28,7 @@ export default function ModelingWorkshop() {
     useEffect(() => {
         const fetchParcours = async () => {
             try {
-                const data = await getParcours();
+                const data = await getParcoursBDD();
                 console.log("cache : " ,data)
                 setParcours(data);
 

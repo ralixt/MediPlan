@@ -3,6 +3,8 @@
 import {connectMongodb, disconnectMongodb} from "@/lib/mongoConnect";
 import ParcoursType from "@/app/models/parcoursType";
 import "@/app/models/etapeType"
+import "@/app/models/competence"
+import "@/app/models/ressource"
 import EtapeType from "@/app/models/etapeType";
 import mongoose from "mongoose";
 import { disconnect } from "process";
@@ -57,6 +59,7 @@ export async function createParcoursType(data) {
         const savedParcoursType = await newParcoursType.save();
         console.log('ParcoursType créé avec succès:', savedParcoursType);
         return savedParcoursType;
+        await disconnectMongodb()
     } catch (error) {
         console.error('Erreur lors de la création du ParcoursType:', error);
         throw error;
@@ -89,37 +92,61 @@ export async function getParcoursType(id:string){
     }
 }
 
-// export async function getAllParcoursType() {
-//     await connectMongodb();
-//     try {
-//         const parcoursType = await ParcoursType.find()
-//             .populate('sequencables' )
-//             .populate('precedences.antecedent')
-//             .populate('precedences.successeur');
-//
-//         return parcoursType
-//
-//
-//
-//     } catch (error) {
-//         console.error("Erreur d'obtention des parcours :", error);
-//     } finally {
-//         await disconnectMongodb();
-//     }
-// }
-
 export async function getAllParcoursType() {
+    await connectMongodb();
+    try {
+        const parcoursType = await ParcoursType.find().lean()
+            .populate({
+                path: 'sequencables',
+                populate: [
+                    { path: 'Competence' },
+                    { path: 'Lieu' },
+                    { path: 'Materiel' }
+                ]
+            })
+            .populate({
+                path: 'precedences.antecedent',
+                populate: [
+                    { path: 'Competence' },
+                    { path: 'Lieu' },
+                    { path: 'Materiel' }
+                ]
+
+            })
+            .populate({
+                path: 'precedences.successeur',
+                populate: [
+                    { path: 'Competence' },
+                    { path: 'Lieu' },
+                    { path: 'Materiel' }
+                ]
+
+            })
+
+
+        return parcoursType;
+
+    } catch (error) {
+        console.error("Erreur d'obtention des parcours :", error);
+    } finally {
+        await disconnectMongodb();
+    }
+}
+
+
+/*export async function getAllParcoursType() {
     await connectMongodb();
 
     try {
-        // Limitez le nombre de documents renvoyés à 100
-        const parcoursTypes = await ParcoursType.find().limit(100);
+        // Désactivez la population automatique
+        const parcoursTypes = await ParcoursType.find().lean().exec();
         return parcoursTypes;
     } catch (error) {
         console.error('Erreur lors de la récupération des ParcoursType:', error);
         throw error;
     }
-}
+}*/
+
 
 export async function updateParcoursType(id:string, formData:FormData){
     await connectMongodb()

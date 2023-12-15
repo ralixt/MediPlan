@@ -3,7 +3,7 @@ import {Clock, Door, DotsThreeOutlineVertical, ForkKnife, User} from "@phosphor-
 import {DndContext, useDraggable, useDroppable} from '@dnd-kit/core';
 import {set} from "mongoose";
 import {CSS} from '@dnd-kit/utilities';
-import {horizontalListSortingStrategy, SortableContext, useSortable} from "@dnd-kit/sortable";
+import {horizontalListSortingStrategy, rectSortingStrategy, SortableContext, useSortable} from "@dnd-kit/sortable";
 
 type propsET = {
     etapeType : EtapeType
@@ -67,12 +67,15 @@ export function GroupeEtapeType({groupeEtapeType}:propsGET){
         <div className="border-2 border-lightgrey rounded-2xl border-dashed p-4 flex flex-row" ref={setNodeRef} {...listeners} {...attributes} style={style}>
             <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
                 <div ref={droppable.setNodeRef} className='flex flex-row'>
-                    <SortableContext items={groupeEtapeType.Etapes.map((etape) => etape.uid)} strategy={horizontalListSortingStrategy}>
-                        {groupeEtapeType.Etapes.map((etape:sequencable) =>
-                            // <p>{etape.name}</p>
-                            <EtapeType etapeType={etape}/>
-                        )}
-                    </SortableContext>
+                    <DndContext>
+                        <SortableContext items={groupeEtapeType.Etapes.map((etape) => etape.uid)} strategy={horizontalListSortingStrategy}>
+                                                {groupeEtapeType.Etapes.map((etape:sequencable) =>
+                                                    // <p>{etape.name}</p>
+                                                    <EtapeType etapeType={etape}/>
+                                                )}
+                        </SortableContext>
+                    </DndContext>
+
 
                 </div>
 

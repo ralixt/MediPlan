@@ -4,7 +4,13 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import {Clock, Door, DotsThreeOutlineVertical, ForkKnife} from "@phosphor-icons/react";
 import {DndContext, closestCenter, DragEndEvent, closestCorners} from "@dnd-kit/core"
-import {arrayMove, SortableContext, verticalListSortingStrategy, horizontalListSortingStrategy} from  "@dnd-kit/sortable"
+import {
+    arrayMove,
+    SortableContext,
+    verticalListSortingStrategy,
+    horizontalListSortingStrategy,
+    rectSortingStrategy
+} from "@dnd-kit/sortable"
 import {EtapeType, GroupeEtapeType, Precedence} from "@/components/modelingComponents";
 
 type props = {
@@ -45,9 +51,6 @@ export default function ModelingGenerator({element, parcour}: props) {
                         }
                     })}
                 </SortableContext>
-
-
-
             </DndContext>
         </div>
 
@@ -55,6 +58,19 @@ export default function ModelingGenerator({element, parcour}: props) {
 
     function handleDragEnd(event: DragEndEvent) {
 
-        console.log(event.over)
+        // console.log(event.over)
+
+        const { active, over } = event;
+
+        // Vérifie si l'élément est déplacé du groupeEtapeType vers le sortable principal
+        if (active.id !== over.id && over.id === 'sortable1') {
+            const draggedItemId = active.id; // Identifiant de l'élément déplacé
+
+            // Retirer l'élément déplacé de la liste groupeEtapeType
+            const updatedElements = elements.filter((element) => element.uid !== draggedItemId);
+
+            // Mettre à jour les éléments dans le state
+            setElement(updatedElements);
+        }
     }
 }

@@ -22,7 +22,7 @@ const getParcoursBDD = cache(async () => {
 
 
 export default function ModelingWorkshop() {
-    const [parcours, setParcours] = useState([]); // État pour stocker les données des parcours
+    const [Parcours, setParcours] = useState([]); // État pour stocker les données des parcours
     const pathname = usePathname()
 
     useEffect(() => {
@@ -121,9 +121,9 @@ export default function ModelingWorkshop() {
 
             <section className="w-[95%] m-auto">
 
-                {parcours.map((parcour, index) =>
+                {Parcours.map((parcours, index) =>
                     (
-                        <WorkshopButton index={index} text={parcour.name} href={pathname+"/"+parcour.name} />
+                        <WorkshopButton index={index} text={parcours.name} href={pathname+"/"+parcours.name} />
                     )
 
                 )}

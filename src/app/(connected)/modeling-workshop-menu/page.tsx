@@ -2,10 +2,11 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import {OneIconButton, WorkshopButton} from "@/components/buttons";
+import {Loader} from "@/components/loader";
 import {MagnifyingGlass, Plus} from "@phosphor-icons/react";
 import {cache} from 'react'
 import { usePathname } from 'next/navigation'
-import {getAllParcoursType} from "@/actions/ParcoursType";
+import {getAllParcoursType, getNameParcoursType} from "@/actions/ParcoursType";
 
 
 const getParcours = cache(async () => {
@@ -15,7 +16,7 @@ const getParcours = cache(async () => {
 });
 
 const getParcoursBDD = cache(async () => {
-    const response = await getAllParcoursType();
+    const response = await getNameParcoursType();
     return response;
 });
 
@@ -24,6 +25,7 @@ const getParcoursBDD = cache(async () => {
 export default function ModelingWorkshop() {
     const [Parcours, setParcours] = useState([]); // État pour stocker les données des parcours
     const pathname = usePathname()
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchParcours = async () => {
@@ -31,9 +33,11 @@ export default function ModelingWorkshop() {
                 const data = await getParcoursBDD();
                 console.log("cache : " ,data)
                 setParcours(data);
+                setLoading(false);
 
             } catch (error) {
                 console.error("Erreur lors de la récupération des données des parcours:", error);
+                setLoading(false);
             }
         };
 
@@ -120,13 +124,20 @@ export default function ModelingWorkshop() {
             </section>
 
             <section className="w-[95%] m-auto">
+                {loading?
 
-                {Parcours.map((parcours, index) =>
-                    (
-                        <WorkshopButton index={index} text={parcours.name} href={pathname+"/"+parcours.uid} />
-                    )
+                    <Loader/>:
 
-                )}
+
+                    Parcours.map((parcours, index) =>
+                            (
+                                <WorkshopButton index={index} text={parcours.name} href={pathname+"/"+parcours._id} />
+                            )
+
+                        )
+
+                }
+
 
 
             </section>

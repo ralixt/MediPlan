@@ -133,6 +133,18 @@ export async function getAllParcoursType() {
     }
 }
 
+export async function getNameParcoursType(){
+    await connectMongodb();
+    try {
+
+        const parcoursTypeNames = await ParcoursType.find().select('name').lean();
+        return parcoursTypeNames
+
+    }finally {
+        await disconnectMongodb()
+    }
+}
+
 
 /*export async function getAllParcoursType() {
     await connectMongodb();

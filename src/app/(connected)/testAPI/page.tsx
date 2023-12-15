@@ -252,9 +252,14 @@ export default  function test() {
             </form>
 
 
-            <form action={handleCreateEtapeType}>
-                <label htmlFor="name">Nom:</label>
-                <input type="text" id="name" name="name" value={nameEtapeType} onChange={handleNameEtapeTypeChange} required /><br />
+            <form action={handleCreateEtapeType} className="rounded-lg ShadowGlobal">
+                <h2 className="text-center">Ajouter une nouvelle Etape Type</h2>
+
+
+                <div className="input-container">
+                    <label htmlFor="name" className={nameEtapeType ? 'input-label moved' : 'input-label'}>Nom :</label>
+                    <input type="text" id="name" name="name" value={nameEtapeType} onChange={handleNameEtapeTypeChange} required className="input-field"/>
+                </div>
 
                 <label htmlFor="type">Type:</label>
                 <select id="type" name="type" value={typeEtapeType} onChange={handleTypeEtapeTypeChange}  required>

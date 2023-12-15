@@ -19,6 +19,41 @@
     text-align: center;
 }
 
+.ShadowGlobal {
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+.input-container {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .input-label {
+    position: absolute;
+    left: 10px;
+    top: 20px;
+    transition: 0.2s ease-out;
+  }
+  
+  .input-label.moved {
+    top: 5px;
+    font-size: 12px;
+    color: #999;
+  }
+  
+  .input-field {
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+  
+  
+  
+
+
+
 .selected-etape {
     background-color: #4caf50;
     color: #fff;

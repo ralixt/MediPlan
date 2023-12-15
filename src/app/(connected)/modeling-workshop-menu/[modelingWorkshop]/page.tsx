@@ -26,15 +26,14 @@ export type NextPageProps<T = Record<string, string>> = {
 
 const getParcours = cache(async () => {
 
-  const responseBDD = await getAllParcoursType()
+  //const responseBDD = await getAllParcoursType()
   // console.log(responseBDD)
   const response = await fs.readFile("./public/temporary/BDD.json", "utf-8");
   const data: parcoursList = JSON.parse(response);
-  console.log(responseBDD)
+  //console.log(responseBDD)
   return data[0];
  
 });
-
 
 
 

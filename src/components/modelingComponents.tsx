@@ -1,18 +1,19 @@
 "use client"
 import {Clock, Door, DotsThreeOutlineVertical, ForkKnife, User} from "@phosphor-icons/react";
-import {useDraggable, useDroppable} from '@dnd-kit/core';
+import {DndContext, useDraggable, useDroppable} from '@dnd-kit/core';
 import {set} from "mongoose";
 import {CSS} from '@dnd-kit/utilities';
+import {horizontalListSortingStrategy, SortableContext, useSortable} from "@dnd-kit/sortable";
 
 type propsET = {
     etapeType : EtapeType
 }
 export function EtapeType({etapeType}: propsET){
-    const {attributes, listeners, setNodeRef, transform} = useDraggable({
+    const {attributes, listeners, setNodeRef, transform, transition} = useSortable({
         id: etapeType.uid,
     });
     const style = {
-        transform: CSS.Translate.toString(transform),
+        transform: CSS.Translate.toString(transform), transition
     }
     return(
 
@@ -55,16 +56,26 @@ type propsGET = {
     groupeEtapeType:GroupeEtapeType
 }
 export function GroupeEtapeType({groupeEtapeType}:propsGET){
-    const {setNodeRef} = useDroppable({
+    const {attributes, listeners, setNodeRef, transform, transition} = useSortable({
         id: groupeEtapeType.uid,
     });
+    const droppable = useDroppable({id : groupeEtapeType.uid})
+    const style = {
+        transform: CSS.Translate.toString(transform), transition
+    }
     return (
-        <div className="border-2 border-lightgrey rounded-2xl border-dashed p-4 flex flex-row" ref={setNodeRef}>
+        <div className="border-2 border-lightgrey rounded-2xl border-dashed p-4 flex flex-row" ref={setNodeRef} {...listeners} {...attributes} style={style}>
             <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
-            {groupeEtapeType.Etapes.map((etape:sequencable) =>
-                // <p>{etape.name}</p>
-                <EtapeType etapeType={etape}/>
-            )}
+                <div ref={droppable.setNodeRef} className='flex flex-row'>
+                    <SortableContext items={groupeEtapeType.Etapes.map((etape) => etape.uid)} strategy={horizontalListSortingStrategy}>
+                        {groupeEtapeType.Etapes.map((etape:sequencable) =>
+                            // <p>{etape.name}</p>
+                            <EtapeType etapeType={etape}/>
+                        )}
+                    </SortableContext>
+
+                </div>
+
             <p>fin Groupe Etape</p>
         </div> 
     )
@@ -75,11 +86,11 @@ type propsP = {
 }
 
 export function Precedence({precedence} : propsP){
-    const {attributes, listeners, setNodeRef, transform} = useDraggable({
+    const {attributes, listeners, setNodeRef, transform,transition} = useSortable({
         id: precedence.uid,
     });
     const style = {
-        transform: CSS.Translate.toString(transform),
+        transform: CSS.Translate.toString(transform), transition
     }
     return(
         <p ref={setNodeRef} {...listeners} {...attributes} style={style}>precedence: {precedence.name}</p>

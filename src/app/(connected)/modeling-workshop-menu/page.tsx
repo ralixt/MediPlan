@@ -123,7 +123,7 @@ export default function ModelingWorkshop() {
 
                 {Parcours.map((parcours, index) =>
                     (
-                        <WorkshopButton index={index} text={parcours.name} href={pathname+"/"+parcours.name} />
+                        <WorkshopButton index={index} text={parcour.name} href={pathname+"/"+parcour.uid} />
                     )
 
                 )}

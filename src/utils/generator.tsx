@@ -11,6 +11,7 @@ const findIndex = ((tableaux : (Array<GroupeEtapeType | EtapeType | precedence>)
 } )
 
 const generate = ((parcours : parcours) => {
+    console.log("generate")
     let etapesTypes :EtapeType[] = parcours.sequencables.filter((sequencable): sequencable is EtapeType => sequencable.type == "EtapeType")
     let groupesEtapesType :GroupeEtapeType[] = parcours.sequencables.filter((sequencable): sequencable is GroupeEtapeType => sequencable.type == "GroupeEtapeType")
     for(let groupeEtapeType of groupesEtapesType){
@@ -32,6 +33,7 @@ const generate = ((parcours : parcours) => {
             const successeur = sequencables.find((sequencable) => sequencable.uid == precedence.successeur)
             if (antecedant !== undefined && successeur !== undefined) {
                 groupes.push([antecedant, precedence, successeur]);
+                console.log(groupes)
                 const indexASupprimer = sequencables.findIndex((sequencable) => sequencable.uid === successeur.uid);
                 const indexASupprimer2 = sequencables.findIndex((sequencable) => sequencable.uid === antecedant.uid);
 
@@ -64,48 +66,17 @@ const generate = ((parcours : parcours) => {
             }
         }
         else if (indexS !== -1 && indexA !== -1){
-            console.log("fusion")
-            
             groupes[indexA.indexG] = groupes[indexA.indexG].concat(precedence,groupes[indexS.indexG])
             groupes.splice(indexS.indexG,1)
-            console.log(groupes)
         }
+    }
+    groupes.sort((a, b) => b.length - a.length)
+    let groupeConcat = Array.prototype.concat.apply([], groupes);
+    for(let element of sequencables){
+        groupeConcat.push(element)
     }
 
-    groupes.sort((a, b) => b.length - a.length)
-    const elementNode: React.ReactNode[] = []
-    for(const groupe of groupes){
-        for(const element of groupe){
-            if(element.type === "EtapeType"){
-                const newElement : EtapeType = element
-                elementNode.push(<EtapeType etapeType={newElement}/>)
-            }
-            else if (element.type == "GroupeEtapeType"){
-                const newElement : GroupeEtapeType = element
-                elementNode.push(<GroupeEtapeType groupeEtapeType={newElement} />)
-            }
-            else{
-                const newElement : precedence = element
-                elementNode.push(<Precedence precedence={newElement} />)
-            }
-        }
-    }
-    for(let element of sequencables){
-        if(element.type === "EtapeType"){
-            const newElement : EtapeType = element
-            elementNode.push(<EtapeType etapeType={newElement}/>)
-        }
-        else if (element.type == "GroupeEtapeType"){
-            const newElement : GroupeEtapeType = element
-            elementNode.push(<GroupeEtapeType groupeEtapeType={newElement} />)
-        }
-        else{
-            const newElement : precedence = element
-            elementNode.push(<Precedence precedence={newElement} />)
-        }
-    }
-    
-    return elementNode
+    return groupeConcat
 })
 
 export default generate

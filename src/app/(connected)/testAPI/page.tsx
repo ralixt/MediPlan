@@ -13,6 +13,7 @@ import {
 import {createParcoursType, getAllParcoursType} from "@/actions/ParcoursType";
 import "./test.css"
 import {flatted} from "flatted";
+import {CreateUser} from "@/actions/Compte";
 
 
 export default  function test() {
@@ -33,6 +34,8 @@ export default  function test() {
     const [precedences, setPrecedences] = useState([]);
     const [parcoursName, setParcoursName] = useState('');
     const [etapesSelect,setEtapesSelect]=useState([])
+    const [username,setUsername]=useState("ghfghf")
+    const [password,setPassword]=useState("dfgdfgdg")
 
     const handleAddEtapeToParcours = (etapeId) => {
         console.log('Ajout etape to parcours:', etapeId);
@@ -180,6 +183,17 @@ export default  function test() {
     }
 
 
+    const handleSubmitCreateCompte = async ()=>{
+        const formData=new FormData();
+        formData.append('username',username)
+        formData.append('password',password)
+       return  await CreateUser(formData)
+
+
+
+    }
+
+
     const handleNameChange = (event) => {
         setName(event.target.value);
     };
@@ -196,6 +210,13 @@ export default  function test() {
         setNameEtapeType(event.target.value);
     };
 
+    const handleUserNameChange = (event) => {
+        setUsername(event.target.value);
+    };
+
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
     const handleTypeEtapeTypeChange = (event) => {
         setTypeEtapeType(event.target.value);
     };
@@ -235,20 +256,22 @@ export default  function test() {
 
 
 
+
+
     return(<>
 
 
-        <form action={handleCreateOrder} >
-            <input type="text" value={name} onChange={handleNameChange}    />
-            <input type="text" value={type} onChange={handleTypeChange}    />
-            <button  type={"submit"}>EnvoyerRessou</button>
-        </form>
+            <form action={handleCreateOrder}>
+                <input type="text" value={name} onChange={handleNameChange}/>
+                <input type="text" value={type} onChange={handleTypeChange}/>
+                <button type={"submit"}>EnvoyerRessou</button>
+            </form>
 
 
-            <form action={handleCreateOrderComp} >
-                <input type="text" value={nameComp} onChange={handleNameCompChange}    />
+            <form action={handleCreateOrderComp}>
+                <input type="text" value={nameComp} onChange={handleNameCompChange}/>
 
-                <button  type={"submit"}>EnvoyerComp</button>
+                <button type={"submit"}>EnvoyerComp</button>
             </form>
 
 
@@ -258,14 +281,15 @@ export default  function test() {
 
                 <div className="input-container">
                     <label htmlFor="name" className={nameEtapeType ? 'input-label moved' : 'input-label'}>Nom :</label>
-                    <input type="text" id="name" name="name" value={nameEtapeType} onChange={handleNameEtapeTypeChange} required className="input-field"/>
+                    <input type="text" id="name" name="name" value={nameEtapeType} onChange={handleNameEtapeTypeChange}
+                           required className="input-field"/>
                 </div>
 
                 <label htmlFor="type">Type:</label>
-                <select id="type" name="type" value={typeEtapeType} onChange={handleTypeEtapeTypeChange}  required>
+                <select id="type" name="type" value={typeEtapeType} onChange={handleTypeEtapeTypeChange} required>
                     <option value="EtapeType">EtapeType</option>
                     <option value="GroupeEtapeType">GroupeEtapeType</option>
-                </select><br />
+                </select><br/>
                 <select
                     id="competenceId"
                     name="competenceId"
@@ -289,14 +313,15 @@ export default  function test() {
                     {lieu.map((l) => (
                         <option key={l._id} value={l._id}>{l.nom}</option>
                     ))}
-                </select><br />
+                </select><br/>
 
-                <select id="materielId" name="materielId" value={materielId} onChange={handleEtapeTypeChangeMateriel}  required>
+                <select id="materielId" name="materielId" value={materielId} onChange={handleEtapeTypeChangeMateriel}
+                        required>
                     <option value="" disabled>Sélectionnez un materiel</option>
                     {materiel.map((m) => (
                         <option value={m._id}>{m.nom}</option>
                     ))}
-                </select><br />
+                </select><br/>
                 <button type={"submit"}>Envoyer</button>
 
             </form>
@@ -313,7 +338,6 @@ export default  function test() {
 
 
 
-            {console.log(parcoursType.map((c) => c))};
 
 
             <div className="container">
@@ -328,7 +352,8 @@ export default  function test() {
                                 <p>{c.name}</p>
                                 <button type="button" onClick={() => handleAddEtapeToParcours(c._id)}>Ajouter à
                                     Parcours
-                                </button><br/>
+                                </button>
+                                <br/>
 
                             </div>
                         ))}
@@ -345,7 +370,9 @@ export default  function test() {
 
                     {selectedEtapes.length == 2 &&
                         <div>
-                            <button type="button" onClick={handleAddPrecedence} className="add-precedence-btn">Ajouter Précédence</button>
+                            <button type="button" onClick={handleAddPrecedence} className="add-precedence-btn">Ajouter
+                                Précédence
+                            </button>
                         </div>
                     }
 
@@ -353,7 +380,8 @@ export default  function test() {
                         <div>
                             <h3>Précédences</h3>
                             {precedences.map((precedence, index) => (
-                                <p key={index} className="precedence">{precedence.antecedent} précède {precedence.successeur}</p>
+                                <p key={index}
+                                   className="precedence">{precedence.antecedent} précède {precedence.successeur}</p>
                             ))}
                         </div>
                     }
@@ -364,10 +392,32 @@ export default  function test() {
             </div>
 
 
+                    <h1 className="text-xl font-bold my-4">Register</h1>
+
+                    <form action={handleSubmitCreateCompte} >
+                        <input
+                            value={username}
+                            onChange={handleUserNameChange}
+                            type="text"
+                            placeholder="Full Name"
+                        />
+                        <input
+                            value={password}
+                            onChange={handlePasswordChange}
+                            type="password"
+                            placeholder="Password"
+                        />
+                        <button type="submit" >
+                            Register
+                        </button>
+
+                    </form>
+
+
+
         </>
 
     )
-
 
 
 }

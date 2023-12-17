@@ -83,14 +83,47 @@ export async function deleteParcoursType(id:string){
 }
 
 export async function getParcoursType(id:string){
-    await connectMongodb()
+
     try {
-        return await ParcoursType.findById(id);
+        await connectMongodb()
+
+        const p= await ParcoursType.findById(id).lean()
+            .populate({
+                path: 'sequencables',
+                populate: [
+                    { path: 'Competence' },
+                    { path: 'Lieu' },
+                    { path: 'Materiel' }
+                ]
+            })
+            .populate({
+                path: 'precedences.antecedent',
+                populate: [
+                    { path: 'Competence' },
+                    { path: 'Lieu' },
+                    { path: 'Materiel' }
+                ]
+
+            })
+            .populate({
+                path: 'precedences.successeur',
+                populate: [
+                    { path: 'Competence' },
+                    { path: 'Lieu' },
+                    { path: 'Materiel' }
+                ]
+
+            });
+        return p
         console.log(" Obtention de Parcours réussi ")
     }catch (error){
         console.log("erreur d'obtention parcours type")
+    }finally {
+    await    disconnectMongodb()
     }
 }
+
+
 
 export async function getAllParcoursType() {
     await connectMongodb();

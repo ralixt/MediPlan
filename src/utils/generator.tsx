@@ -11,7 +11,7 @@ const findIndex = ((tableaux : (Array<GroupeEtapeType | EtapeType | precedence>)
 } )
 
 const generate = ((parcours : parcours) => {
-    console.log("generate")
+    //console.log("generate")
     let etapesTypes :EtapeType[] = parcours.sequencables.filter((sequencable): sequencable is EtapeType => sequencable.type == "EtapeType")
     let groupesEtapesType :GroupeEtapeType[] = parcours.sequencables.filter((sequencable): sequencable is GroupeEtapeType => sequencable.type == "GroupeEtapeType")
     for(let groupeEtapeType of groupesEtapesType){
@@ -33,7 +33,7 @@ const generate = ((parcours : parcours) => {
             const successeur = sequencables.find((sequencable) => sequencable.uid == precedence.successeur)
             if (antecedant !== undefined && successeur !== undefined) {
                 groupes.push([antecedant, precedence, successeur]);
-                console.log(groupes)
+               // console.log(groupes)
                 const indexASupprimer = sequencables.findIndex((sequencable) => sequencable.uid === successeur.uid);
                 const indexASupprimer2 = sequencables.findIndex((sequencable) => sequencable.uid === antecedant.uid);
 

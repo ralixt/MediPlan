@@ -22,7 +22,7 @@ export const disconnectMongodb = async () => {
         
 
 
-        console.log("Connected to MongoDB");
+        console.log("Disonnected to MongoDB");
     } catch (error) {
         console.error("Error connecting to MongoDB:", error);
     }

@@ -34,8 +34,8 @@ export default  function test() {
     const [precedences, setPrecedences] = useState([]);
     const [parcoursName, setParcoursName] = useState('');
     const [etapesSelect,setEtapesSelect]=useState([])
-    const [username,setUsername]=useState("ghfghf")
-    const [password,setPassword]=useState("dfgdfgdg")
+    const [username,setUsername]=useState("")
+    const [password,setPassword]=useState("")
 
     const handleAddEtapeToParcours = (etapeId) => {
         console.log('Ajout etape to parcours:', etapeId);

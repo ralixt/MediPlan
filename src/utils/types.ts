@@ -1,7 +1,7 @@
 type sequencable = EtapeType | GroupeEtapeType
 
 type EtapeType = {
-    uid: string,
+    _id: string,
     name: string,
     type: "EtapeType",
     duree: number,
@@ -12,14 +12,14 @@ type EtapeType = {
 }
 
 type GroupeEtapeType = {
-    uid: string,
+    _id: string,
     name: string,
     type: "GroupeEtapeType",
     Etapes:sequencable[]
 }
 
 type precedence = {
-    uid: string,
+    _id: string,
     name: string,
     antecedent : string,
     successeur : string,
@@ -33,7 +33,7 @@ type ressource = {
     type: "Lieu"
 }
 type parcours = {
-    uid: string,
+    _id: string,
     name: string,
     type: string,
     sequencables : sequencable[]

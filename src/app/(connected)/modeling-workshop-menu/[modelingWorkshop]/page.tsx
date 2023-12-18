@@ -45,10 +45,10 @@ export default async function ModelingWorkshop({
 }: NextPageProps<props>) {
 
   let elements = null
- //const parcours = await getParcours()
+ const parcours = await getParcours()
 
- const parcours = await getParcoursType(params.modelingWorkshop)
-    console.log(parcours)
+ //const parcours = await getParcoursType(params.modelingWorkshop)
+
   if(parcours!==undefined) {
       elements = generate(parcours);
   }

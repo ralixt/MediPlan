@@ -29,12 +29,12 @@ export async function CreateUser(formData: FormData) {
     }
 }
 
-export const authenticateUser = async (credentials: { email: any; password: any; }) => {
-    const { email, password } = credentials;
+export const authenticateUser = async (credentials: { username: any; password: any; }) => {
+    const { username, password } = credentials;
 
     try {
         await connectMongodb();
-        const user = await Compte.findOne({ email });
+        const user = await Compte.findOne({ username });
 
         if (!user) {
             return null;

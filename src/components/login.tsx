@@ -22,22 +22,25 @@ export const Login = (props: Props) => {
     const userName = useRef("")
     const password = useRef("")
 
+    const [email, setEmail] = useState("");
+    const [motDePasse, setPassword] = useState("");
+
     const [usernameFocused, setUsernameFocused] = useState(false);
     const [passwordFocused, setPasswordFocused] = useState(false);
 
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         console.log("coucou")
         await signIn("credentials", {
-            username: userName.current,
-            password: password.current,
+            username: email,
+            password: motDePasse,
             redirect: true,
             callbackUrl: props.callbackUrl ?? "http://localhost:3000/home"
         })
 
     }
     const session = useSession()
-    console.log(session)
+    console.log("ss",session)
 
     return (
 
@@ -56,9 +59,10 @@ export const Login = (props: Props) => {
                        placeholder="Nom d'utilisateur"
                        className="w-full outline-none bg-white"
                        onChange={(e) =>
-                           userName.current = e.target.value}
-                       onFocus={() => setUsernameFocused(true)}
-                       onBlur={() => setUsernameFocused(false)}/>
+                           setEmail(e.target.value)}
+                    onFocus={() => setUsernameFocused(true)}
+                       onBlur={() => setUsernameFocused(false)}
+                />
 
                 {/*</label>*/}
                 <User size={32}/>
@@ -73,9 +77,10 @@ export const Login = (props: Props) => {
                        placeholder="Mot de passe"
                        className="w-full outline-none bg-white"
                        onChange={(e) =>
-                           password.current = e.target.value}
-                       onFocus={() => setPasswordFocused(true)}
-                       onBlur={() => setPasswordFocused(false)}/>
+                          setPassword(e.target.value)}
+                      onFocus={() => setPasswordFocused(true)}
+                     onBlur={() => setPasswordFocused(false)}
+                />
                 {/*</label>*/}
                 <Password size={32}/>
             </div>

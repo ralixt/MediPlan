@@ -1,5 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import {authenticateUser} from "@/actions/Compte";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -9,7 +10,7 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Sign in",
       credentials: {
-        email: {
+        username: {
           label: "Email",
           type: "email",
           placeholder: "example@example.com",
@@ -17,8 +18,10 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const user = { id: "1", name: "Admin", email: "admin@admin.com"};
-        return user;
+       const users = authenticateUser(credentials)
+        console.log(credentials)
+        const user = { id: "1", name: "admin", email: "admin@admin.com",password:"cc"};
+        return users;
       },
     }),
   ],

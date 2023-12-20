@@ -14,6 +14,7 @@ import {createParcoursType, getAllParcoursType} from "@/actions/ParcoursType";
 import "./test.css"
 import {flatted} from "flatted";
 import {CreateUser} from "@/actions/Compte";
+import {Clock, Door, DotsThreeOutlineVertical, ForkKnife, User} from "@phosphor-icons/react";
 
 
 export default  function test() {
@@ -366,9 +367,6 @@ export default  function test() {
             </div>
 
 
-
-
-
             <div className="container">
 
                 <form className="form" action={handleCreateParcoursType}>
@@ -421,27 +419,105 @@ export default  function test() {
             </div>
 
 
-                    <h1 className="text-xl font-bold my-4">Register</h1>
+            <h1 className="text-xl font-bold my-4">Register</h1>
 
-                    <form action={handleSubmitCreateCompte} >
-                        <input
-                            value={username}
-                            onChange={handleUserNameChange}
-                            type="text"
-                            placeholder="Full Name"
-                        />
-                        <input
-                            value={password}
-                            onChange={handlePasswordChange}
-                            type="password"
-                            placeholder="Password"
-                        />
-                        <button type="submit" >
-                            Register
-                        </button>
+            <form action={handleSubmitCreateCompte}>
+                <input
+                    value={username}
+                    onChange={handleUserNameChange}
+                    type="text"
+                    placeholder="Full Name"
+                />
+                <input
+                    value={password}
+                    onChange={handlePasswordChange}
+                    type="password"
+                    placeholder="Password"
+                />
+                <button type="submit">
+                    Register
+                </button>
 
-                    </form>
+            </form>
 
+
+            <div className="bg-white shadow-md rounded-3xl p-4 flex flex-row"
+            >
+                <div>
+                    <h1>hhhhh</h1>
+                </div>
+                <div className="flex-grow-0 space-y-2 mr-4 ">
+                    <div className="flex flex-row items-center">
+                        <Clock size={32}/>
+                        21
+                    </div>
+
+
+                    <div className="flex flex-row items-center">
+                        <ForkKnife size={32}/>
+                        a jeun
+                    </div>
+
+
+                    <div className="flex flex-row items-center">
+                        <Door size={32}/>
+                        lieu
+                    </div>
+
+                    <div className="flex flex-row items-center">
+                        <User size={32}/>
+                        comp
+                    </div>
+
+                </div>
+                <button className="rounded-full">
+                    <DotsThreeOutlineVertical size={32} weight="fill" color="#009BD4"/>
+                </button>
+
+            </div>
+
+
+            <div className="bg-white shadow-md rounded-3xl p-4 flex">
+                <div className="mr-4">
+                    <h1 className="font-bold text-lg">hhhhh</h1>
+                </div>
+                <div className="flex-grow space-y-2 mr-4">
+                    <div className="flex items-center">
+                        <svg className="h-8 w-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+
+                        </svg>
+                        21
+                    </div>
+                    <div className="flex items-center">
+                        <svg className="h-8 w-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+
+                        </svg>
+                        a jeun
+                    </div>
+                    <div className="flex items-center">
+                        <svg className="h-8 w-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+
+                        </svg>
+                        lieu
+                    </div>
+                    <div className="flex items-center">
+                        <svg className="h-8 w-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+
+                        </svg>
+                        comp
+                    </div>
+                </div>
+                <button className="rounded-full">
+                    <svg className="h-8 w-8 fill-current text-blue-500" fill="none" stroke="currentColor"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+
+                    </svg>
+                </button>
+            </div>
 
 
         </>

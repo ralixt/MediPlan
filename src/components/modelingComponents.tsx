@@ -17,97 +17,106 @@ export function EtapeType({etapeType}: propsET){
     }
     return(
 
-    <div className="bg-white shadow-md rounded-3xl p-4 w-52 h-64" ref={setNodeRef} {...listeners} {...attributes} style={style} >
-        <h1>{etapeType.name}</h1>
+    <div className="flex flex-col justify-between bg-white shadow-md rounded-3xl p-8 w-52 h-64" ref={setNodeRef} {...listeners} {...attributes} style={style} >
+        <h2 className="font-bold">{etapeType.name}</h2>
 
-        <div>
+        <div className="my-2">
             <div className="flex flex-row items-center">
-                <Clock size={32}/>
-                {etapeType.duree}
+                <Clock size={25}/>
+                <p className="ml-2">{etapeType.duree}</p>'
             </div>
 
             {etapeType.aJeun && (
-                <div className="flex flex-row items-center">
+                <div className="flex flex-row items-center mt-2">
                     <ForkKnife size={32}/>
-                    {etapeType.aJeun}
+                    <p className="ml-2">{etapeType.aJeun}</p>
+
                 </div>
             )}
 
-            <div className="flex flex-row items-center">
-                <Door size={32}/>
-                {etapeType.lieux}
+            <div className="flex flex-row items-center mt-2">
+                <Door size={25}/>
+                <p className="ml-2">{etapeType.lieux}</p>
             </div>
 
-            <div className="flex flex-row items-center">
-                <User size={32} />
-                {etapeType.competences}
+            <div className="flex flex-row items-center mt-2">
+                <User size={25} />
+                <p lassName="ml-2">{etapeType.competences}</p>
             </div>
 
         </div>
-        <button className="rounded-full">
-            <DotsThreeOutlineVertical size={32}  weight="fill" color="#009BD4"/>
-        </button>
+        <div className="flex justify-end mt-4">
+            <button className="rounded-full">
+                <DotsThreeOutlineVertical size={32} weight="fill" color="#009BD4"/>
+            </button>
+        </div>
 
     </div>
     )
 }
 
-export function EtapeTypeOver({etapeType}: propsET){
+export function EtapeTypeOver({etapeType}: propsET) {
     return (
-        <div className="bg-white shadow-md rounded-3xl p-4 w-52 h-64" >
-            <h1>{etapeType.name}</h1>
+        <div className="flex flex-col justify-between bg-white shadow-md rounded-3xl p-8 w-52 h-64">
+            <h2 className="font-bold">{etapeType.name}</h2>
 
-            <div>
+            <div className="my-2">
                 <div className="flex flex-row items-center">
-                    <Clock size={32}/>
-                    {etapeType.duree}
+                    <Clock size={25}/>
+                    <p className="ml-2">{etapeType.duree}</p>'
                 </div>
 
                 {etapeType.aJeun && (
-                    <div className="flex flex-row items-center">
+                    <div className="flex flex-row items-center mt-2">
                         <ForkKnife size={32}/>
-                        {etapeType.aJeun}
+                        <p className="ml-2">{etapeType.aJeun}</p>
+
                     </div>
                 )}
 
-                <div className="flex flex-row items-center">
-                    <Door size={32}/>
-                    {etapeType.lieux}
+                <div className="flex flex-row items-center mt-2">
+                    <Door size={25}/>
+                    <p className="ml-2">{etapeType.lieux}</p>
                 </div>
 
-                <div className="flex flex-row items-center">
-                    <User size={32} />
-                    {etapeType.competences}
+                <div className="flex flex-row items-center mt-2">
+                    <User size={25}/>
+                    <p lassName="ml-2">{etapeType.competences}</p>
                 </div>
 
             </div>
-            <button className="rounded-full">
-                <DotsThreeOutlineVertical size={32}  weight="fill" color="#009BD4"/>
-            </button>
-
+            <div className="flex justify-end mt-4">
+                <button className="rounded-full">
+                    <DotsThreeOutlineVertical size={32} weight="fill" color="#009BD4"/>
+                </button>
+            </div>
         </div>
     )
 }
+
 type propsGET = {
-    groupeEtapeType:GroupeEtapeType
+    groupeEtapeType: GroupeEtapeType
 }
-export function GroupeEtapeType({groupeEtapeType}:propsGET){
+
+export function GroupeEtapeType({groupeEtapeType}: propsGET) {
     const {attributes, listeners, setNodeRef, transform, transition} = useSortable({
         id: groupeEtapeType._id,
     });
-    const droppable = useDroppable({id : groupeEtapeType._id})
+    const droppable = useDroppable({id: groupeEtapeType._id})
     const style = {
         transform: CSS.Translate.toString(transform), transition
     }
     return (
-        <div className="border-2 border-lightgrey rounded-2xl border-dashed p-4 flex flex-row" ref={setNodeRef} {...listeners} {...attributes} style={style}>
+        <div className="border-2 border-lightgrey rounded-2xl border-dashed p-12 flex flex-row "
+             ref={setNodeRef} {...listeners} {...attributes} style={style}>
             <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
-                <div ref={droppable.setNodeRef} className='flex flex-row'>
-                    <DndContext>
-                        <SortableContext items={groupeEtapeType.Etapes.map((etape) => etape._id)} strategy={horizontalListSortingStrategy}>
-                                                {groupeEtapeType.Etapes.map((etape:sequencable) =>
-                                                    // <p>{etape.name}</p>
-                                                    <EtapeType etapeType={etape}/>
+            <div ref={droppable.setNodeRef} className='flex flex-row'>
+                <DndContext>
+                    <SortableContext items={groupeEtapeType.Etapes.map((etape) => etape._id)}
+                                     strategy={horizontalListSortingStrategy}>
+                        {groupeEtapeType.Etapes.map((etape: sequencable) =>
+                                // <p>{etape.name}</p>
+                                <EtapeType etapeType={etape}/>
                                                 )}
                         </SortableContext>
                     </DndContext>

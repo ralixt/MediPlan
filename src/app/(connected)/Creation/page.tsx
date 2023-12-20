@@ -11,12 +11,12 @@ import {
     getRessourceByName
 } from "@/actions/EtapeType";
 import {createParcoursType, getAllParcoursType} from "@/actions/ParcoursType";
-import "./test.css"
+import "./style.css"
 import {flatted} from "flatted";
 import {CreateUser} from "@/actions/Compte";
 
 
-export default  function test() {
+export default  function creation() {
     const [name,setName]=useState("")
     const [nameComp,setNameComp]=useState("")
     const [type,setType]=useState("")
@@ -259,20 +259,6 @@ export default  function test() {
 
 
     return(<>
-            <form action={handleCreateOrder}>
-                <input type="text" value={name} onChange={handleNameChange}/>
-                <input type="text" value={type} onChange={handleTypeChange}/>
-                <button type={"submit"}>EnvoyerRessource</button>
-            </form>
-
-
-            <form action={handleCreateOrderComp}>
-                <input type="text" value={nameComp} onChange={handleNameCompChange}/>
-
-                <button type={"submit"}>EnvoyerCompetence</button>
-            </form>
-
-
             <form action={handleCreateEtapeType} className="rounded-lg ShadowGlobal">
                 <h2 className="text-center">Ajouter une nouvelle Etape Type</h2>
 
@@ -354,96 +340,6 @@ export default  function test() {
                 </div>
                 </div>
             </form>
-            <div>
-                <h2>Etape Type</h2>
-                {etapeType.map((c) => (
-                    <div key={c._id}>
-                        <p>{c.name}</p>
-
-                        <button onClick={() => deleteEtapeType(c._id)}>supprimer</button>
-                    </div>
-                ))}
-            </div>
-
-
-
-
-
-            <div className="container">
-
-                <form className="form" action={handleCreateParcoursType}>
-
-
-                    <h2>Étapes Type</h2>
-                    <div className="etapes-list">
-                        {etapeType.map((c) => (
-                            <div key={c._id} className="etape-item">
-                                <p>{c.name}</p>
-                                <button type="button" onClick={() => handleAddEtapeToParcours(c._id)}>Ajouter à
-                                    Parcours
-                                </button>
-                                <br/>
-
-                            </div>
-                        ))}
-                    </div>
-
-                    {selectedEtapes.length > 0 &&
-                        <div>
-                            <h3>Étapes Sélectionnées</h3>
-                            {selectedEtapes.map((etapeId) => (
-                                <p key={etapeId} className="selected-etape">{etapeId}</p>
-                            ))}
-                        </div>
-                    }
-
-                    {selectedEtapes.length == 2 &&
-                        <div>
-                            <button type="button" onClick={handleAddPrecedence} className="add-precedence-btn">Ajouter
-                                Précédence
-                            </button>
-                        </div>
-                    }
-
-                    {precedences.length > 0 &&
-                        <div>
-                            <h3>Précédences</h3>
-                            {precedences.map((precedence, index) => (
-                                <p key={index}
-                                   className="precedence">{precedence.antecedent} précède {precedence.successeur}</p>
-                            ))}
-                        </div>
-                    }
-
-                    <button type="submit" className="submit-btn">Créer Parcours</button>
-                </form>
-
-            </div>
-
-
-                    <h1 className="text-xl font-bold my-4">Register</h1>
-
-                    <form action={handleSubmitCreateCompte} >
-                        <input
-                            value={username}
-                            onChange={handleUserNameChange}
-                            type="text"
-                            placeholder="Full Name"
-                        />
-                        <input
-                            value={password}
-                            onChange={handlePasswordChange}
-                            type="password"
-                            placeholder="Password"
-                        />
-                        <button type="submit" >
-                            Register
-                        </button>
-
-                    </form>
-
-
-
         </>
 
     )

@@ -3,6 +3,7 @@ import {useCallback, useEffect, useState} from "react";
 import {createComp, createRessou, getComp, getLieu, getMateriel} from "@/actions/CreateCompTest";
 import {Ressource} from "@/app/models/ressource"
 import {connectMongodb} from "@/lib/mongoConnect";
+import {Clock, Door, User, PersonSimple, PersonArmsSpread} from "@phosphor-icons/react";
 import {
     createEtapeType,
     deleteEtapeType,
@@ -233,12 +234,6 @@ export default  function creation() {
             console.error('Error fetching materiel by name:', error);
         }
     }
-
-
-    const handleEtapeTypeChangeLieu = (event) => {
-        setLieuId(event.target.value);
-    };
-
   /*  const handleEtapeTypeChangeMateriel = async (event) => {
         const selectedName = event.target.value;
         try {
@@ -259,85 +254,57 @@ export default  function creation() {
 
 
     return(<>
-            <form action={handleCreateEtapeType} className="rounded-lg ShadowGlobal">
-                <h2 className="text-center">Ajouter une nouvelle Etape Type</h2>
-
-
-                <div className="input-container">
-                    <label htmlFor="name" className={nameEtapeType ? 'input-label moved' : 'input-label'}>Nom :</label>
-                    <input type="text" id="name" name="name" value={nameEtapeType} onChange={handleNameEtapeTypeChange}
-                           required className="input-field"/>
-                </div>
-
-                <label htmlFor="type">Type:</label>
-                <select id="type" name="type" value={typeEtapeType} onChange={handleTypeEtapeTypeChange} required>
-                    <option value="EtapeType">EtapeType</option>
-                    <option value="GroupeEtapeType">GroupeEtapeType</option>
-                </select>
-                
-
-                <label htmlFor="lieuId">Lieu:</label>
-                <select id="lieuId" name="lieuId" value={lieuId} onChange={handleEtapeTypeChangeLieu} required>
-                    <option value="" disabled>Sélectionnez un lieu</option>
-                    {lieu.map((l) => (
-                        <option key={l._id} value={l._id}>{l.nom}</option>
-                    ))}
-                </select>
-                <select
-                    id="competenceId"
-                    name="competenceId"
-                    value={competenceId}
-                    onChange={handleEtapeTypeChangeCompetence}
-                    required
-                >
-                    <option value="" disabled>
-                        Sélectionnez une compétence
-                    </option>
-                    {competence.map((comp) => (
-                        <option key={comp._id} value={comp.nom}>
-                            {comp.nom}
-                        </option>
-                    ))}
-                </select>
-
-                <select id="materielId" name="materielId" value={materielId} onChange={handleEtapeTypeChangeMateriel}
-                        required>
-                    <option value="" disabled>Sélectionnez un materiel</option>
-                    {materiel.map((m) => (
-                        <option value={m._id}>{m.nom}</option>
-                    ))}
-                </select>
-                
-
-            </form>
             <form>
-            <div className="flex flex-col p-6 space-y-4 bg-white rounded-md shadow-md">
-                <h2 className="text-lg font-semibold text-center">Ajouter une nouvelle étape type</h2>
-                <div className="flex items-center space-x-2">
-                    <label htmlFor="stepName" className="font-medium">Nom de l’étape</label>
-                    <input id="stepName" type="text" className="flex-grow p-2 border rounded-md"/>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <label htmlFor="time" className="font-medium">Temps</label>
-                    <select id="time" className="flex-grow p-2 border rounded-md">
-                    <option>Sélectionnez le temps</option>
-                    </select>
-                </div>
-                <div>
-                    <label className="flex switch">
-                        <input id="fasting" type="checkbox"/>
-                        <span className="slider round"></span>
-                    </label>
-                    <label htmlFor="fasting" className="font-medium">À jeun</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <label htmlFor="staff" className="font-medium">Personnel (facultatif)</label>
-                    <input id="staff" type="text" className="flex-grow p-2 border rounded-md"/>
-                </div>
-                <div className="flex flex-auto justify-center space-x-4">
-                    <button className="px-4 py-2 text-white bg-gray-400 rounded-md">Annuler</button>
-                    <button type={"submit"} className="px-4 py-2 text-white bg-blue-500 rounded-md">Ajouter</button>
-                </div>
+                <div className="flex flex-col p-6 space-y-4 bg-white rounded-md shadow-md">
+                    <h2 className="text-lg font-semibold text-center">Ajouter une nouvelle étape type</h2>
+                    <div className="flex flex-row w-full border-b-2 mb-8 font-bold border-black mb-10">
+                        <input id="stepName" type="text" className="w-full outline-none bg-white text-2xl" placeholder="Nom de l'étape"/>
+                    </div>
+                    <div className="flex flex-row w-full border-b-2 mb-8 mb-10">
+                        <input id="time" className="w-full outline-none bg-white" placeholder="Temps"></input>
+                        <Clock size={24}/>
+                    </div>
+                    <div>
+                        <label className="flex switch">
+                            <input id="fasting" type="checkbox"/>
+                            <span className="slider round"></span>
+                        </label>
+                        <label htmlFor="fasting" className="font-medium text-center">À jeun</label>
+                    </div>
+                    <div className="flex flex-row w-full border-b-2 mb-8">
+                        <select id="lieuId" name="lieuId" value={lieuId} onChange={(e)=> {setLieuId(e.target.value)}} required className="w-full outline-none bg-white">
+                            <option value="" disabled>Sélectionnez un lieu</option>
+                            {lieu.map((l) => (
+                                <option key={l._id} value={l._id}>{l.nom}</option>
+                            ))}
+                        </select>
+                        <Door size={24}/>
+                    </div>
+                    <div className="flex flex-row w-full border-b-2 mb-8">
+                        <select id="competenceId" name="competenceId" value={competenceId} onChange={handleEtapeTypeChangeCompetence} required className="w-full outline-none bg-white">
+                            <option value="" disabled>
+                                Sélectionnez une compétence requise
+                            </option>
+                            {competence.map((comp) => (
+                                <option key={comp._id} value={comp.nom}>
+                                    {comp.nom}
+                                </option>
+                            ))}
+                        </select>
+                        <User size={24}/>
+                    </div>
+                    <div className="flex flex-row w-full border-b-2 mb-8">
+                        <select id="materielId" name="materielId" value={materielId} onChange={handleEtapeTypeChangeMateriel} required className="w-full outline-none bg-white">
+                            <option value="" disabled>Sélectionnez un materiel</option>
+                            {materiel.map((m) => (
+                                <option value={m._id}>{m.nom}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="flex flex-auto justify-center space-x-4">
+                        <button className="px-4 py-2 text-white bg-gray-400 rounded-md">Annuler</button>
+                        <button type={"submit"} className="px-4 py-2 text-white bg-blue-500 rounded-md">Ajouter</button>
+                    </div>
                 </div>
             </form>
         </>

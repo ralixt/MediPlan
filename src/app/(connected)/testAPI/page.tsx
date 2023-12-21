@@ -343,7 +343,7 @@ export default  function test() {
                         <input id="fasting" type="checkbox"/>
                         <span className="slider round"></span>
                     </label>
-                    <label htmlFor="fasting" className="font-medium">À jeun</label>
+                    <label htmlFor="fasting" className="font-medium items-end">À jeun</label>
                 </div>
                 <div className="flex items-center space-x-2">
                     <label htmlFor="staff" className="font-medium">Personnel (facultatif)</label>

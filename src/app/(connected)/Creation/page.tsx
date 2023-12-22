@@ -28,76 +28,8 @@ export default  function creation() {
     const [competenceId, setCompetenceId] = useState("");
     const [lieuId, setLieuId] = useState('');
     const [materielId, setMaterielId] = useState('');
-    const [etapeType,setEtapeType]=useState([]);
-    const [parcoursType,setParcoursType]=useState([]);
-    const [selectedEtapes, setSelectedEtapes] = useState([]);
-    const [precedences, setPrecedences] = useState([]);
-    const [parcoursName, setParcoursName] = useState('');
-    const [etapesSelect,setEtapesSelect]=useState([])
-    const [username,setUsername]=useState("")
-    const [password,setPassword]=useState("")
-
-    const handleAddEtapeToParcours = (etapeId) => {
-        console.log('Ajout etape to parcours:', etapeId);
-        setSelectedEtapes([...selectedEtapes, etapeId]);
-       const d = selectedEtapes
-
-            setEtapesSelect([...etapesSelect, etapesSelect.includes(etapeId)? null:etapeId])
-
-    };
-    const handleAddSquencable = (etapeId) => {
-        setSelectedEtapes([...selectedEtapes, etapeId]);
-    };
-
-    const handleAddPrecedence = () => {
-        if (selectedEtapes.length === 2) {
-            const [antecedent, successeur] = selectedEtapes;
-            setPrecedences([...precedences, { antecedent, successeur }]);
-            setSelectedEtapes([]);
-        }
-    };
-
-
-
-
-
-    // const handleCreateParcoursType = async () => {
-    //     // Crée le parcours type avec les étapes et les précédences
-    //     const formData = new FormData();
-    //     formData.append('name', parcoursName);
-    //     formData.append('type', 'ParcoursType');
-    //     formData.append('sequencables', JSON.stringify(etapesSelect)) ;
-    //     formData.append('precedences', JSON.stringify(precedences) );
-    //
-    //     await createParcoursType(formData);
-    //
-    //     // Après la création, réinitialisez les séquencables et les précédences sélectionnées
-    //     setSelectedEtapes([]);
-    //     setEtapesSelect([])
-    //     setPrecedences([]);
-    // };
-
-    const handleCreateParcoursType = async () => {
-        // Crée le parcours type avec les étapes et les précédences
-        const data = {
-            name: '',
-            type: 'ParcoursType',
-            sequencables: etapesSelect,
-            precedences: precedences
-        };
-
-        try {
-            await createParcoursType(data);
-
-            // Après la création, réinitialisez les séquencables et les précédences sélectionnées
-            // setSelectedEtapes([]);
-            // setEtapesSelect([]);
-            // setPrecedences([]);
-        } catch (error) {
-            console.error('Erreur lors de la création du ParcoursType:', error);
-        }
-    };
-
+    const [AJeun, setAJeun] = useState(false);
+    const [Duree, setDuree] = useState();
 
 
 
@@ -131,46 +63,12 @@ export default  function creation() {
             }
         };
 
-        const fetchDataEtapeType = async () => {
-            try {
-                const fetchedEtapeType = await getAllEtapeType();
-                setEtapeType(fetchedEtapeType);
-            } catch (error) {
-                console.error("Erreur de fetch Etape type :", error);
-            }
-        };
-        const fetchDataParcoursType = async () => {
-            try {
-                const fetchedParcoursType = await getAllParcoursType();
-                setParcoursType(fetchedParcoursType);
-            } catch (error) {
-                console.error("Erreur de fetch Parcours type :", error);
-            }
-        };
-
-
-
 
         fetchDataComp();
         fetchDataLieu();
         fetchDataMateriel();
-        fetchDataEtapeType();
-        fetchDataParcoursType();
     }, []);
 
-    const handleCreateOrder=async ()=>{
-        await createRessou(name,type);
-
-    };
-
-    const handleCreateOrderComp=async ()=>{
-
-            const formData=new FormData();
-            formData.append('nom',nameComp)
-
-
-        await createComp(formData);
-    };
 
     const handleCreateEtapeType=async ()=>{
         const formData=new FormData();
@@ -179,62 +77,19 @@ export default  function creation() {
         formData.append('competenceId',competenceId)
         formData.append('lieuId',lieuId)
         formData.append('materielId',materielId)
+        formData.append("AJeun", AJeun)
+        formData.append("duree", Duree)
         await createEtapeType(formData)
     }
-
-
-    const handleSubmitCreateCompte = async ()=>{
-        const formData=new FormData();
-        formData.append('username',username)
-        formData.append('password',password)
-       return  await CreateUser(formData)
-
-
-
-    }
-
-
-    const handleNameChange = (event) => {
-        setName(event.target.value);
-    };
-
-    const handleNameCompChange = (event) => {
-        setNameComp(event.target.value);
-    };
-
-    const handleTypeChange = (event) => {
-        setType(event.target.value);
-    };
-
-    const handleNameEtapeTypeChange = (event) => {
-        setNameEtapeType(event.target.value);
-    };
-
-   /* const handleEtapeTypeChangeCompetence = (event) => {
-        setCompetenceId(event.target.value);
-    };*/
 
     const handleEtapeTypeChangeCompetence = async (event) => {
         setCompetenceId(event.target.value)
     }
 
 
-  /*  const handleEtapeTypeChangeMateriel = async (event) => {
-        const selectedName = event.target.value;
-        try {
-            const materiel = await getRessourceByName(selectedName);
-            setMaterielId(materiel._id);
-        } catch (error) {
-            console.error('Error fetching materiel by name:', error);
-        }
-    };*/
-
     const handleEtapeTypeChangeMateriel = (event) => {
         setMaterielId(event.target.value);
     };
-
-
-
 
 
 
@@ -246,13 +101,13 @@ export default  function creation() {
                         <input id="stepName" type="text" className="w-full outline-none bg-white text-2xl" placeholder="Nom de l'étape" value={nameEtapeType} onChange={(e)=> {setNameEtapeType(e.target.value)}}/>
                     </div>
                     <div className="flex flex-row w-full border-b-2 mb-8 mb-10">
-                        <input id="time" className="w-full outline-none bg-white" placeholder="Temps"></input>
+                        <input id="time" type="number" className="w-full outline-none bg-white" placeholder="Temps" value={Duree} onChange={(e)=> {setDuree(e.target.value)}}></input>
                         <Clock size={24}/>
                     </div>
                     <div>
-                        <label className="flex switch">
-                            <input id="fasting" type="checkbox"/>
-                            <span className="slider round"></span>
+                        <label className="flex switch" >
+                            <input id="fasting" type="checkbox" name="aJeun" checked={AJeun} onChange={()=>setAJeun(AJeun => !AJeun)}/>
+                            <span className="slider round" ></span>
                         </label>
                         <label htmlFor="fasting" className="font-medium text-center">À jeun</label>
                     </div>

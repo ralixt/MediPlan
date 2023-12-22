@@ -8,6 +8,7 @@ import './scrollbar.css'
 import {deleteAllParcoursType, getAllParcoursType, getParcoursType} from "@/actions/ParcoursType";
 import {Loader} from "@/components/loader";
 import {param} from "ts-interface-checker";
+import {ModelingGeneratorMenu} from "@/components/modelingGeneratorMenu";
 
 type props = {
   uid: string;
@@ -61,6 +62,7 @@ export default async function ModelingWorkshop({
         <WorkshopButtonOneIcon href="/modeling-workshop-menu" icon={<ArrowLeft size={24} />} classname="absolute top-6 left-24 bg-lightgrey transition-all duration-300 ease-in-out hover:rounded-full p-4 rounded-2xl"/>
         <h1 className=" text-xl pt-10">{parcours.name}</h1>
         <ModelingGenerator element={elements} parcour={parcours} />
+        <ModelingGeneratorMenu></ModelingGeneratorMenu>
     </div>
   );
 }

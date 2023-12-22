@@ -262,7 +262,11 @@ export default  function test() {
     return(<>
             <form action={handleCreateOrder}>
                 <input type="text" value={name} onChange={handleNameChange}/>
-                <input type="text" value={type} onChange={handleTypeChange}/>
+                <select value={type} onChange={handleTypeChange}>
+                    <option value="personnel">personnel</option>    
+                    <option value="materiel">matériel</option>
+                    <option value="lieu">lieu</option>
+                </select>        
                 <button type={"submit"}>EnvoyerRessource</button>
             </form>
 

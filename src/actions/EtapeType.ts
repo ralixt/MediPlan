@@ -1,6 +1,6 @@
 "use server";
 import EtapeType from "@/app/models/etapeType";
-import { connectMongodb } from "@/lib/mongoConnect";
+import {connectMongodb, disconnectMongodb} from "@/lib/mongoConnect";
 import Competence from "@/app/models/competence";
 import Ressource from "@/app/models/ressource";
 import exp from "constants";
@@ -17,8 +17,20 @@ export async function getRessourceByName(name:string) {
 
 export async function getAllEtapeType(){
     await connectMongodb();
-    return await EtapeType.find();
+    return await EtapeType.find()
+
 }
+export async function deleteEtapeType(){
+    try {
+        await connectMongodb()
+        return await EtapeType.deleteMany()
+    }catch (e) {
+        console.log(e)
+    }finally {
+        await disconnectMongodb()
+    }
+}
+
 
 export async function getEtapeType(id:string){
     await connectMongodb();
@@ -59,7 +71,7 @@ export async function createEtapeType(formData: FormData) {
 
 
 
-export async function deleteEtapeType(id:string) {
+export async function deleteEtapeTypeById(id:string) {
     await connectMongodb()
 
     try {

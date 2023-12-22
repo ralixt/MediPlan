@@ -7,15 +7,26 @@ import {
     ForkKnife,
     User,
 } from "@phosphor-icons/react";
+import {cache, useEffect, useState} from "react";
+import {getAllParcoursType} from "@/actions/ParcoursType";
+import fs from "fs/promises";
+import {getAllEtapeType} from "@/actions/EtapeType";
+import etapeType from "@/app/models/etapeType";
 
 // type propsET = {
 //     etapeType: EtapeType;
 // };
 
 // export function EtapeTypeCompact({ etapeType }: propsET) {
-export function EtapeTypeCompact() {
+export function EtapeTypeCompact(etape) {
+
+
+
     return (
+
+
         <div
+
             className="flex flex-row justify-between bg-lightlightgrey shadow-2xl rounded-3xl p-4 h-28"
             // ref={setNodeRef}
             // {...listeners}
@@ -23,7 +34,7 @@ export function EtapeTypeCompact() {
             // style={style}
         >
             {/*<h2 className="font-bold">{etapeType.name}</h2>*/}
-            <h2 className="font-bold text-3xl flex items-center justify-center">name</h2>
+            <h2 className="font-bold text-3xl flex items-center justify-center">{etape.name}</h2>
             <div className="text-xs ml-4 mr-12">
                 <div className="flex flex-row items-center">
                     <Clock size={16}/>
@@ -60,9 +71,47 @@ export function EtapeTypeCompact() {
 
 
 export function ModelingGeneratorMenu() {
+
+    const [EtapeType, setEtapeType] = useState([]);
+
+
+    useEffect(() => {
+        const fetchParcours = async () => {
+            try {
+                const data = await getAllEtapeType();
+                console.log("cache : " ,data)
+                setEtapeType(data);
+
+
+            } catch (error) {
+                console.error("Erreur lors de la récupération des données des étape types:", error);
+
+            }
+        };
+
+        fetchParcours();
+    }, []);
+   
+
+
+
+
     return(
+        <>
         <div>
-            <EtapeTypeCompact/>
+
+
+
+            {
+                EtapeType.map(((etapes)=>
+                        <EtapeTypeCompact  etape={etapes}  />
+
+                ))
+            }
+
+
+
         </div>
+        </>
     )
 }

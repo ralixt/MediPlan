@@ -1,6 +1,6 @@
 "use client"
 import {useCallback, useEffect, useState} from "react";
-import {createComp, createRessou, getComp, getLieu, getMateriel} from "@/actions/CreateCompTest";
+import {createComp, createRessou, deleteRessource, getComp, getLieu, getMateriel} from "@/actions/CreateCompTest";
 import {Ressource} from "@/app/models/ressource"
 import {connectMongodb} from "@/lib/mongoConnect";
 import {
@@ -149,6 +149,22 @@ export default  function test() {
             }
         };
 
+        const fetchDeleteRessource = async () => {
+            try {
+            await deleteRessource()
+            } catch (error) {
+                console.error("Erreur de suppression ressource :", error);
+            }
+        };
+
+        const fetchDeleteEtapeType = async () => {
+            try {
+                await deleteEtapeType()
+            } catch (error) {
+                console.error("Erreur de suppression etape type :", error);
+            }
+        };
+
 
 
 
@@ -157,6 +173,8 @@ export default  function test() {
         fetchDataMateriel();
         fetchDataEtapeType();
         fetchDataParcoursType();
+     //   fetchDeleteEtapeType();
+       // fetchDeleteRessource();
     }, []);
 
     const handleCreateOrder=async ()=>{

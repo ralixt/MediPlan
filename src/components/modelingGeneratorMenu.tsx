@@ -21,11 +21,13 @@ import etapeType from "@/app/models/etapeType";
 export function EtapeTypeCompact(etape) {
 
 
+    return <>
 
-    return (
 
-
+        {console.log(etape)}
         <div
+
+
             className="flex flex-row justify-between bg-lightlightgrey shadow-lg rounded-3xl p-4 h-28 max-w-xs "
             // ref={setNodeRef}
             // {...listeners}
@@ -33,7 +35,7 @@ export function EtapeTypeCompact(etape) {
             // style={style}
         >
             {/*<h2 className="font-bold">{etapeType.name}</h2>*/}
-            <h2 className="font-bold text-3xl flex items-center justify-center">{etape.name}</h2>
+            <h2 className="font-bold text-3xl flex items-center justify-center">{etape.etape.name}</h2>
             <div className="text-xs ml-4 mr-12">
                 <div className="flex flex-row items-center">
                     <Clock size={16}/>
@@ -41,10 +43,10 @@ export function EtapeTypeCompact(etape) {
                 </div>
 
                 {/*{etapeType.aJeun && (*/}
-                    <div className="flex flex-row items-center mt-2">
-                        <ForkKnife size={16}/>
-                        <p className="ml-2">Yes</p>
-                    </div>
+                <div className="flex flex-row items-center mt-2">
+                    <ForkKnife size={16}/>
+                    <p className="ml-2">Yes</p>
+                </div>
                 {/*)}*/}
 
                 <div className="flex flex-row items-center mt-2">
@@ -65,10 +67,10 @@ export function EtapeTypeCompact(etape) {
                 </button>
             </div>
         </div>
-    );
+        );
+    </>
+
 }
-
-
 export function ModelingGeneratorMenu() {
 
     const [EtapeType, setEtapeType] = useState([]);
@@ -78,7 +80,7 @@ export function ModelingGeneratorMenu() {
         const fetchParcours = async () => {
             try {
                 const data = await getAllEtapeType();
-                console.log("cache : " ,data)
+                console.log("cache : " ,data.map(i=>i.name))
                 setEtapeType(data);
 
 

@@ -1,43 +1,46 @@
-type sequencable = EtapeType | GroupeEtapeType
+type sequencable = EtapeType | GroupeEtapeType;
 
+type border = {
+  _id: string;
+  type: "Border";
+};
 type EtapeType = {
-    _id: string,
-    name: string,
-    type: "EtapeType",
-    duree: number,
-    competences: competence[],
-    lieux : ressource[],
-    materiels: ressource[],
-    aJeun:boolean
-}
+  _id: string;
+  name: string;
+  type: "EtapeType";
+  duree: number;
+  Competence: competence[];
+  Lieu: ressource[];
+  Materiel: ressource[];
+  aJeun: boolean;
+};
 
 type GroupeEtapeType = {
-    _id: string,
-    name: string,
-    type: "GroupeEtapeType",
-    Etapes:sequencable[]
-}
+  _id: string;
+  name: string;
+  type: "GroupeEtapeType";
+  Etapes: EtapeType[];
+};
 
 type precedence = {
-    _id: string,
-    name: string,
-    antecedent : string,
-    successeur : string,
-    type:"Precendence"
-}
-type competence={
-    nom: string
-}
+  _id: string;
+  name: string;
+  antecedent: string;
+  successeur: string;
+  type: "Precendence";
+};
+type competence = {
+  nom: string;
+};
 type ressource = {
-    nom: string,
-    type: "Lieu"
-}
+  nom: string;
+  type: "Lieu";
+};
 type parcours = {
-    _id: string,
-    name: string,
-    type: string,
-    sequencables : sequencable[]
-    precedences: precedence[]
-
-}
-type parcoursList = parcours[]
+  _id: string;
+  name: string;
+  type: string;
+  sequencables: sequencable[];
+  precedences: precedence[];
+};
+type parcoursList = parcours[];

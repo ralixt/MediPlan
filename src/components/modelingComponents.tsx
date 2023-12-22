@@ -20,19 +20,18 @@ type propsET = {
   etapeType: EtapeType;
 };
 export function EtapeType({ etapeType }: propsET) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: etapeType._id,
-  });
-  const style = {
-    transform: CSS.Translate.toString(transform),
-  };
+  const { attributes, listeners, setNodeRef, transform, transition, isOver } =
+    useSortable({
+      id: etapeType._id,
+    });
   return (
     <div
-      className="flex flex-col justify-between bg-white shadow-md rounded-3xl p-8 w-52 h-64"
+      className={`flex flex-col justify-between bg-white shadow-md rounded-3xl p-8 w-52 h-64 ${
+        isOver ? "border-2 border-black" : ""
+      }`}
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      style={style}
     >
       <h2 className="font-bold text-2xl">{etapeType.name}</h2>
 
@@ -51,12 +50,22 @@ export function EtapeType({ etapeType }: propsET) {
 
         <div className="flex flex-row items-center mt-2">
           <Door size={25} />
-          <p className="ml-2 text-xl">{etapeType.lieux}</p>
+
+          {etapeType.Lieu.map((lieu, index) => (
+            <p key={index} className="ml-2 text-xl">
+              {lieu.nom}
+            </p>
+          ))}
         </div>
 
         <div className="flex flex-row items-center mt-2">
           <User size={25} />
-          <p className="ml-2 text-xl">{etapeType.competences}</p>
+
+          {etapeType.Competence.map((competence, index) => (
+            <p key={index} className="ml-2 text-xl">
+              {competence.nom}
+            </p>
+          ))}
         </div>
       </div>
       <div className="flex justify-end mt-4">
@@ -69,38 +78,46 @@ export function EtapeType({ etapeType }: propsET) {
 }
 export function EtapeTypeOver({ etapeType }: propsET) {
   return (
-      <div className="flex flex-col justify-between bg-white shadow-md rounded-3xl p-8 w-52 h-64">
-        <h2 className="font-bold text-2xl">{etapeType.name}</h2>
+    <div className="flex flex-col justify-between bg-white shadow-md rounded-3xl p-8 w-52 h-64">
+      <h2 className="font-bold text-2xl">{etapeType.name}</h2>
 
-        <div className="my-2">
-          <div className="flex flex-row items-center">
-            <Clock size={25}/>
-            <p className="ml-2 text-xl">{etapeType.duree}</p>'
-          </div>
-
-          {etapeType.aJeun && (
-              <div className="flex flex-row items-center mt-2">
-                <ForkKnife size={32}/>
-                <p className="ml-2 text-xl">{etapeType.aJeun}</p>
-              </div>
-          )}
-
-          <div className="flex flex-row items-center mt-2">
-            <Door size={25}/>
-            <p className="ml-2 text-xl">{etapeType.lieux}</p>
-          </div>
-
-          <div className="flex flex-row items-center mt-2">
-            <User size={25}/>
-            <p className="ml-2 text-xl">{etapeType.competences}</p>
-          </div>
+      <div className="my-2">
+        <div className="flex flex-row items-center">
+          <Clock size={25} />
+          <p className="ml-2 text-xl">{etapeType.duree}</p>'
         </div>
-        <div className="flex justify-end mt-4">
-          <button className="rounded-full">
-            <DotsThreeOutlineVertical size={32} weight="fill" color="#009BD4"/>
-          </button>
+
+        {etapeType.aJeun && (
+          <div className="flex flex-row items-center mt-2">
+            <ForkKnife size={32} />
+            <p className="ml-2 text-xl">{etapeType.aJeun}</p>
+          </div>
+        )}
+
+        <div className="flex flex-row items-center mt-2">
+          <Door size={25} />
+          {etapeType.Lieu.map((lieu, index) => (
+            <p key={index} className="ml-2">
+              {lieu.nom}
+            </p>
+          ))}
+        </div>
+
+        <div className="flex flex-row items-center mt-2">
+          <User size={25} />
+          {etapeType.Competence.map((competence, index) => (
+            <p key={index} className="ml-2 text-xl">
+              {competence.nom}
+            </p>
+          ))}
         </div>
       </div>
+      <div className="flex justify-end mt-4">
+        <button className="rounded-full">
+          <DotsThreeOutlineVertical size={32} weight="fill" color="#009BD4" />
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -108,40 +125,30 @@ type propsGET = {
   groupeEtapeType: GroupeEtapeType;
 };
 
-export function GroupeEtapeType({groupeEtapeType}: propsGET) {
-  const {attributes, listeners, setNodeRef, transform, transition} =
-      useSortable({
-        id: groupeEtapeType._id,
-      });
-  const droppable = useDroppable({id: groupeEtapeType._id});
-  const style = {
-    transform: CSS.Translate.toString(transform),
-    transition,
-  };
-  return (
-      <div
-          className="border-2 border-lightgrey rounded-2xl border-dashed p-12 flex flex-row "
-          ref={setNodeRef}
-          {...listeners}
-          {...attributes}
-          style={style}
-      >
-        <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
-        <div ref={droppable.setNodeRef} className="flex flex-row">
-          <DndContext>
-            <SortableContext
-                items={groupeEtapeType.Etapes.map((etape) => etape._id)}
-                strategy={horizontalListSortingStrategy}
-            >
-              {groupeEtapeType.Etapes.map((etape: sequencable) => (
-                  // <p>{etape.name}</p>
-              <EtapeType etapeType={etape} />
-            ))}
-          </SortableContext>
-        </DndContext>
-      </div>
+export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
+  const { attributes, listeners, setNodeRef, transform, transition, isOver } =
+    useSortable({
+      id: groupeEtapeType._id,
+    });
+  const droppable = useDroppable({ id: groupeEtapeType._id });
 
-      <p>fin Groupe Etape</p>
+  return (
+    <div
+      className={` rounded-2xl p-12 flex flex-col m-12 ${
+        isOver
+          ? "border-2 border-black"
+          : "border-2 border-lightgrey border-dashed"
+      }`}
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+    >
+      <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
+      <div ref={droppable.setNodeRef} className="flex flex-row">
+        {groupeEtapeType.Etapes.map((etape: EtapeType) => (
+          <EtapeType key={etape._id} etapeType={etape} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -150,12 +157,8 @@ export function GroupeEtapeTypeOver({ groupeEtapeType }: propsGET) {
     <div className="border-2 border-lightgrey rounded-2xl border-dashed p-4 flex flex-row">
       <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
       <div className="flex flex-row">
-        {groupeEtapeType.Etapes.map((etape: sequencable) => (
-          // <p>{etape.name}</p>
-          <EtapeType etapeType={etape} />
-        ))}
+        {groupeEtapeType.Etapes.length + " Etapes types"}
       </div>
-      <p>fin Groupe Etape</p>
     </div>
   );
 }
@@ -164,24 +167,44 @@ type propsP = {
   precedence: precedence;
 };
 export function Precedence({ precedence }: propsP) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: precedence._id,
-  });
-  const style = {
-    transform: CSS.Translate.toString(transform),
-  };
+  const { attributes, listeners, setNodeRef, transform, transition, isOver } =
+    useSortable({
+      id: precedence._id,
+    });
   return (
-    <p
-      className="m-5"
+    <div
+      className={`m-5 ${isOver ? "border-2 border-black" : ""}`}
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      style={style}
     >
-      precedence: {precedence.name}
-    </p>
+      <p>precedence: {precedence.name}</p>
+    </div>
   );
 }
 export function PrecedenceOver({ precedence }: propsP) {
-  return <p>precedence: {precedence.name}</p>;
+  return (
+    <div className={`m-5`}>
+      <p>precedence: {precedence.name}</p>
+    </div>
+  );
+}
+
+type propsB = {
+  border: border;
+};
+
+export function Border({ border }: propsB) {
+  const { attributes, listeners, setNodeRef, transform, transition, isOver } =
+    useSortable({ id: border._id });
+  return (
+    <div
+      className={`rounded-3xl p-8 w-52 h-64 ${
+        isOver ? "border-2 border-black" : ""
+      }`}
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+    ></div>
+  );
 }

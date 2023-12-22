@@ -16,15 +16,15 @@ import {
 export function EtapeTypeCompact() {
     return (
         <div
-            className="flex flex-row justify-between bg-lightlightgrey shadow-md rounded-3xl p-4 h-20"
+            className="flex flex-row justify-between bg-lightlightgrey shadow-2xl rounded-3xl p-4 h-28"
             // ref={setNodeRef}
             // {...listeners}
             // {...attributes}
             // style={style}
         >
             {/*<h2 className="font-bold">{etapeType.name}</h2>*/}
-            <h2 className="font-bold text-3xl">name</h2>
-            <div className="my-2 text-xs">
+            <h2 className="font-bold text-3xl flex items-center justify-center">name</h2>
+            <div className="text-xs ml-4 mr-12">
                 <div className="flex flex-row items-center">
                     <Clock size={16}/>
                     <p className="ml-2">5</p>'

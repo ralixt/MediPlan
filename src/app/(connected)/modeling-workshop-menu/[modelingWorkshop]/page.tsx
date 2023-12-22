@@ -60,7 +60,7 @@ export default async function ModelingWorkshop({
 
     <div className="flex flex-col items-center justify-center w-full h-[100vh] bg-lightlightgrey">
         <WorkshopButtonOneIcon href="/modeling-workshop-menu" icon={<ArrowLeft size={24} />} classname="absolute top-6 left-24 bg-lightgrey transition-all duration-300 ease-in-out hover:rounded-full p-4 rounded-2xl"/>
-        <h1 className=" text-xl pt-10">{parcours.name}</h1>
+        <h1 className=" text-3xl pt-10 font-bold">{parcours.name}</h1>
         <ModelingGenerator element={elements} parcour={parcours} />
         <ModelingGeneratorMenu></ModelingGeneratorMenu>
     </div>

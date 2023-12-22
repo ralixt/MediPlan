@@ -254,7 +254,7 @@ export default  function creation() {
 
 
     return(<>
-            <form>
+            <form action={handleCreateEtapeType}>
                 <div className="flex flex-col p-6 space-y-4 bg-white rounded-md shadow-md">
                     <h2 className="text-lg font-semibold text-center">Ajouter une nouvelle étape type</h2>
                     <div className="flex flex-row w-full border-b-2 mb-8 font-bold border-black mb-10">
@@ -303,7 +303,7 @@ export default  function creation() {
                     </div>
                     <div className="flex flex-auto justify-center space-x-4">
                         <button className="px-4 py-2 text-white bg-gray-400 rounded-md">Annuler</button>
-                        <button type={"submit"} className="px-4 py-2 text-white bg-blue-500 rounded-md">Ajouter</button>
+                        <button type="submit" className="px-4 py-2 text-white bg-blue-500 rounded-md">Ajouter</button>
                     </div>
                 </div>
             </form>

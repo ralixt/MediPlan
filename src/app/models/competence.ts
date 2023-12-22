@@ -5,7 +5,7 @@ interface ICompetence extends Document {
 }
 
 const competenceSchema = new Schema<ICompetence>({
-    nom: { type: String, required: true },
+    nom: { type: String },
 });
 
 const Competence =mongoose.models.Competence|| mongoose.model<ICompetence>('Competence', competenceSchema);

@@ -23,10 +23,9 @@ export default  function creation() {
     const [type,setType]=useState("")
     const [competence,setCompetence]=useState([])
     const [nameEtapeType,setNameEtapeType]=useState("")
-    const [typeEtapeType,setTypeEtapeType]=useState("EtapeType")
     const [lieu,setLieu]=useState([])
     const [materiel,setMateriel]=useState([])
-    const [competenceId, setCompetenceId] = useState('');
+    const [competenceId, setCompetenceId] = useState("");
     const [lieuId, setLieuId] = useState('');
     const [materielId, setMaterielId] = useState('');
     const [etapeType,setEtapeType]=useState([]);
@@ -176,7 +175,7 @@ export default  function creation() {
     const handleCreateEtapeType=async ()=>{
         const formData=new FormData();
         formData.append('names',nameEtapeType)
-        formData.append('type',typeEtapeType)
+        formData.append('type',"EtapeType")
         formData.append('competenceId',competenceId)
         formData.append('lieuId',lieuId)
         formData.append('materielId',materielId)
@@ -211,29 +210,15 @@ export default  function creation() {
         setNameEtapeType(event.target.value);
     };
 
-    const handleUserNameChange = (event) => {
-        setUsername(event.target.value);
-    };
-
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
-    const handleTypeEtapeTypeChange = (event) => {
-        setTypeEtapeType(event.target.value);
-    };
    /* const handleEtapeTypeChangeCompetence = (event) => {
         setCompetenceId(event.target.value);
     };*/
 
     const handleEtapeTypeChangeCompetence = async (event) => {
-        const selectedName = event.target.value;
-        try {
-            const competence = await getCompetenceByName(selectedName);
-            setCompetenceId(competence._id);
-        } catch (error) {
-            console.error('Error fetching materiel by name:', error);
-        }
+        setCompetenceId(event.target.value)
     }
+
+
   /*  const handleEtapeTypeChangeMateriel = async (event) => {
         const selectedName = event.target.value;
         try {
@@ -258,7 +243,7 @@ export default  function creation() {
                 <div className="flex flex-col p-6 space-y-4 bg-white rounded-md shadow-md">
                     <h2 className="text-lg font-semibold text-center">Ajouter une nouvelle étape type</h2>
                     <div className="flex flex-row w-full border-b-2 mb-8 font-bold border-black mb-10">
-                        <input id="stepName" type="text" className="w-full outline-none bg-white text-2xl" placeholder="Nom de l'étape"/>
+                        <input id="stepName" type="text" className="w-full outline-none bg-white text-2xl" placeholder="Nom de l'étape" value={nameEtapeType} onChange={(e)=> {setNameEtapeType(e.target.value)}}/>
                     </div>
                     <div className="flex flex-row w-full border-b-2 mb-8 mb-10">
                         <input id="time" className="w-full outline-none bg-white" placeholder="Temps"></input>
@@ -286,7 +271,7 @@ export default  function creation() {
                                 Sélectionnez une compétence requise
                             </option>
                             {competence.map((comp) => (
-                                <option key={comp._id} value={comp.nom}>
+                                <option key={comp._id} value={comp._id}>
                                     {comp.nom}
                                 </option>
                             ))}

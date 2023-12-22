@@ -4,7 +4,7 @@ import {
     Clock,
     Door,
     DotsThreeOutlineVertical,
-    ForkKnife,
+    ForkKnife, PencilSimpleLine,
     User,
 } from "@phosphor-icons/react";
 import {cache, useEffect, useState} from "react";
@@ -26,8 +26,7 @@ export function EtapeTypeCompact(etape) {
 
 
         <div
-
-            className="flex flex-row justify-between bg-lightlightgrey shadow-2xl rounded-3xl p-4 h-28"
+            className="flex flex-row justify-between bg-lightlightgrey shadow-lg rounded-3xl p-4 h-28 max-w-xs "
             // ref={setNodeRef}
             // {...listeners}
             // {...attributes}
@@ -97,21 +96,28 @@ export function ModelingGeneratorMenu() {
 
 
     return(
-        <>
-        <div>
+        <div className="h-52 w-11/12 bg-white p-12 mb-4 shadow-lg rounded-3xl" >
+            <div className="flex flex-row">
+                <div className="border-2 border-dashed h-20 border-grey rounded-3xl p-6 text-grey text-bold">
+                    <p className="mx-auto my-auto">Bloc d'étapes</p>
+                </div>
+                <div className="w-96 h-20 bg-light-blue flex flex-row">
+                    <PencilSimpleLine size={32} />
+                    <p>Lier</p>
+                </div>
+            </div>
 
-
-
+            <div className="flex flex-row">
             {
                 EtapeType.map(((etapes)=>
                         <EtapeTypeCompact  etape={etapes}  />
 
                 ))
             }
+            </div>
 
-
-
+            
         </div>
-        </>
+        
     )
 }

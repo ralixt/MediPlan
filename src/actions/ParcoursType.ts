@@ -1,13 +1,17 @@
 "use server"
 
-import {connectMongodb, disconnectMongodb} from "@/lib/mongoConnect";
+
 import ParcoursType from "@/app/models/parcoursType";
 import "@/app/models/etapeType"
 import "@/app/models/competence"
 import "@/app/models/ressource"
+import Database from "@/lib/mongoConnect";
 import EtapeType from "@/app/models/etapeType";
 import mongoose from "mongoose";
 import { disconnect } from "process";
+
+const dbInstance = Database.getInstance();
+
 
 // export async function createParcoursType(formData: FormData) {
 //     await connectMongodb();
@@ -41,7 +45,7 @@ import { disconnect } from "process";
 // }
 
 
-export async function createParcoursType(data) {
+/*export async function createParcoursType(data) {
 
     const { name, type, sequencables, precedences } = data;
 
@@ -55,16 +59,46 @@ export async function createParcoursType(data) {
 
     // Enregistrer le ParcoursType dans la base de données
     try {
-        await connectMongodb()
+
         const savedParcoursType = await newParcoursType.save();
         console.log('ParcoursType créé avec succès:', savedParcoursType);
         return savedParcoursType;
-        await disconnectMongodb()
+
     } catch (error) {
         console.error('Erreur lors de la création du ParcoursType:', error);
         throw error;
-    }finally {
-      await  disconnectMongodb()
+    }
+}*/
+
+export async function createParcoursType(formData: FormData) {
+
+
+    try {
+
+        const name = formData.get("name") as string;
+        const type = formData.get("type") as string;
+
+        /* const sequencablesIds =JSON.parse( formData.get("sequencables") as string);
+
+         const precedencesIds = JSON.parse(formData.get("precedences") as string);
+
+*/
+
+
+
+
+
+
+        const newParcoursType = await ParcoursType.create({
+            name,
+            type,
+            //sequencables: sequencablesIds,
+            //precedences:precedencesIds,
+        });
+
+        console.log("ParcoursType créé :", newParcoursType);
+    } catch (error) {
+        console.error("Erreur de création ParcoursType :", error);
     }
 }
 
@@ -72,7 +106,7 @@ export async function createParcoursType(data) {
 
 
 export async function deleteParcoursType(id:string){
-    await connectMongodb()
+
 
     try {
         const parcoursType = await ParcoursType.findByIdAndDelete(id);
@@ -85,7 +119,7 @@ export async function deleteParcoursType(id:string){
 export async function getParcoursType(id:string){
 
     try {
-        await connectMongodb()
+
 
         const p= await ParcoursType.findById(id).lean()
             .populate({
@@ -118,15 +152,13 @@ export async function getParcoursType(id:string){
         console.log(" Obtention de Parcours réussi ")
     }catch (error){
         console.log("erreur d'obtention parcours type")
-    }finally {
-    await    disconnectMongodb()
     }
 }
 
 
 
 export async function getAllParcoursType() {
-    await connectMongodb();
+
     try {
         const parcoursType = await ParcoursType.find().lean()
             .populate({
@@ -161,21 +193,17 @@ export async function getAllParcoursType() {
 
     } catch (error) {
         console.error("Erreur d'obtention des parcours :", error);
-    } finally {
-        await disconnectMongodb();
     }
 }
 
 export async function getNameParcoursType(){
-    await connectMongodb();
-    try {
+
+
 
         const parcoursTypeNames = await ParcoursType.find().select('name').lean();
         return parcoursTypeNames
 
-    }finally {
-        await disconnectMongodb()
-    }
+
 }
 
 
@@ -194,7 +222,7 @@ export async function getNameParcoursType(){
 
 
 export async function updateParcoursType(id:string, formData:FormData){
-    await connectMongodb()
+
     try {
         const parcoursTypeUpdated = await ParcoursType.findByIdAndUpdate(id,formData)
         if(parcoursTypeUpdated){
@@ -210,11 +238,13 @@ export async function updateParcoursType(id:string, formData:FormData){
     }
 }
 export async function deleteAllParcoursType() {
-    await connectMongodb()
+
    try{
      await ParcoursType.deleteMany()
    }catch(error){
     console.log("erreur du suppression du parcours type")
    }
-} 
+}
+
+
 

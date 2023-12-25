@@ -7,6 +7,7 @@ import {MagnifyingGlass, Plus} from "@phosphor-icons/react";
 import {cache} from 'react'
 import { usePathname } from 'next/navigation'
 import {getAllParcoursType, getNameParcoursType} from "@/actions/ParcoursType";
+import {AddParcoursType} from "@/components/addParcoursTypeForm";
 
 
 const getParcours = cache(async () => {
@@ -99,13 +100,7 @@ export default function ModelingWorkshop() {
                                            href="rechercher"/>
 
                         </form>
-                        <div className="h-full flex justify-center items-center content-center">
-                            <OneIconButton
-                                text="Nouveau parcours"
-                                icon={<Plus size={32} />}
-                                href="rechercher"/>
-
-                        </div>
+                        <AddParcoursType setloading={setLoading}/>
                     </div>
 
 

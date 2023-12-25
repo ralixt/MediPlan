@@ -1,43 +1,52 @@
 "use server";
 import EtapeType from "@/app/models/etapeType";
-import {connectMongodb, disconnectMongodb} from "@/lib/mongoConnect";
+import Database from "@/lib/mongoConnect";
 import Competence from "@/app/models/competence";
 import Ressource from "@/app/models/ressource";
 import exp from "constants";
 
+const dbInstance = Database.getInstance();
+
 export async function getCompetenceByName(name:string) {
-    await connectMongodb();
+
     return await Competence.findOne({ nom: name });
 }
 
 export async function getRessourceByName(name:string) {
-    await connectMongodb();
+
     return await Ressource.findOne({ nom: name });
 }
 
 export async function getAllEtapeType(){
-    await connectMongodb();
-    return await EtapeType.find()
+
+    return await EtapeType.find().lean()
+
+
+
+        .populate({ path: 'Competence' })
+        .populate({ path: 'Lieu' })
+        .populate({ path: 'Materiel' })
+
+
+
 
 }
 export async function deleteEtapeType(){
     try {
-        await connectMongodb()
+
         return await EtapeType.deleteMany()
     }catch (e) {
         console.log(e)
-    }finally {
-        await disconnectMongodb()
     }
 }
 
 
 export async function getEtapeType(id:string){
-    await connectMongodb();
+
     return EtapeType.findById(id);
 }
 export async function createEtapeType(formData: FormData) {
-    await connectMongodb();
+
 
     try {
         const name = formData.get("names");
@@ -72,10 +81,10 @@ export async function createEtapeType(formData: FormData) {
 
 
 export async function deleteEtapeTypeById(id:string) {
-    await connectMongodb()
+
 
     try {
-      const etapeType = await EtapeType.findByIdAndDelete(id,);
+      const etapeType = await EtapeType.findByIdAndDelete(id);
       console.log("EtapeType supprimé", etapeType)
     } catch (error) {
         console.log("Erreur de suppression EtapeType")
@@ -84,7 +93,7 @@ export async function deleteEtapeTypeById(id:string) {
 }
 
 export async function updateEtapeType(id:string, formData:FormData){
-    await connectMongodb()
+
     try {
         const etapeTypeUpdated = await EtapeType.findByIdAndUpdate(id,formData)
         if(etapeTypeUpdated){

@@ -1,29 +1,38 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-export const connectMongodb = async () => {
-    try {
+class Database {
+    private static instance: Database;
 
-        await mongoose.connect(process.env.MONGO_URI);
-
-        
-
-
-        console.log("Connected to MongoDB");
-    } catch (error) {
-        console.error("Error connecting to MongoDB:", error);
+    private constructor() {
+        this._connect();
     }
-};
 
-export const disconnectMongodb = async () => {
-    try {
-
-        await mongoose.disconnect();
-
-        
-
-
-        console.log("Disonnected to MongoDB");
-    } catch (error) {
-        console.error("Error connecting to MongoDB:", error);
+    private async _connect() {
+        try {
+            await mongoose.connect(process.env.MONGO_URI);
+            console.log('Connected to MongoDB');
+        } catch (error) {
+            console.error('Error connecting to MongoDB:', error);
+            throw error;
+        }
     }
-};
+
+    public static getInstance(): Database {
+        if (!Database.instance) {
+            Database.instance = new Database();
+        }
+        return Database.instance;
+    }
+
+    public async disconnect() {
+        try {
+            await mongoose.disconnect();
+            console.log('Disconnected from MongoDB');
+        } catch (error) {
+            console.error('Error disconnecting from MongoDB:', error);
+            throw error;
+        }
+    }
+}
+
+export default Database;

@@ -159,3 +159,23 @@ export function WorkshopButtonOneIcon ({icon, href, classname}: PropsWorkshopOne
     )
 }
 
+type PropsOneIconButtonAddParcoursType = {
+    text: string;
+    icon: React.ReactNode;
+    Click : (event: React.MouseEvent<HTMLButtonElement>) => void
+};
+export function OneIconButtonAddParcoursType({text,icon, Click}: PropsOneIconButtonAddParcoursType){
+    return(
+
+        <button className="flex rounded-[10px] bg-dark-blue" type="submit" onClick={Click}>
+            <div className="flex flex-row gap-8 px-5 py-7 bg-white rounded-[10px] hover:translate-x-[-0.5rem] hover:translate-y-[-0.5rem] transition-all duration-200 ease-in-out active:translate-x-0 active:translate-y-0">
+                <div className="flex flex-row gap-2">
+                    <p>{text}</p>
+                </div>
+                {icon}
+            </div>
+        </button>
+
+    )
+}
+

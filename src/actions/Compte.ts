@@ -1,13 +1,13 @@
 "use server"
-import { connectMongodb, disconnectMongodb } from "@/lib/mongoConnect";
+import Database from "@/lib/mongoConnect";
 import Compte from "@/app/models/compte";
 import bcrypt from "bcrypt"
 
 
-
+const dbInstance = Database.getInstance();
 export async function CreateUser(formData: FormData) {
     try {
-        await connectMongodb();
+
 
         const username = formData.get("username");
         const password = formData.get("password");
@@ -24,8 +24,6 @@ export async function CreateUser(formData: FormData) {
         return comptes;
     } catch (e) {
         console.error(e);
-    } finally {
-        await disconnectMongodb();
     }
 }
 
@@ -33,7 +31,7 @@ export const authenticateUser = async (credentials: { username: any; password: a
     const { username, password } = credentials;
 
     try {
-        await connectMongodb();
+
         const user = await Compte.findOne({ username });
 
         if (!user) {

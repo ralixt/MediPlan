@@ -9,7 +9,7 @@ import ParcoursType from "@/app/models/parcoursType";
 import {Loader} from "@/components/loader";
 import {Plus} from "@phosphor-icons/react";
 
-export function AddParcoursType({ setloading }){
+export function AddParcoursType({ setloading,SetParcours }){
 
     const [showPopup, setShowPopup] = useState(false);
     const [parcoursTypeName, setParcoursTypeName] = useState("kk");
@@ -21,7 +21,6 @@ export function AddParcoursType({ setloading }){
     };
 
     const handlePopupClose = () => {
-        // Cacher la popup lorsque l'utilisateur clique en dehors ou sur le bouton de fermeture
         setShowPopup(false);
     };
 
@@ -58,7 +57,6 @@ export function AddParcoursType({ setloading }){
         setIsLoading(false);
 
 
-        // Rafraîchir la page
         window.location.reload();
     };
 

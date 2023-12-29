@@ -100,7 +100,7 @@ export default function ModelingWorkshop() {
                                            href="rechercher"/>
 
                         </form>
-                        <AddParcoursType setloading={setLoading}/>
+                        <AddParcoursType setloading={setLoading} SetParcours={setParcours}/>
                     </div>
 
 

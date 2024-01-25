@@ -1,65 +1,60 @@
 "use client";
-import { cache, useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+
+// Import des modules nécessaires
+import React, { useState } from "react";
 import {
-  Clock,
-  Door,
-  DotsThreeOutlineVertical,
-  ForkKnife,
-} from "@phosphor-icons/react";
-import {
-  DndContext,
-  closestCenter,
-  DragEndEvent,
-  closestCorners,
-  DragOverlay,
-  DragStartEvent,
-  pointerWithin,
   useSensors,
   useSensor,
   KeyboardSensor,
   PointerSensor,
 } from "@dnd-kit/core";
 import {
+  DndContext,
+  DragEndEvent,
+  DragStartEvent,
+  pointerWithin,
+} from "@dnd-kit/core";
+import {
   arrayMove,
   SortableContext,
-  verticalListSortingStrategy,
   horizontalListSortingStrategy,
-  rectSortingStrategy,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import {
-  Border,
   EtapeType,
-  EtapeTypeOver,
   GroupeEtapeType,
-  GroupeEtapeTypeOver,
+  Border,
   Precedence,
-  PrecedenceOver,
 } from "@/components/modelingComponents";
 
-type props = {
-  element: (GroupeEtapeType | EtapeType | precedence | border)[];
+// Définition des types
+type Props = {
+  element: (GroupeEtapeType | EtapeType | Precedence | Border)[];
   parcour: parcours;
   allElement: string[];
 };
 
+// Composant principal du générateur de modélisation
 export default function ModelingGenerator({
   element,
   parcour,
   allElement,
-}: props) {
+}: Props) {
+  // State pour suivre l'élément actif en cours de déplacement
   const [activeId, setActiveId] = useState("");
+  // State pour stocker les éléments
   const [elements, setElements] = useState(element);
+  // State pour stocker tous les éléments
   const [all, setAll] = useState(allElement);
 
+  // Gestion de l'événement de défilement horizontal
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
     const delta = Math.max(-1, Math.min(1, e.deltaY));
     container.scrollLeft += delta * 100; // Ajustez la valeur pour contrôler la vitesse du défilement horizontal
   };
 
+  // Configuration des capteurs pour le déplacement d'éléments
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -67,6 +62,7 @@ export default function ModelingGenerator({
     })
   );
 
+  // Rendu du composant
   return (
     <div
       className="flex flex-row gap-20 w-full overflow-x-scroll px-48 h-full items-center"
@@ -83,60 +79,43 @@ export default function ModelingGenerator({
           strategy={horizontalListSortingStrategy}
         >
           {elements.map((element) => {
-            console.log(element);
-            if (element.type === "EtapeType") {
-              const newElement: EtapeType = element;
-              return <EtapeType key={newElement._id} etapeType={newElement} />;
-            } else if (element.type == "GroupeEtapeType") {
-              const newElement: GroupeEtapeType = element;
-              return (
-                <GroupeEtapeType
-                  key={newElement._id}
-                  groupeEtapeType={newElement}
-                />
-              );
-            } else if (element.type === "Border") {
-              const newElement: border = element;
-              return <Border key={newElement._id} border={newElement} />;
-            } else {
-              console.log("precedence");
-              const newElement: precedence = element;
-              return (
-                <Precedence key={newElement._id} precedence={newElement} />
-              );
-            }
+            return renderElement(element);
           })}
         </SortableContext>
-        {/* {<DragOverlay>{getDragOverlay()}</DragOverlay>} */}
       </DndContext>
     </div>
   );
 
-  //   function getDragOverlay() {
-  //     if (activeId === "") {
-  //       return null;
-  //     }
-  //     const element = elements.find((element) => element._id === activeId);
+  // Fonction de rendu pour un élément donné
+  function renderElement(
+    element: GroupeEtapeType | EtapeType | Precedence | Border
+  ) {
+    if (element.type === "EtapeType") {
+      return <EtapeType key={element._id} etapeType={element as EtapeType} />;
+    } else if (element.type === "GroupeEtapeType") {
+      return (
+        <GroupeEtapeType
+          key={element._id}
+          groupeEtapeType={element as GroupeEtapeType}
+        />
+      );
+    } else if (element.type === "Border") {
+      return <Border key={element._id} border={element as Border} />;
+    } else {
+      return (
+        <Precedence key={element._id} precedence={element as Precedence} />
+      );
+    }
+  }
 
-  //     if (isGroupeEtape(activeId)) {
-  //       const element = elements.find((element) => element._id === activeId);
-
-  //       return <GroupeEtapeTypeOver groupeEtapeType={element} />;
-  //     } else if (isEtapeType(activeId)) {
-  //       const element = elements.find((element) => element._id === activeId);
-  //       return <EtapeTypeOver etapeType={element} />;
-  //     } else {
-  //       const element = elements.find((element) => element._id === activeId);
-  //       return <PrecedenceOver precedence={element} />;
-  //     }
-  //   }
-
+  // Fonction pour déterminer si un élément est de type GroupeEtapeType
   function isGroupeEtape(id: string) {
     const element = elements.find((element) => element._id === id);
 
     return !!(element && element.type === "GroupeEtapeType");
   }
 
+  // Fonction pour obtenir le parent d'un élément
   function getParent(id: string) {
     for (const element of elements) {
       if (element.type === "GroupeEtapeType") {
@@ -152,47 +131,46 @@ export default function ModelingGenerator({
     }
   }
 
+  // Fonction pour déterminer si un élément est un enfant
   function isChild(id: string) {
-    let element = elements.findIndex((element) => element._id === id);
-    if (element === -1) {
-      return true;
-    }
-    return false;
+    let elementIndex = elements.findIndex((element) => element._id === id);
+    return elementIndex === -1;
   }
 
+  // Fonction pour déterminer si un élément est une bordure de fin
   function isEndBorder(id: string) {
     const element = elements.find((element) => element._id === id);
-    if (
+    return (
       element !== undefined &&
       element.type === "Border" &&
       element._id === "border2"
-    ) {
-      return true;
-    }
-    return false;
+    );
   }
 
+  // Fonction pour déterminer si un élément est une bordure de début
   function isStartBorder(id: string) {
     const element = elements.find((element) => element._id === id);
-    if (
+    return (
       element !== undefined &&
       element.type === "Border" &&
       element._id === "border1"
-    ) {
-      return true;
-    }
-    return false;
+    );
   }
 
+  // Gestion de l'événement de début de glissement
   function handleDragStart(event: DragStartEvent) {
     const id: string = event.active.id.toString();
     setActiveId(id);
   }
 
+  // Gestion de l'événement de fin de glissement
   function handleDragEnd(event: DragEndEvent) {
+    // Si aucun élément n'est actif, ne rien faire
     if (activeId === "") {
       return;
     }
+
+    // Récupérer l'élément actif et l'élément survolé
     const { active, over } = event;
     const id: string = active.id.toString();
     let overId = "";
@@ -202,6 +180,7 @@ export default function ModelingGenerator({
       return;
     }
 
+    // Vérification des conditions pour le déplacement
     if (
       (isGroupeEtape(id) && isGroupeEtape(overId)) ||
       isEndBorder(id) ||
@@ -210,53 +189,38 @@ export default function ModelingGenerator({
       return;
     }
 
-    // if (isNew(id)) {
-    //   console.log("new all");
-    //   setAll((all) => {
-    //     const activeIndex = newItem.findIndex((item) => item.id === id);
-    //     const newItems = { ...newItem[activeIndex] };
-    //     newItems.id = newItems.id + 10;
-    //     while (all.findIndex((item) => item.id === newItems.id) !== -1) {
-    //       newItems.id = newItems.id + 10;
-    //     }
-
-    //     all.push(newItems);
-    //     return [...all];
-    //   });
-    // }
-
+    // Mettre à jour les éléments avec la nouvelle disposition
     setElements((data) => {
       let items = [...data];
-      //   if (isNew(id)) {
-      //     const activeIndex = newItem.findIndex((item) => item.id === id);
-      //     const newItems = { ...newItem[activeIndex] };
-      //     newItems.id = newItems.id + 10;
-      //     while (items.findIndex((item) => item.id === newItems.id) !== -1) {
-      //       newItems.id = newItems.id + 10;
-      //     }
-      //     items.splice(1, 0, newItems);
-      //     console.log("new item");
-      //     return [...items];
-      //   } else
+
+      // Si l'élément actif est un enfant d'un groupe
       if (isChild(id)) {
         const parentParams = getParent(id);
         if (parentParams !== undefined) {
           const { parentId, indexParent, indexChild } = parentParams;
+
+          // Si l'élément survolé est un groupe différent, déplacer l'élément
           if (isGroupeEtape(overId) && parentId !== overId) {
             const indexOver = items.findIndex((item) => item._id === overId);
 
+            // Vérifier si le groupe de destination existe
             if (indexOver === -1) {
               console.error("child-container", id, overId);
               return [...items];
             }
+
+            // Déplacer l'élément de l'ancien groupe au nouveau groupe
             items[indexOver].Etapes.push(items[indexParent].Etapes[indexChild]);
             items[indexParent].Etapes.splice(indexChild, 1);
             return [...items];
           } else if (parentId !== overId) {
+            // Si l'élément survolé n'est pas un groupe, mais un autre élément
+            // Ajouter l'élément à la nouvelle position
             items.push(items[indexParent].Etapes[indexChild]);
             const activeIndex = items.findIndex((item) => item._id === id);
             let overIndex = items.findIndex((item) => item._id === overId);
 
+            // Ajuster l'indice de destination en fonction des bords
             if (overIndex === -1 || activeIndex === -1) {
               console.error("child-other", id, overId);
               return items;
@@ -267,6 +231,8 @@ export default function ModelingGenerator({
             } else if (isStartBorder(overId)) {
               overIndex += 1;
             }
+
+            // Déplacer l'élément à la nouvelle position
             const newItem = arrayMove(items, activeIndex, overIndex);
             items[indexParent].Etapes.splice(indexChild, 1);
             return newItem;
@@ -276,14 +242,20 @@ export default function ModelingGenerator({
           return [...items];
         }
       } else if (!isGroupeEtape(id)) {
+        // Si l'élément actif n'est pas un groupe
         console.log("pas groupeEtape");
+
         if (isGroupeEtape(overId)) {
+          // Si l'élément survolé est un groupe, ajouter l'élément à ce groupe
           const activeIndex = items.findIndex((item) => item._id === id);
           const overIndex = items.findIndex((item) => item._id === overId);
+
           if (overIndex === -1 || activeIndex === -1) {
             console.error("other-container", id, overId);
             return [...items];
           }
+
+          // Vérifier si l'élément n'est pas déjà dans le groupe de destination
           if (
             items[overIndex].Etapes.findIndex(
               (item: EtapeType) => item._id === id
@@ -295,11 +267,15 @@ export default function ModelingGenerator({
 
           return items;
         } else if (isChild(overId)) {
+          // Si l'élément survolé est un enfant, déplacer l'élément à son parent
           console.log("enfant");
           const parentParams = getParent(overId);
           const activeIndex = items.findIndex((item) => item._id === id);
+
           if (parentParams !== undefined) {
             const { parentId, indexParent, indexChild } = parentParams;
+
+            // Vérifier si l'élément n'est pas déjà dans le groupe de destination
             if (
               items[indexParent].Etapes.findIndex(
                 (item: EtapeType) => item._id === id
@@ -313,37 +289,53 @@ export default function ModelingGenerator({
             return [...items];
           }
         } else {
+          // Si l'élément survolé est un autre élément, déplacer l'élément à la nouvelle position
           const activeIndex = items.findIndex((item) => item._id === id);
           let overIndex = items.findIndex((item) => item._id === overId);
+
           if (overIndex === -1 || activeIndex === -1) {
             console.error("other-other", id, overId);
             return [...items];
           }
+
+          // Ajuster l'indice de destination en fonction des bords
           if (isEndBorder(overId)) {
             overIndex -= 1;
           } else if (isStartBorder(overId)) {
             overIndex += 1;
           }
+
+          // Déplacer l'élément à la nouvelle position
           const newItem = arrayMove(items, activeIndex, overIndex);
           return newItem;
         }
       } else {
+        // Si l'élément actif est un groupe
         const activeIndex = items.findIndex((item) => item._id === id);
         let overIndex = items.findIndex((item) => item._id === overId);
+
         if (overIndex === -1 || activeIndex === -1) {
           console.error("other-other", id, overId);
           return [...items];
         }
+
+        // Ajuster l'indice de destination en fonction des bords
         if (isEndBorder(overId)) {
           overIndex -= 1;
         } else if (isStartBorder(overId)) {
           overIndex += 1;
         }
+
+        // Déplacer l'élément à la nouvelle position
         const newItem = arrayMove(items, activeIndex, overIndex);
         return newItem;
       }
+
+      // Retourner la liste mise à jour des éléments
       return items;
     });
+
+    // Réinitialiser l'id de l'élément actif
     setActiveId("");
   }
 }

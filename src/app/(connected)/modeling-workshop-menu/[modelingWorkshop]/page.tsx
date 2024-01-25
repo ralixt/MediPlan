@@ -1,4 +1,4 @@
- import ModelingGenerator from "@/components/modelingGenerator";
+import ModelingGenerator from "@/components/modelingGenerator";
 import { cache } from "react";
 import fs from "fs/promises";
 import generate from "@/utils/generator";

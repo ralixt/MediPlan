@@ -4,8 +4,8 @@ import {
     Clock,
     Door,
     DotsThreeOutlineVertical,
-    ForkKnife, PencilSimpleLine,
-    User,
+    ForkKnife, PencilSimpleLine, Plus,
+    User, X,
 } from "@phosphor-icons/react";
 import {cache, useEffect, useState} from "react";
 import {getAllParcoursType} from "@/actions/ParcoursType";
@@ -171,8 +171,6 @@ export function EtapeTypeCompact({etape,SetEtapes}) {
     return <>
 
 
-
-
         {showModifierForm && (
            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                <div className="bg-white p-8 rounded shadow-md relative flex flex-col items-center w-[400px]">
@@ -283,16 +281,14 @@ export function EtapeTypeCompact({etape,SetEtapes}) {
             </div>
         )}
         <div
-
-
-            className="flex flex-row justify-between bg-lightlightgrey shadow-lg rounded-3xl p-4 h-32 "
+            className="flex flex-row justify-between items-center bg-lightlightgrey shadow-lg rounded-3xl px-8 py-4 w-full h-20 mr-4"
             // ref={setNodeRef}
             // {...listeners}
             // {...attributes}
             // style={style}
         >
             {/*<h2 className="font-bold">{etapeType.name}</h2>*/}
-            <h2 className="font-bold text-3xl flex items-center justify-center">{etape.name}</h2>
+            <h2 className="font-bold text-3xl flex items-center justify-center whitespace-nowrap">{etape.name}</h2>
             <div className="text-xs ml-4 mr-12">
                 <div className="flex flex-row items-center">
                     <Clock size={16}/>
@@ -311,13 +307,13 @@ export function EtapeTypeCompact({etape,SetEtapes}) {
                 <div className="flex flex-row items-center mt-2">
                     <Door size={16}/>
                     {/*<p className="ml-2">{etapeType.lieux}</p>*/}
-                    <p className="ml-2">{etape.Lieu[0].nom}</p>
+                    <p className="ml-2 whitespace-nowrap">{etape.Lieu[0].nom}</p>
                 </div>
 
                 <div className="flex flex-row items-center mt-2">
                     <User size={16}/>
                     {/*<p className="ml-2">{etapeType.competences}</p>*/}
-                    <p className="ml-2">{etape.Competence[0].nom}</p>
+                    <p className="ml-2 whitespace-nowrap">{etape.Competence[0].nom}</p>
                 </div>
             </div>
             <div className="flex justify-end mt-4">
@@ -330,6 +326,7 @@ export function EtapeTypeCompact({etape,SetEtapes}) {
     </>
 
 }
+
 export function ModelingGeneratorMenu() {
 
     const [EtapeType, setEtapeType] = useState([]);
@@ -357,20 +354,29 @@ export function ModelingGeneratorMenu() {
 
 
     return(
-        <div className="overflow-y-auto max-h-52 w-11/12 bg-white p-12 mb-4 shadow-lg rounded-3xl">
-
-            <div className="flex flex-row">
+        <div className="w-11/12 bg-white p-4 mb-4 shadow-lg rounded-3xl">
+            {/*max-h-52*/}
+            <div className="flex flex-row w-full pb-4 justify-between">
                 <div className="border-2 border-dashed h-20 border-grey rounded-3xl p-6 text-grey text-bold">
                     <p className="mx-auto my-auto">Bloc d'étapes</p>
                 </div>
-                <div className="w-96 h-20 bg-light-blue flex flex-row">
+                <div className="w-96 h-20 bg-light-blue flex flex-row items-center justify-center rounded-3xl">
                     <PencilSimpleLine size={32}/>
-                    <p>Lier</p>
+                    <p className="font-bold ml-4">Lier</p>
                 </div>
+
+                <div className="w-20 h-20 bg-dark-blue rounded-3xl flex items-center justify-center">
+                    <Plus size={32}/>
+                </div>
+
+                <div className="w-20 h-20 bg-light-blue rounded-3xl flex items-center justify-center">
+                    <X size={32} />
+                </div>
+
             </div>
 
-            <div className="flex flex-row">
-                {
+            <div className="flex flex-row overflow-y-auto h-24">
+            {
                     EtapeType.map(((etapes) =>
                             <EtapeTypeCompact etape={etapes} SetEtapes={setEtapeType}/>
 

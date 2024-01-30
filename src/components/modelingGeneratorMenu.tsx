@@ -23,6 +23,8 @@ import { getComp, getLieu, getMateriel } from "@/actions/CreateCompTest";
 import ModifierOverlay from "./modifierOverlay";
 import OptionOverlay from "./optionOverlay";
 import { EtapeTypeCompact } from "./modelingComponents";
+import Popup from "reactjs-popup";
+import Creation from "@/app/(connected)/Creation/page";
 
 export function ModelingGeneratorMenu() {
   const [EtapeType, setEtapeType] = useState([]);
@@ -57,7 +59,9 @@ export function ModelingGeneratorMenu() {
         </div>
 
         <div className="w-20 h-20 bg-dark-blue rounded-3xl flex items-center justify-center">
-          <Plus size={32} />
+          <Popup trigger={<Plus size={32} />} position="left center">
+            <Creation></Creation>
+          </Popup>
         </div>
 
         <div className="w-20 h-20 bg-light-blue rounded-3xl flex items-center justify-center">

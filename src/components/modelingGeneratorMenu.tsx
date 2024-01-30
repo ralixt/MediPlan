@@ -13,6 +13,8 @@ import fs from "fs/promises";
 import {deleteEtapeTypeById, getAllEtapeType, updateEtapeType} from "@/actions/EtapeType";
 import etapeType from "@/app/models/etapeType";
 import {getComp, getLieu, getMateriel} from "@/actions/CreateCompTest";
+import Popup from 'reactjs-popup';
+import Creation from "@/app/(connected)/Creation/page";
 
 // type propsET = {
 //     etapeType: EtapeType;
@@ -366,13 +368,14 @@ export function ModelingGeneratorMenu() {
                 </div>
 
                 <div className="w-20 h-20 bg-dark-blue rounded-3xl flex items-center justify-center">
-                    <Plus size={32}/>
+                    <Popup trigger={<Plus size={32}/>} position="left center">
+                        <Creation></Creation>
+                    </Popup>
                 </div>
 
                 <div className="w-20 h-20 bg-light-blue rounded-3xl flex items-center justify-center">
                     <X size={32} />
                 </div>
-
             </div>
 
             <div className="flex flex-row overflow-y-auto h-24">

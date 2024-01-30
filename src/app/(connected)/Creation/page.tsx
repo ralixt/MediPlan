@@ -1,23 +1,14 @@
 "use client"
 import {useCallback, useEffect, useState} from "react";
 import {createComp, createRessou, getComp, getLieu, getMateriel} from "@/actions/CreateCompTest";
-import {Ressource} from "@/app/models/ressource"
-import {connectMongodb} from "@/lib/mongoConnect";
 import {Clock, Door, User, PersonSimple, PersonArmsSpread} from "@phosphor-icons/react";
 import {
-    createEtapeType,
-    deleteEtapeType,
-    getAllEtapeType,
-    getCompetenceByName,
-    getRessourceByName
+    createEtapeType
 } from "@/actions/EtapeType";
-import {createParcoursType, getAllParcoursType} from "@/actions/ParcoursType";
 import "./style.css"
-import {flatted} from "flatted";
-import {CreateUser} from "@/actions/Compte";
 
 
-export default  function creation() {
+export default  function Creation() {
     const [name,setName]=useState("")
     const [nameComp,setNameComp]=useState("")
     const [type,setType]=useState("")
@@ -95,7 +86,7 @@ export default  function creation() {
 
     return(<>
             <form action={handleCreateEtapeType}>
-                <div className="flex flex-col p-6 space-y-4 bg-white rounded-md shadow-md">
+                <div className="flex flex-col p-6 space-y-4 bg-white rounded-md shadow-md container sm">
                     <h2 className="text-lg font-semibold text-center">Ajouter une nouvelle étape type</h2>
                     <div className="flex flex-row w-full border-b-2 mb-8 font-bold border-black mb-10">
                         <input id="stepName" type="text" className="w-full outline-none bg-white text-2xl" placeholder="Nom de l'étape" value={nameEtapeType} onChange={(e)=> {setNameEtapeType(e.target.value)}}/>
@@ -142,14 +133,11 @@ export default  function creation() {
                         </select>
                     </div>
                     <div className="flex flex-auto justify-center space-x-4">
-                        <button className="px-4 py-2 text-white bg-gray-400 rounded-md">Annuler</button>
-                        <button type="submit" className="px-4 py-2 text-white bg-blue-500 rounded-md">Ajouter</button>
+                        <button className="px-4 py-2 text-white bg-gray-400 rounded-md max-w-lg container">Annuler</button>
+                        <button type="submit" className="px-4 py-2 text-white bg-blue-500 rounded-md max-w-lg container">Ajouter</button>
                     </div>
                 </div>
             </form>
         </>
-
     )
-
-
 }

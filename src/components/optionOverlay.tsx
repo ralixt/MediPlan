@@ -1,6 +1,6 @@
 import { deleteEtapeTypeById } from "@/actions/EtapeType";
 
-export default function OptionOverlay({setShowModifierForm, setShowOptions, setConfirmDelete,SetEtapes, confirmDelete}) {
+export default function OptionOverlay({setShowModifierForm, setShowOptions, setConfirmDelete,SetEtapes, confirmDelete, etape}) {
   const handleModifierClick = () => {
     setShowModifierForm(true);
     setShowOptions(false);

@@ -4,11 +4,15 @@ import fs from "fs/promises";
 import generate from "@/utils/generator";
 import { WorkshopButtonOneIcon } from "@/components/buttons";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
-import './scrollbar.css'
-import {deleteAllParcoursType, getAllParcoursType, getParcoursType} from "@/actions/ParcoursType";
-import {Loader} from "@/components/loader";
-import {param} from "ts-interface-checker";
-import {ModelingGeneratorMenu} from "@/components/modelingGeneratorMenu";
+import "./scrollbar.css";
+import {
+  deleteAllParcoursType,
+  getAllParcoursType,
+  getParcoursType,
+} from "@/actions/ParcoursType";
+import { Loader } from "@/components/loader";
+import { param } from "ts-interface-checker";
+import { ModelingGeneratorMenu } from "@/components/modelingGeneratorMenu";
 import DownloadParcours from "@/components/telechargement";
 
 type props = {
@@ -44,27 +48,31 @@ export default async function ModelingWorkshop({
   const parcours = await getParcours();
   //console.log(parcours)
 
-  //const parcours = await getParcoursType(params.modelingWorkshop)
+  //const parcours = await getParcoursType(params.modelingWorkshop);
 
   if (parcours !== undefined) {
     elements = generate(parcours);
     //console.log(elements)
   }
 
-
-
   return elements == undefined && parcours == undefined ? (
     <Loader></Loader>
   ) : (
     <div className="flex flex-col items-center justify-center w-full h-[100vh] bg-lightlightgrey">
-        <DownloadParcours parcours={parcours}></DownloadParcours>
-        <WorkshopButtonOneIcon href="/modeling-workshop-menu" icon={<ArrowLeft size={24} />} classname="absolute top-6 left-24 bg-lightgrey transition-all duration-300 ease-in-out hover:rounded-full p-4 rounded-2xl"/>
-        <h1 className=" text-3xl pt-10 font-bold">{parcours.name}</h1>
-        <> {console.log("ele",parcours)}</>
-        <ModelingGenerator element={elements.groupeConcat} allElement={elements?.allElement} parcour={parcours} />
-        <ModelingGeneratorMenu></ModelingGeneratorMenu>
-
-
+      <DownloadParcours parcours={parcours}></DownloadParcours>
+      <WorkshopButtonOneIcon
+        href="/modeling-workshop-menu"
+        icon={<ArrowLeft size={24} />}
+        classname="absolute top-6 left-24 bg-lightgrey transition-all duration-300 ease-in-out hover:rounded-full p-4 rounded-2xl"
+      />
+      <h1 className=" text-3xl pt-10 font-bold">{parcours.name}</h1>
+      <> {console.log("ele", parcours)}</>
+      <ModelingGenerator
+        element={elements.groupeConcat}
+        allElement={elements?.allElement}
+        parcour={parcours}
+      />
+      <ModelingGeneratorMenu></ModelingGeneratorMenu>
     </div>
   );
 }

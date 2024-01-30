@@ -336,7 +336,7 @@ export function ModelingGeneratorMenu() {
         const fetchParcours = async () => {
             try {
                 const data = await getAllEtapeType();
-                console.log("cache : " ,data.map(i=>i.name))
+                //console.log("cache : " ,data.map(i=>i.name))
                 setEtapeType(data);
 
 

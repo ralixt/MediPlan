@@ -15,6 +15,7 @@ import "./test.css"
 import {flatted} from "flatted";
 import {CreateUser} from "@/actions/Compte";
 import {Clock, Door, DotsThreeOutlineVertical, ForkKnife, User} from "@phosphor-icons/react";
+import DownloadButton from "@/components/telechargement";
 
 
 export default  function test() {
@@ -540,6 +541,7 @@ export default  function test() {
                     </svg>
                 </button>
             </div>
+
 
 
         </>

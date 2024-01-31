@@ -37,43 +37,48 @@ export default function OptionOverlay({setShowModifierForm, setShowOptions, setC
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-8 rounded shadow-md relative flex flex-col items-center w-[400px]">
+      <div className="bg-white p-8 rounded-3xl shadow-md relative flex flex-col items-center content-center justify-center w-[415px] h-64">
         {confirmDelete ? (
           <>
-            <h2 className="text-2xl font-bold mb-4">
-              Êtes-vous sûr de supprimer l'étape type ?
-            </h2>
+            <div className="flex flex-col items-center content-center justify-center">
+              <h2 className="text-2xl font-bold mb-4">
+                Supprimer étape
+              </h2>
+              <p>Voulez vous supprimer L’étape {etape.name} ?</p>
+            </div>
+
+
             <button
-              onClick={handleConfirmationClick}
-              className="w-full bg-red-500 text-white px-4 py-2 rounded mb-2"
+                onClick={handleConfirmationClick}
+                className="w-full bg-negative text-white px-4 py-2 rounded-xl mb-2 hover:rounded-full"
             >
               Oui
             </button>
             <button
               onClick={handleAnnulerClick}
-              className="w-full bg-gray-500 text-white px-4 py-2 rounded"
+              className="w-full bg-lightgrey px-4 py-2 rounded-xl hover:rounded-full"
             >
               Annuler
             </button>
           </>
         ) : (
           <>
-            <h2 className="text-2xl font-bold mb-4">Options</h2>
+            <h2 className="text-2xl font-bold mb-8">Options</h2>
             <button
               onClick={handleModifierClick}
-              className="w-full bg-blue-500 text-white px-4 py-2 rounded mb-2"
+              className="w-full bg-dark-blue text-white px-4 py-2 rounded-xl mb-4 hover:rounded-full"
             >
               Modifier
             </button>
             <button
               onClick={handleSupprimerClick}
-              className="w-full bg-red-500 text-white px-4 py-2 rounded mb-2"
+              className="w-full bg-negative text-white px-4 py-2 rounded-xl mb-4 hover:rounded-full"
             >
               Supprimer
             </button>
             <button
               onClick={handleRetourClick}
-              className="w-full bg-gray-500 text-white px-4 py-2 rounded"
+              className="w-full bg-lightgrey px-4 py-2 rounded-xl hover:rounded-full"
             >
               Retour
             </button>

@@ -10,7 +10,7 @@ import {
     User,
     X,
 } from "@phosphor-icons/react";
-import {cache, useEffect, useState} from "react";
+import React, {cache, useEffect, useState} from "react";
 import {getAllParcoursType} from "@/actions/ParcoursType";
 import fs from "fs/promises";
 import {
@@ -26,6 +26,7 @@ import {EtapeTypeCompact} from "./modelingComponents";
 import Popup from "reactjs-popup";
 import Creation from "@/app/(connected)/Creation/page";
 import 'reactjs-popup/dist/index.css';
+
 
 
 export function ModelingGeneratorMenu() {
@@ -55,21 +56,23 @@ export function ModelingGeneratorMenu() {
     };
 
     return (
-        <div className="w-11/12 ml-8 mr-4">
-            <div
-                className={`w-20 h-20 bg-dark-blue rounded-3xl flex items-center justify-center mr-4 cursor-pointer ${
-                    menuVisible ? 'hidden' : 'block'
-                }`}
-                onClick={toggleMenuVisibility}
-            >
-                <Plus size={32}/>
+        <div className="w-11/12 mb-4">
+            <div className="flex justify-end items-center content-center">
+                <div
+                    className={`w-20 h-20 bg-light-blue rounded-3xl flex items-center justify-center mr-4 cursor-pointer hover:rounded-full ${
+                        menuVisible ? 'hidden' : 'block'
+                    }`}
+                    onClick={toggleMenuVisibility}
+                >
+                    <Plus size={32}/>
+                </div>
             </div>
 
+
             <div
-                className={`bg-white p-4 mb-4 shadow-lg rounded-3xl ${menuVisible ? 'block' : 'hidden'}`}
-                onClick={toggleMenuVisibility}
+                className={`bg-white pt-4 pl-4 pr-4 pb-2 shadow-lg rounded-3xl ${menuVisible ? 'block' : 'hidden'}`}
             >
-                <div className="flex flex-row w-full justify-between mb-4">
+                <div className="flex flex-row w-full justify-between mb-2">
                     <div className="flex flex-row items-center content-center w-full justify-between pr-4">
                         <div
                             className="flex items-center content-center justify-center border-4 border-dashed h-20 border-grey rounded-3xl p-6 text-grey w-full mr-4">
@@ -84,19 +87,24 @@ export function ModelingGeneratorMenu() {
 
                     <div className="flex flex-row items-center content-center border-l-2 pl-4">
 
-                        <div className="w-20 h-20 bg-dark-blue rounded-3xl flex items-center justify-center mr-4">
+                        <div className="w-20 h-20 bg-dark-blue rounded-3xl flex items-center justify-center mr-4 hover:rounded-full">
                             <Popup trigger={<Plus size={32}/>} position="left center" modal nested>
                                 <Creation></Creation>
                             </Popup>
                         </div>
 
-                        <div className="w-20 h-20 bg-light-blue rounded-3xl flex items-center justify-center">
+
+                        <button
+                            className="w-20 h-20 bg-light-blue rounded-3xl flex items-center justify-center hover:rounded-full"
+                            onClick={toggleMenuVisibility}
+                        >
                             <X size={32}/>
-                        </div>
+                        </button>
+
                     </div>
                 </div>
 
-                <div className="flex flex-row overflow-x-auto overflow-y-hidden w-full">
+                <div className="flex flex-row overflow-x-scroll w-full h-24 items-center content-center">
                     {EtapeType.map((etapes) => (
                         <EtapeTypeCompact etape={etapes} SetEtapes={setEtapeType} key={etapes.id}/>
                     ))}

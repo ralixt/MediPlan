@@ -25,6 +25,8 @@ import OptionOverlay from "./optionOverlay";
 import {EtapeTypeCompact} from "./modelingComponents";
 import Popup from "reactjs-popup";
 import Creation from "@/app/(connected)/Creation/page";
+import 'reactjs-popup/dist/index.css';
+
 
 export function ModelingGeneratorMenu() {
     const [EtapeType, setEtapeType] = useState([]);
@@ -83,7 +85,7 @@ export function ModelingGeneratorMenu() {
                     <div className="flex flex-row items-center content-center border-l-2 pl-4">
 
                         <div className="w-20 h-20 bg-dark-blue rounded-3xl flex items-center justify-center mr-4">
-                            <Popup trigger={<Plus size={32}/>} position="left center">
+                            <Popup trigger={<Plus size={32}/>} position="left center" modal nested>
                                 <Creation></Creation>
                             </Popup>
                         </div>

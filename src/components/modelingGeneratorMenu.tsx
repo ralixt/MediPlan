@@ -4,7 +4,7 @@ import {
     Clock,
     Door,
     DotsThreeOutlineVertical,
-    ForkKnife,
+    ForkKnife, MagnifyingGlass,
     PencilSimpleLine,
     Plus,
     User,
@@ -26,7 +26,7 @@ import {EtapeTypeCompact} from "./modelingComponents";
 import Popup from "reactjs-popup";
 import Creation from "@/app/(connected)/Creation/page";
 import 'reactjs-popup/dist/index.css';
-
+import diacritics from "diacritics";
 
 
 export function ModelingGeneratorMenu() {
@@ -54,6 +54,9 @@ export function ModelingGeneratorMenu() {
     const toggleMenuVisibility = () => {
         setMenuVisible(!menuVisible);
     };
+
+    const [searchEtape, setSearchEtape] = useState("");
+
 
     return (
         <div className="w-11/12 mb-4">
@@ -87,7 +90,8 @@ export function ModelingGeneratorMenu() {
 
                     <div className="flex flex-row items-center content-center border-l-2 pl-4">
 
-                        <div className="w-20 h-20 bg-dark-blue rounded-3xl flex items-center justify-center mr-4 hover:rounded-full">
+                        <div
+                            className="w-20 h-20 bg-dark-blue rounded-3xl flex items-center justify-center mr-4 hover:rounded-full">
                             <Popup trigger={<Plus size={32}/>} position="left center" modal nested>
                                 <Creation></Creation>
                             </Popup>
@@ -104,11 +108,40 @@ export function ModelingGeneratorMenu() {
                     </div>
                 </div>
 
-                <div className="flex flex-row overflow-x-scroll w-full h-24 items-center content-center">
-                    {EtapeType.map((etapes) => (
-                        <EtapeTypeCompact etape={etapes} SetEtapes={setEtapeType} key={etapes.id}/>
-                    ))}
+                <div className="flex flex-row items-center content-center">
+
+                    <div className="flex flex-row items-center content-center bg-lightgrey rounded-3xl p-4 mr-4">
+                        <MagnifyingGlass size={32}/>
+                        <input
+                            type="text"
+                            placeholder="Rechercher une étape"
+                            value={searchEtape}
+                            onChange={(e) => setSearchEtape(e.target.value)}
+                            className="border-none outline-none bg-lightgrey ml-2"
+                        />
+                        <button onClick={() => setSearchEtape("")}>
+                            <X size={25}/>
+                        </button>
+                    </div>
+
+                    <div className="flex flex-row overflow-x-scroll w-full h-24 items-center content-center">
+                        {EtapeType.filter((etape) =>
+                            diacritics.remove(etape.name.toLowerCase()).includes(diacritics.remove(searchEtape.toLowerCase()))
+                        ).length > 0 ? (
+                            EtapeType.filter((etape) =>
+                                diacritics.remove(etape.name.toLowerCase()).includes(diacritics.remove(searchEtape.toLowerCase()))
+                            ).map((etapes) => (
+                                <EtapeTypeCompact etape={etapes} SetEtapes={setSearchEtape} key={etapes.id}/>
+                            ))
+                        ) : (
+                            <div className="flex items-center content-center justify-center w-full">
+                                <p className="text-2xl">Aucune étape trouvée</p>
+                            </div>
+
+                        )}
+                    </div>
                 </div>
+
             </div>
 
         </div>

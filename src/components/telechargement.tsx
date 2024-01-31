@@ -21,7 +21,7 @@ const DownloadParcours = ({parcours}) => {
     };
 
     return (
-        <button onClick={handleClick} className="bg-grey p-4 mt-2 rounded-2xl text-white hover:rounded-full">
+        <button onClick={handleClick} className="bg-grey p-4 mt-6 rounded-2xl text-white hover:rounded-full">
             Télécharger le fichier JSON
         </button>
     );

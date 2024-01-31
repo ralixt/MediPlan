@@ -254,7 +254,7 @@ export function EtapeTypeCompact({etape, SetEtapes}) {
                 />
             )}
             <div
-                className="flex flex-row justify-between items-center bg-lightlightgrey shadow-lg rounded-3xl px-8 py-4 w-full h-20 mr-4 hover:rounded-full"
+                className="flex flex-row justify-between items-center bg-lightlightgrey shadow-lg rounded-3xl px-8 py-4 h-20 mr-4 hover:rounded-full"
                 // ref={setNodeRef}
                 // {...listeners}
                 // {...attributes}

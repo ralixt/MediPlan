@@ -65,7 +65,7 @@ export default async function ModelingWorkshop({
         icon={<ArrowLeft size={24} />}
         classname="absolute top-6 left-24 bg-lightgrey transition-all duration-300 ease-in-out hover:rounded-full p-4 rounded-2xl"
       />
-      <h1 className=" text-3xl pt-10 font-bold">{parcours.name}</h1>
+      <h1 className=" text-3xl pt-4 font-bold">{parcours.name}</h1>
       <> {console.log("ele", parcours)}</>
       <ModelingGenerator
         element={elements.groupeConcat}

@@ -5,7 +5,7 @@ import {
 } from "@/components/modelingComponents";
 
 const findIndex = (
-  tableaux: Array<GroupeEtapeType | EtapeType | precedence>[],
+  tableaux: Array<GroupeEtapeType | EtapeType | Precedence>[],
   _id: String
 ) => {
   for (let indexG = 0; indexG < tableaux.length; indexG++) {
@@ -35,8 +35,8 @@ const generate = (parcours: parcours) => {
   let sequencables: (GroupeEtapeType | EtapeType)[] = etapesTypes;
   sequencables = sequencables.concat(groupesEtapesType);
 
-  const precedences: precedence[] = parcours.precedences;
-  const groupes: Array<GroupeEtapeType | EtapeType | precedence>[] = [];
+  const precedences: Precedence[] = parcours.precedences;
+  const groupes: Array<GroupeEtapeType | EtapeType | Precedence>[] = [];
 
   for (let precedence of precedences) {
     const indexS = findIndex(groupes, precedence.successeur);
@@ -106,7 +106,7 @@ const generate = (parcours: parcours) => {
     }
   }
   groupes.sort((a, b) => b.length - a.length);
-  let groupeConcat: (GroupeEtapeType | EtapeType | precedence | border)[] =
+  let groupeConcat: (GroupeEtapeType | EtapeType | Precedence | Border)[] =
     Array.prototype.concat.apply([], groupes);
   for (let element of sequencables) {
     groupeConcat.push(element);

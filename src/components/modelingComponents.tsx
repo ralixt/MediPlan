@@ -175,7 +175,7 @@ export function GroupeEtapeTypeOver({groupeEtapeType}: propsGET) {
 }
 
 type propsP = {
-    precedence: precedence;
+  precedence: Precedence;
 };
 
 export function Precedence({precedence}: propsP) {
@@ -206,7 +206,7 @@ export function PrecedenceOver({precedence}: propsP) {
 }
 
 type propsB = {
-    border: border;
+  border: Border;
 };
 
 export function Border({border}: propsB) {
@@ -224,10 +224,14 @@ export function Border({border}: propsB) {
     );
 }
 
-export function EtapeTypeCompact({etape, SetEtapes}) {
-    const [showOptions, setShowOptions] = useState(false);
-    const [confirmDelete, setConfirmDelete] = useState(false);
-    const [showModifierForm, setShowModifierForm] = useState(false);
+export function EtapeTypeCompact({ etape, SetEtapes }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isOver } =
+    useSortable({
+      id: etape._id,
+    });
+  const [showOptions, setShowOptions] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [showModifierForm, setShowModifierForm] = useState(false);
 
     const handleOptionsClick = () => {
         setShowOptions(!showOptions);
@@ -243,32 +247,31 @@ export function EtapeTypeCompact({etape, SetEtapes}) {
                 />
             )}
 
-            {showOptions && (
-                <OptionOverlay
-                    setShowModifierForm={setShowModifierForm}
-                    setShowOptions={setShowOptions}
-                    setConfirmDelete={setConfirmDelete}
-                    SetEtapes={SetEtapes}
-                    confirmDelete={confirmDelete}
-                    etape={etape}
-                />
-            )}
-            <div
-                className="flex flex-row justify-between items-center bg-lightlightgrey shadow-lg rounded-3xl px-8 py-4 h-20 mr-4 hover:rounded-full"
-                // ref={setNodeRef}
-                // {...listeners}
-                // {...attributes}
-                // style={style}
-            >
-                {/*<h2 className="font-bold">{etapeType.name}</h2>*/}
-                <h2 className="font-bold text-3xl flex items-center justify-center whitespace-nowrap">
-                    {etape.name}
-                </h2>
-                <div className="text-xs ml-4 mr-12">
-                    <div className="flex flex-row items-center">
-                        <Clock size={15}/>
-                        <p className="ml-2">{etape.duree}</p>'
-                    </div>
+      {showOptions && (
+        <OptionOverlay
+          setShowModifierForm={setShowModifierForm}
+          setShowOptions={setShowOptions}
+          setConfirmDelete={setConfirmDelete}
+          SetEtapes={SetEtapes}
+          confirmDelete={confirmDelete}
+          etape={etape}
+        />
+      )}
+      <div
+        className="flex flex-row justify-between items-center bg-lightlightgrey shadow-lg rounded-3xl px-8 py-4 w-full h-20 mr-4"
+        ref={setNodeRef}
+        {...listeners}
+        {...attributes}
+      >
+        {/*<h2 className="font-bold">{etapeType.name}</h2>*/}
+        <h2 className="font-bold text-3xl flex items-center justify-center whitespace-nowrap">
+          {etape.name}
+        </h2>
+        <div className="text-xs ml-4 mr-12">
+          <div className="flex flex-row items-center">
+            <Clock size={15} />
+            <p className="ml-2">{etape.duree}</p>'
+          </div>
 
                     {/*{etapeType.aJeun && (*/}
                     {etape.a_jeun && (

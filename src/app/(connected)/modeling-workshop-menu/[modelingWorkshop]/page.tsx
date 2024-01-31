@@ -72,7 +72,6 @@ export default async function ModelingWorkshop({
         allElement={elements?.allElement}
         parcour={parcours}
       />
-      <ModelingGeneratorMenu></ModelingGeneratorMenu>
     </div>
   );
 }

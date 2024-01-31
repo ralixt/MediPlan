@@ -1,6 +1,6 @@
 type sequencable = EtapeType | GroupeEtapeType;
 
-type border = {
+type Border = {
   _id: string;
   type: "Border";
 };
@@ -22,12 +22,12 @@ type GroupeEtapeType = {
   Etapes: EtapeType[];
 };
 
-type precedence = {
+type Precedence = {
   _id: string;
   name: string;
   antecedent: string;
   successeur: string;
-  type: "Precendence";
+  type: "Precedence";
 };
 type competence = {
   nom: string;
@@ -41,6 +41,6 @@ type parcours = {
   name: string;
   type: string;
   sequencables: sequencable[];
-  precedences: precedence[];
+  precedences: Precedence[];
 };
 type parcoursList = parcours[];

@@ -1,12 +1,14 @@
 "use client";
 
 // Import des modules nécessaires
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useSensors,
   useSensor,
   KeyboardSensor,
   PointerSensor,
+  Active,
+  Over,
 } from "@dnd-kit/core";
 import {
   DndContext,
@@ -26,6 +28,9 @@ import {
   Border,
   Precedence,
 } from "@/components/modelingComponents";
+import { ModelingGeneratorMenu } from "./modelingGeneratorMenu";
+import { getAllEtapeType } from "@/actions/EtapeType";
+import { v4 as uuidv4 } from "uuid";
 
 // Définition des types
 type Props = {
@@ -40,18 +45,38 @@ export default function ModelingGenerator({
   parcour,
   allElement,
 }: Props) {
-  // State pour suivre l'élément actif en cours de déplacement
-  const [activeId, setActiveId] = useState("");
   // State pour stocker les éléments
-  const [elements, setElements] = useState(element);
-  // State pour stocker tous les éléments
-  const [all, setAll] = useState(allElement);
+  const [elements, setElements] =
+    useState<(GroupeEtapeType | EtapeType | Precedence | Border)[]>(element);
+
+  const [etapeType, setEtapeType] = useState<EtapeType[]>([]);
+
+  const [dragEnd, setDragEnd] = useState(false);
+
+  useEffect(() => {
+    const fetchParcours = async () => {
+      try {
+        const data = await getAllEtapeType();
+        //console.log("cache : " ,data.map(i=>i.name))
+        setEtapeType(data);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des données des étape types:",
+          error
+        );
+      }
+    };
+
+    fetchParcours();
+  }, []);
 
   // Gestion de l'événement de défilement horizontal
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
-    const delta = Math.max(-1, Math.min(1, e.deltaY));
-    container.scrollLeft += delta * 100; // Ajustez la valeur pour contrôler la vitesse du défilement horizontal
+    if (container) {
+      const delta = Math.max(-1, Math.min(1, e.deltaY));
+      container.scrollLeft += delta * 100; // Ajustez la valeur pour contrôler la vitesse du défilement horizontal
+    }
   };
 
   // Configuration des capteurs pour le déplacement d'éléments
@@ -62,26 +87,38 @@ export default function ModelingGenerator({
     })
   );
 
+  useEffect(() => {
+    setDragEnd(false);
+  }, [dragEnd]);
+
   // Rendu du composant
   return (
-    <div
-      className="flex flex-row gap-20 w-full overflow-x-scroll px-48 h-full items-center"
-      onWheel={handleWheel}
-    >
+    <div className="flex flex-row w-full h-full items-center">
       <DndContext
         collisionDetection={pointerWithin}
         onDragEnd={handleDragEnd}
-        onDragStart={handleDragStart}
         {...sensors}
       >
-        <SortableContext
-          items={element.map((element) => element._id)}
-          strategy={horizontalListSortingStrategy}
-        >
-          {elements.map((element) => {
-            return renderElement(element);
-          })}
-        </SortableContext>
+        <div className="flex flex-col w-full">
+          <div className="overflow-scroll" id="scroll" onWheel={handleWheel}>
+            <SortableContext
+              items={element.map((element) => element._id)}
+              strategy={horizontalListSortingStrategy}
+            >
+              <div className="flex flex-row gap-10 items-center justify-start mx-48">
+                {elements.map((element) => {
+                  return renderElement(element);
+                })}
+              </div>
+            </SortableContext>
+          </div>
+          <div className="w-full">
+            <ModelingGeneratorMenu
+              EtapeType={etapeType}
+              setEtapeType={setEtapeType}
+            />
+          </div>
+        </div>
       </DndContext>
     </div>
   );
@@ -113,6 +150,20 @@ export default function ModelingGenerator({
     const element = elements.find((element) => element._id === id);
 
     return !!(element && element.type === "GroupeEtapeType");
+  }
+
+  function isPrecedence(id: string) {
+    const element = elements.find((element) => element._id === id);
+
+    return !!(element && element.type === "Precedence");
+  }
+
+  function isEtape(id: string) {
+    let element = elements.find((element) => element._id === id);
+    if (element === undefined) {
+      element = etapeType.find((element) => element._id === id);
+    }
+    return !!(element && element.type === "EtapeType");
   }
 
   // Fonction pour obtenir le parent d'un élément
@@ -157,22 +208,26 @@ export default function ModelingGenerator({
     );
   }
 
-  // Gestion de l'événement de début de glissement
-  function handleDragStart(event: DragStartEvent) {
-    const id: string = event.active.id.toString();
-    setActiveId(id);
+  function isNew(active: Active, over: Over) {
+    if (
+      active.data.current !== undefined &&
+      over.data.current !== undefined &&
+      active.data.current.sortable.containerId !==
+        over.data.current.sortable.containerId
+    ) {
+      return true;
+    }
+    return false;
   }
 
-  // Gestion de l'événement de fin de glissement
-  function handleDragEnd(event: DragEndEvent) {
-    // Si aucun élément n'est actif, ne rien faire
-    if (activeId === "") {
-      return;
-    }
+  function ajouterUidAleatoire(uid: string): string {
+    let uidAleatoire = uuidv4().substr(0, 5);
+    return uid + uidAleatoire;
+  }
 
-    // Récupérer l'élément actif et l'élément survolé
+  function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
-    const id: string = active.id.toString();
+    const activeId: string = active.id.toString();
     let overId = "";
     if (over) {
       overId = over.id.toString();
@@ -180,143 +235,236 @@ export default function ModelingGenerator({
       return;
     }
 
-    // Vérification des conditions pour le déplacement
     if (
-      (isGroupeEtape(id) && isGroupeEtape(overId)) ||
-      isEndBorder(id) ||
-      isStartBorder(id)
+      (isGroupeEtape(activeId) && isGroupeEtape(overId)) ||
+      isEndBorder(activeId) ||
+      isStartBorder(activeId) ||
+      (activeId === overId && !isNew(active, over)) ||
+      (isPrecedence(activeId) && (isGroupeEtape(overId) || isChild(overId)))
     ) {
       return;
     }
 
-    // Mettre à jour les éléments avec la nouvelle disposition
-    setElements((data) => {
-      let items = [...data];
-
-      // Si l'élément actif est un enfant d'un groupe
-      if (isChild(id)) {
-        const parentParams = getParent(id);
-        if (parentParams !== undefined) {
-          const { parentId, indexParent, indexChild } = parentParams;
-
-          // Si l'élément survolé est un groupe différent, déplacer l'élément
-          if (isGroupeEtape(overId) && parentId !== overId) {
-            const indexOver = items.findIndex((item) => item._id === overId);
-
-            // Vérifier si le groupe de destination existe
-            if (indexOver === -1) {
-              console.error("child-container", id, overId);
-              return [...items];
-            }
-
-            // Déplacer l'élément de l'ancien groupe au nouveau groupe
-            items[indexOver].Etapes.push(items[indexParent].Etapes[indexChild]);
-            items[indexParent].Etapes.splice(indexChild, 1);
-            return [...items];
-          } else if (parentId !== overId) {
-            // Si l'élément survolé n'est pas un groupe, mais un autre élément
-            // Ajouter l'élément à la nouvelle position
-            items.push(items[indexParent].Etapes[indexChild]);
-            const activeIndex = items.findIndex((item) => item._id === id);
-            let overIndex = items.findIndex((item) => item._id === overId);
-
-            // Ajuster l'indice de destination en fonction des bords
-            if (overIndex === -1 || activeIndex === -1) {
-              console.error("child-other", id, overId);
-              return items;
-            }
-
-            if (isEndBorder(overId)) {
-              overIndex -= 1;
-            } else if (isStartBorder(overId)) {
-              overIndex += 1;
-            }
-
-            // Déplacer l'élément à la nouvelle position
-            const newItem = arrayMove(items, activeIndex, overIndex);
-            items[indexParent].Etapes.splice(indexChild, 1);
-            return newItem;
-          }
-        } else {
-          console.error("parent");
-          return [...items];
-        }
-      } else if (!isGroupeEtape(id)) {
-        // Si l'élément actif n'est pas un groupe
-        console.log("pas groupeEtape");
-
+    if (isNew(active, over)) {
+      if (isEtape(activeId)) {
         if (isGroupeEtape(overId)) {
-          // Si l'élément survolé est un groupe, ajouter l'élément à ce groupe
-          const activeIndex = items.findIndex((item) => item._id === id);
-          const overIndex = items.findIndex((item) => item._id === overId);
-
+          const activeIndex = etapeType.findIndex(
+            (item) => item._id === activeId
+          );
+          const overIndex = elements.findIndex((item) => item._id === overId);
           if (overIndex === -1 || activeIndex === -1) {
-            console.error("other-container", id, overId);
-            return [...items];
+            console.error("other-container", activeId, overId);
+            return;
           }
 
-          // Vérifier si l'élément n'est pas déjà dans le groupe de destination
           if (
-            items[overIndex].Etapes.findIndex(
-              (item: EtapeType) => item._id === id
+            elements[overIndex].Etapes.findIndex(
+              (item: EtapeType) => item._id === activeId
             ) === -1
           ) {
-            items[overIndex].Etapes.push(items[activeIndex]);
-            items.splice(activeIndex, 1);
+            let edit = true;
+            setElements((data) => {
+              const items = [...data];
+              if (edit) {
+                edit = false;
+                const etapetypepush = { ...etapeType[activeIndex] };
+                etapetypepush._id = ajouterUidAleatoire(etapetypepush._id);
+                items[overIndex].Etapes.push(etapetypepush);
+              }
+              return items;
+            });
+            console.log("DragEnd - New - Etape - GET");
+            return;
           }
-
-          return items;
+          return;
         } else if (isChild(overId)) {
-          // Si l'élément survolé est un enfant, déplacer l'élément à son parent
-          console.log("enfant");
           const parentParams = getParent(overId);
-          const activeIndex = items.findIndex((item) => item._id === id);
+          const activeIndex = etapeType.findIndex(
+            (item) => item._id === activeId
+          );
 
           if (parentParams !== undefined) {
             const { parentId, indexParent, indexChild } = parentParams;
 
-            // Vérifier si l'élément n'est pas déjà dans le groupe de destination
             if (
-              items[indexParent].Etapes.findIndex(
-                (item: EtapeType) => item._id === id
+              elements[indexParent].Etapes.findIndex(
+                (item: EtapeType) => item._id === activeId
               ) === -1
             ) {
-              items[indexParent].Etapes.push(items[activeIndex]);
-              items.splice(activeIndex, 1);
+              let edit = true;
+              setElements((data) => {
+                const items = [...data];
+                if (edit) {
+                  edit = false;
+                  let etapetypepush = { ...etapeType[activeIndex] };
+                  etapetypepush._id = ajouterUidAleatoire(etapetypepush._id);
+                  items[indexParent].Etapes.push(etapetypepush);
+                }
+                console.log(items);
+                return items;
+              });
+              console.log("DragEnd - New - Etape - Child");
+              return;
             }
-          } else {
-            console.error("parent");
-            return [...items];
           }
+          return;
         } else {
-          // Si l'élément survolé est un autre élément, déplacer l'élément à la nouvelle position
-          const activeIndex = items.findIndex((item) => item._id === id);
-          let overIndex = items.findIndex((item) => item._id === overId);
+          let edit = true;
+          setElements((data) => {
+            const items = [...data];
+            if (edit) {
+              edit = false;
+              let activeIndex = etapeType.findIndex(
+                (item) => item._id === activeId
+              );
+              if (activeIndex === -1) {
+                console.error("child-other", activeId, overId);
+                return [...data];
+              }
+              let etapetypepush = { ...etapeType[activeIndex] };
+              etapetypepush._id = ajouterUidAleatoire(etapetypepush._id);
+              items.push(etapetypepush);
 
-          if (overIndex === -1 || activeIndex === -1) {
-            console.error("other-other", id, overId);
-            return [...items];
-          }
+              activeIndex = items.findIndex(
+                (item) => item._id === etapetypepush._id
+              );
+              let overIndex = items.findIndex((item) => item._id === overId);
+              if (overIndex === -1 || activeIndex === -1) {
+                console.error("child-other", activeId, overId);
+                return [...data];
+              }
 
-          // Ajuster l'indice de destination en fonction des bords
-          if (isEndBorder(overId)) {
-            overIndex -= 1;
-          } else if (isStartBorder(overId)) {
-            overIndex += 1;
-          }
+              if (isEndBorder(overId)) {
+                overIndex -= 1;
+              } else if (isStartBorder(overId)) {
+                overIndex += 1;
+              }
 
-          // Déplacer l'élément à la nouvelle position
-          const newItem = arrayMove(items, activeIndex, overIndex);
-          return newItem;
+              const newItem = arrayMove(items, activeIndex, overIndex);
+              return newItem;
+            }
+            return items;
+          });
+          console.log("DragEnd - GET");
+          return;
         }
-      } else {
-        // Si l'élément actif est un groupe
-        const activeIndex = items.findIndex((item) => item._id === id);
-        let overIndex = items.findIndex((item) => item._id === overId);
+      }
+    } else if (isChild(activeId)) {
+      const parentParams = getParent(activeId);
+      if (parentParams !== undefined) {
+        const { parentId, indexParent, indexChild } = parentParams;
+
+        if (isGroupeEtape(overId) && parentId !== overId) {
+          const indexOver = elements.findIndex((item) => item._id === overId);
+          if (indexOver === -1) {
+            console.error("child-container", activeId, overId);
+            return;
+          }
+          let edit = true;
+          setElements((data) => {
+            const items = [...data];
+            if (edit) {
+              edit = false;
+              items[indexOver].Etapes.push(
+                items[indexParent].Etapes[indexChild]
+              );
+              items[indexParent].Etapes.splice(indexChild, 1);
+            }
+            return items;
+          });
+          console.log("DragEnd - Child - GET");
+          return;
+        } else if (parentId !== overId) {
+          let edit = true;
+          setElements((data) => {
+            const items = [...data];
+            if (edit) {
+              edit = false;
+              items.push(items[indexParent].Etapes[indexChild]);
+              const activeIndex = items.findIndex(
+                (item) => item._id === activeId
+              );
+              let overIndex = items.findIndex((item) => item._id === overId);
+              if (overIndex === -1 || activeIndex === -1) {
+                console.error("child-other", activeId, overId);
+                return [...data];
+              }
+              if (isEndBorder(overId)) {
+                overIndex -= 1;
+              } else if (isStartBorder(overId)) {
+                overIndex += 1;
+              }
+              const newItem = arrayMove(items, activeIndex, overIndex);
+              items[indexParent].Etapes.splice(indexChild, 1);
+              return newItem;
+            }
+            return items;
+          });
+          console.log("DragEnd - Child - !GET");
+          return;
+        }
+      }
+    } else if (!isGroupeEtape(activeId)) {
+      if (isGroupeEtape(overId)) {
+        const activeIndex = elements.findIndex((item) => item._id === activeId);
+        const overIndex = elements.findIndex((item) => item._id === overId);
 
         if (overIndex === -1 || activeIndex === -1) {
-          console.error("other-other", id, overId);
-          return [...items];
+          console.error("other-container", activeId, overId);
+          return;
+        }
+
+        if (
+          elements[overIndex].Etapes.findIndex(
+            (item: EtapeType) => item._id === activeId
+          ) === -1
+        ) {
+          let edit = true;
+          setElements((data) => {
+            const items = [...data];
+            if (edit) {
+              edit = false;
+              items[overIndex].Etapes.push(items[activeIndex]);
+              items.splice(activeIndex, 1);
+            }
+
+            return items;
+          });
+          console.log("DragEnd - !GET - GET");
+          return;
+        }
+      } else if (isChild(overId)) {
+        const parentParams = getParent(overId);
+        const activeIndex = elements.findIndex((item) => item._id === activeId);
+        if (parentParams !== undefined) {
+          const { parentId, indexParent, indexChild } = parentParams;
+          if (
+            elements[indexParent].Etapes.findIndex(
+              (item: EtapeType) => item._id === activeId
+            ) === -1
+          ) {
+            let edit = true;
+            setElements((data) => {
+              const items = [...data];
+              if (edit) {
+                edit = false;
+                items[indexParent].Etapes.push(items[activeIndex]);
+                items.splice(activeIndex, 1);
+              }
+
+              return items;
+            });
+            console.log("DragEnd - !GET - Child");
+            return;
+          }
+        }
+      } else {
+        const activeIndex = elements.findIndex((item) => item._id === activeId);
+        let overIndex = elements.findIndex((item) => item._id === overId);
+
+        if (overIndex === -1 || activeIndex === -1) {
+          console.error("other-other", activeId, overId);
+          return;
         }
 
         // Ajuster l'indice de destination en fonction des bords
@@ -326,16 +474,46 @@ export default function ModelingGenerator({
           overIndex += 1;
         }
 
-        // Déplacer l'élément à la nouvelle position
-        const newItem = arrayMove(items, activeIndex, overIndex);
-        return newItem;
+        let edit = true;
+        setElements((data) => {
+          const items = [...data];
+          if (edit) {
+            edit = true;
+            const newItem = arrayMove(items, activeIndex, overIndex);
+            return newItem;
+          }
+          return items;
+        });
+        console.log("DragEnd - !GET - !GET/Child");
+        return;
+      }
+    } else {
+      const activeIndex = elements.findIndex((item) => item._id === activeId);
+      let overIndex = elements.findIndex((item) => item._id === overId);
+
+      if (overIndex === -1 || activeIndex === -1) {
+        console.error("other-other", activeId, overId);
+        return;
       }
 
-      // Retourner la liste mise à jour des éléments
-      return items;
-    });
-
-    // Réinitialiser l'id de l'élément actif
-    setActiveId("");
+      if (isEndBorder(overId)) {
+        overIndex -= 1;
+      } else if (isStartBorder(overId)) {
+        overIndex += 1;
+      }
+      let edit = true;
+      setElements((data) => {
+        const items = [...data];
+        if (edit) {
+          edit = false;
+          const newItem = arrayMove(items, activeIndex, overIndex);
+          return newItem;
+        }
+        return items;
+      });
+      console.log("DragEnd - GET");
+      return;
+    }
+    return;
   }
 }

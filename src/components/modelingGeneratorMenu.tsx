@@ -136,7 +136,7 @@ export function ModelingGeneratorMenu({ EtapeType, setEtapeType }) {
                   <EtapeTypeCompact
                     etape={etapes}
                     SetEtapes={setSearchEtape}
-                    key={etapes.id}
+                    key={etapes._id}
                   />
                 ))
               ) : (

@@ -18,7 +18,7 @@ const findIndex = (
 };
 
 const generate = (parcours: parcours) => {
-  //console.log("generate")
+  console.log("generate", parcours);
   let etapesTypes: EtapeType[] = parcours.sequencables.filter(
     (sequencable): sequencable is EtapeType => sequencable.type == "EtapeType"
   );

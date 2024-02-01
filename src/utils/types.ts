@@ -12,7 +12,7 @@ type EtapeType = {
   Competence: competence[];
   Lieu: ressource[];
   Materiel: ressource[];
-  aJeun: boolean;
+  a_Jeun: boolean;
 };
 
 type GroupeEtapeType = {
@@ -24,7 +24,6 @@ type GroupeEtapeType = {
 
 type Precedence = {
   _id: string;
-  name: string;
   antecedent: string;
   successeur: string;
   type: "Precedence";

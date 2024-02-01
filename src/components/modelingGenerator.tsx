@@ -36,28 +36,21 @@ import { v4 as uuidv4 } from "uuid";
 type Props = {
   element: (GroupeEtapeType | EtapeType | Precedence | Border)[];
   parcour: parcours;
-  allElement: string[];
 };
 
 // Composant principal du générateur de modélisation
-export default function ModelingGenerator({
-  element,
-  parcour,
-  allElement,
-}: Props) {
+export default function ModelingGenerator({ element, parcour }: Props) {
   // State pour stocker les éléments
   const [elements, setElements] =
     useState<(GroupeEtapeType | EtapeType | Precedence | Border)[]>(element);
 
   const [etapeType, setEtapeType] = useState<EtapeType[]>([]);
 
-  const [dragEnd, setDragEnd] = useState(false);
-
   useEffect(() => {
     const fetchParcours = async () => {
       try {
         const data = await getAllEtapeType();
-        //console.log("cache : " ,data.map(i=>i.name))
+        console.log(data);
         setEtapeType(data);
       } catch (error) {
         console.error(
@@ -87,10 +80,6 @@ export default function ModelingGenerator({
     })
   );
 
-  useEffect(() => {
-    setDragEnd(false);
-  }, [dragEnd]);
-
   // Rendu du composant
   return (
     <div className="flex flex-row w-full h-full items-center">
@@ -98,6 +87,7 @@ export default function ModelingGenerator({
         collisionDetection={pointerWithin}
         onDragEnd={handleDragEnd}
         {...sensors}
+        id="dnd"
       >
         <div className="flex flex-col w-full">
           <div className="overflow-scroll" id="scroll" onWheel={handleWheel}>

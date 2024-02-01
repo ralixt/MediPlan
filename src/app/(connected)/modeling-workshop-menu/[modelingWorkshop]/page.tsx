@@ -45,16 +45,14 @@ export default async function ModelingWorkshop({
   params,
 }: NextPageProps<props>) {
   let elements = null;
-  const parcours = await getParcours();
+  //const parcours = await getParcours();
   //console.log(parcours)
-
-  //const parcours = await getParcoursType(params.modelingWorkshop);
-
+  const parcours = await getParcoursType(params.modelingWorkshop);
   if (parcours !== undefined) {
     elements = generate(parcours);
     //console.log(elements)
   }
-
+  console.log(parcours, elements);
   return elements == undefined && parcours == undefined ? (
     <Loader></Loader>
   ) : (
@@ -66,12 +64,7 @@ export default async function ModelingWorkshop({
         classname="absolute top-6 left-24 bg-lightgrey transition-all duration-300 ease-in-out hover:rounded-full p-4 rounded-2xl"
       />
       <h1 className=" text-3xl pt-4 font-bold">{parcours.name}</h1>
-      <> {console.log("ele", parcours)}</>
-      <ModelingGenerator
-        element={elements.groupeConcat}
-        allElement={elements?.allElement}
-        parcour={parcours}
-      />
+      <ModelingGenerator element={elements.groupeConcat} parcour={parcours} />
     </div>
   );
 }

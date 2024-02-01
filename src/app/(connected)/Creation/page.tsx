@@ -8,7 +8,7 @@ import {
 import "./style.css"
 
 
-export default  function Creation() {
+export default function Creation(props) {
     const [name,setName]=useState("")
     const [nameComp,setNameComp]=useState("")
     const [type,setType]=useState("")
@@ -133,7 +133,7 @@ export default  function Creation() {
                         </select>
                     </div>
                     <div className="flex flex-auto justify-center space-x-4">
-                        <button className="px-4 py-2 text-white bg-gray-400 rounded-md max-w-lg container">Annuler</button>
+                        <button className="px-4 py-2 text-white bg-gray-400 rounded-md max-w-lg container" onClick={props.fonctionClose}>Annuler</button>
                         <button type="submit" className="px-4 py-2 text-white bg-blue-500 rounded-md max-w-lg container">Ajouter</button>
                     </div>
                 </div>

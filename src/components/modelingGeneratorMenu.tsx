@@ -87,7 +87,11 @@ export function ModelingGeneratorMenu({ EtapeType, setEtapeType }) {
                 modal
                 nested
               >
-                <Creation></Creation>
+                {
+                    close => (
+                        <Creation fonctionClose={close}></Creation>
+                    )
+                }
               </Popup>
             </div>
 

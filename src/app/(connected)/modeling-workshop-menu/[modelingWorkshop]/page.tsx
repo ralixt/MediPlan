@@ -52,7 +52,7 @@ export default async function ModelingWorkshop({
     elements = generate(parcours);
     //console.log(elements)
   }
-  console.log(parcours, elements);
+  //console.log(parcours, elements);
   return elements == undefined && parcours == undefined ? (
     <Loader></Loader>
   ) : (

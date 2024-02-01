@@ -50,7 +50,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     const fetchParcours = async () => {
       try {
         const data = await getAllEtapeType();
-        console.log(data);
+        //console.log(data);
         setEtapeType(data);
       } catch (error) {
         console.error(
@@ -118,7 +118,13 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     element: GroupeEtapeType | EtapeType | Precedence | Border
   ) {
     if (element.type === "EtapeType") {
-      return <EtapeType key={element._id} etapeType={element as EtapeType} />;
+      return (
+        <EtapeType
+          key={element._id}
+          etapeType={element as EtapeType}
+          SetEtapes={setElements}
+        />
+      );
     } else if (element.type === "GroupeEtapeType") {
       return (
         <GroupeEtapeType
@@ -324,11 +330,16 @@ export default function ModelingGenerator({ element, parcour }: Props) {
                 return [...data];
               }
 
-              if (isEndBorder(overId)) {
-                overIndex -= 1;
-              } else if (isStartBorder(overId)) {
+              // if (isEndBorder(overId)) {
+              //   console.log("is end border");
+              //   overIndex -= 1;
+              // }
+              if (isStartBorder(overId)) {
+                console.log("is start border");
                 overIndex += 1;
               }
+              console.log(activeIndex);
+              console.log(overIndex);
 
               const newItem = arrayMove(items, activeIndex, overIndex);
               return newItem;

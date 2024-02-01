@@ -30,7 +30,7 @@ export const Login = (props: Props) => {
 
     const onSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        console.log("coucou")
+        //console.log("coucou")
         await signIn("credentials", {
             username: email,
             password: motDePasse,
@@ -40,7 +40,7 @@ export const Login = (props: Props) => {
 
     }
     const session = useSession()
-    console.log("ss",session)
+    //console.log("ss",session)
 
     return (
 

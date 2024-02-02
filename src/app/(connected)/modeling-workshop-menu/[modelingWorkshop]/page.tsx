@@ -50,7 +50,7 @@ export default async function ModelingWorkshop({
   const parcours = await getParcoursType(params.modelingWorkshop);
   if (parcours !== undefined) {
     elements = generate(parcours);
-    //console.log(elements)
+    //console.log(elements);
   }
   //console.log(parcours, elements);
   return elements == undefined && parcours == undefined ? (
@@ -64,7 +64,7 @@ export default async function ModelingWorkshop({
         classname="absolute top-6 left-24 bg-lightgrey transition-all duration-300 ease-in-out hover:rounded-full p-4 rounded-2xl"
       />
       <h1 className=" text-3xl pt-4 font-bold">{parcours.name}</h1>
-      <ModelingGenerator element={elements.groupeConcat} parcour={parcours} />
+      <ModelingGenerator element={elements} parcour={parcours} />
     </div>
   );
 }

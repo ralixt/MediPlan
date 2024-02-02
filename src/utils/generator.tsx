@@ -3,6 +3,7 @@ import {
   GroupeEtapeType,
   Precedence,
 } from "@/components/modelingComponents";
+import { v4 as uuidv4 } from "uuid";
 
 const findIndex = (
   tableaux: Array<GroupeEtapeType | EtapeType | Precedence>[],
@@ -17,8 +18,12 @@ const findIndex = (
   return -1;
 };
 
+function ajouterUidAleatoire(uid: string): string {
+  let uidAleatoire = uuidv4().substr(0, 5);
+  return uid + uidAleatoire;
+}
+
 const generate = (parcours: parcours) => {
-  console.log("generate", parcours);
   let etapesTypes: EtapeType[] = parcours.sequencables.filter(
     (sequencable): sequencable is EtapeType => sequencable.type == "EtapeType"
   );
@@ -120,13 +125,20 @@ const generate = (parcours: parcours) => {
     type: "Border",
   });
 
-  let allElement = parcours.sequencables.map((sequencable) => sequencable._id);
-  allElement = allElement.concat(
-    parcours.precedences.map((precedence) => precedence._id)
-  );
-  allElement.push("border1", "border2");
-
-  return { groupeConcat, allElement };
+  groupeConcat = groupeConcat.map((element) => {
+    const newElement = { ...element };
+    if (newElement.type === "GroupeEtapeType") {
+      newElement.Etapes = newElement.Etapes.map((etape) => {
+        const newEtape = { ...etape };
+        newEtape._id = ajouterUidAleatoire(newEtape._id);
+        return newEtape;
+      });
+    }
+    newElement._id = ajouterUidAleatoire(newElement._id);
+    return newElement;
+  });
+  console.log(groupeConcat);
+  return groupeConcat;
 };
 
 export default generate;

@@ -187,20 +187,18 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   // Fonction pour déterminer si un élément est une bordure de fin
   function isEndBorder(id: string) {
     const element = elements.find((element) => element._id === id);
+    const idBase = element?._id.slice(0, -5);
     return (
-      element !== undefined &&
-      element.type === "Border" &&
-      element._id === "border2"
+      element !== undefined && element.type === "Border" && idBase === "border2"
     );
   }
 
   // Fonction pour déterminer si un élément est une bordure de début
   function isStartBorder(id: string) {
     const element = elements.find((element) => element._id === id);
+    const idBase = element?._id.slice(0, -5);
     return (
-      element !== undefined &&
-      element.type === "Border" &&
-      element._id === "border1"
+      element !== undefined && element.type === "Border" && idBase === "border1"
     );
   }
 

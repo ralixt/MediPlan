@@ -51,7 +51,7 @@ export function ModelingGeneratorMenu({ EtapeType, setEtapeType }) {
   };
 
   return (
-    <div className="w-11/12 mb-4">
+    <div className="w-full pb-4 pl-12 pr-8">
       <div className="flex justify-end items-center content-center">
         <div
           className={`w-20 h-20 bg-light-blue rounded-3xl flex items-center justify-center mr-4 cursor-pointer hover:rounded-full ${

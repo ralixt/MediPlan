@@ -71,6 +71,7 @@ export default function Creation(props) {
         formData.append("AJeun", AJeun)
         formData.append("duree", Duree)
         await createEtapeType(formData)
+        props.fonctionClose()
     }
 
     const handleEtapeTypeChangeCompetence = async (event) => {

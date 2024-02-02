@@ -194,6 +194,17 @@ export async function getNameParcoursType() {
   return parcoursTypeNames;
 }
 
+export async function searchParcoursType(phrase: string){
+  try {
+    const regex = new RegExp(phrase, 'i');
+    const data = await ParcoursType.find({ nom: regex });
+    return data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données', error);
+    throw error;
+  }
+}
+
 /*export async function getAllParcoursType() {
     await connectMongodb();
 

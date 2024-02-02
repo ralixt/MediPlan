@@ -57,13 +57,18 @@ export default async function ModelingWorkshop({
     <Loader></Loader>
   ) : (
     <div className="flex flex-col items-center justify-center w-full h-[100vh] bg-lightlightgrey">
-      <DownloadParcours parcours={parcours}></DownloadParcours>
-      <WorkshopButtonOneIcon
-        href="/modeling-workshop-menu"
-        icon={<ArrowLeft size={24} />}
-        classname="absolute top-6 left-24 bg-lightgrey transition-all duration-300 ease-in-out hover:rounded-full p-4 rounded-2xl"
-      />
-      <h1 className=" text-3xl pt-4 font-bold">{parcours.name}</h1>
+      <div className="w-full flex flex-row items-center content-center justify-between mt-6 pr-8 pl-12">
+        <WorkshopButtonOneIcon
+            href="/modeling-workshop-menu"
+            icon={<ArrowLeft size={24}/>}
+            classname=" bg-lightgrey transition-all duration-300 ease-in-out hover:rounded-full w-14 h-14 rounded-2xl flex items-center content-center justify-center"
+            // absolute top-6 left-24
+        />
+        <h1 className=" text-3xl font-bold">{parcours.name}</h1>
+        <DownloadParcours parcours={parcours}></DownloadParcours>
+      </div>
+
+
       <ModelingGenerator element={elements.groupeConcat} parcour={parcours} />
     </div>
   );

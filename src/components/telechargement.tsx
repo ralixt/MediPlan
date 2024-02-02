@@ -1,5 +1,6 @@
 "use client"
 import React from 'react';
+import {FileArrowDown} from "@phosphor-icons/react";
 
 const DownloadParcours = ({parcours}) => {
     const handleClick = () => {
@@ -21,8 +22,8 @@ const DownloadParcours = ({parcours}) => {
     };
 
     return (
-        <button onClick={handleClick} className="bg-grey p-4 mt-6 rounded-2xl text-white hover:rounded-full">
-            Télécharger le fichier JSON
+        <button onClick={handleClick} className="bg-grey w-14 h-14 rounded-2xl text-white flex items-center content-center justify-center hover:rounded-full">
+            <FileArrowDown size={32} />
         </button>
     );
 };

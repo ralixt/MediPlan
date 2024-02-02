@@ -89,8 +89,8 @@ export default function ModelingGenerator({ element, parcour }: Props) {
         {...sensors}
         id="dnd"
       >
-        <div className="flex flex-col w-full">
-          <div className="overflow-scroll" id="scroll" onWheel={handleWheel}>
+        <div className="flex flex-col w-full h-full">
+          <div className="overflow-scroll h-full flex items-center content-center" id="scroll" onWheel={handleWheel}>
             <SortableContext
               items={element.map((element) => element._id)}
               strategy={horizontalListSortingStrategy}
@@ -102,7 +102,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               </div>
             </SortableContext>
           </div>
-          <div className="w-full">
+          <div className="w-full h-2/5 flex items-center content-center">
             <ModelingGeneratorMenu
               EtapeType={etapeType}
               setEtapeType={setEtapeType}

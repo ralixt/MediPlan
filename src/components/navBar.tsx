@@ -28,7 +28,7 @@ export default function NavBar() {
     >
       <div className="flex flex-col gap-11">
         <div>
-          <Link href="/home" className="flex flex-rox gap-1 items-end">
+          <Link href="/home" className="flex flex-row gap-1 items-end">
             <Image
               src="/MediplanIcon.svg"
               alt="Mediplan Icon"
@@ -39,10 +39,10 @@ export default function NavBar() {
             <Image
               src="/MediplanText.svg"
               alt="Mediplan Text"
-              width={100}
-              height={30}
-              className={`transition-[display] duration-300 ease-in-out ${
-                isHovered ? "block" : "hidden"
+              width={100} // largeur fixe
+              height={30} // hauteur fixe
+              className={`transition-all duration-300 ease-in-out ${
+                isHovered ? " opacity-100 delay-50" : "opacity-0"
               }`}
             />
           </Link>

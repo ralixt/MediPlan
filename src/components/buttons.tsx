@@ -96,7 +96,9 @@ export function NavBarButton({ text, href, icon, extend }: PropsNavBarButton) {
       {icon}
       <span
         className={`whitespace-nowrap text-sm  transition-opacity duration-200 ease-in-out ${
-          extend ? "opacity-100 w-full" : "opacity-0 w-0 absolute -left-full"
+          extend
+            ? "opacity-100 w-full delay-50"
+            : "opacity-0 w-0 absolute -left-full"
         } `}
       >
         {text}
@@ -122,7 +124,7 @@ export function LogOutButton({ text, icon, extend }: PropsLogOutButton) {
       {icon}
       <span
         className={`whitespace-nowrap text-sm transition-opacity duration-200 ease-in-out ${
-          extend ? "opacity-100" : "opacity-0"
+          extend ? "opacity-100 delay-50" : "opacity-0 absolute -left-full"
         }`}
       >
         {text}

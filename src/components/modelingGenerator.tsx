@@ -80,6 +80,8 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     })
   );
 
+  useEffect(() => console.log(elements), [elements]);
+
   // Rendu du composant
   return (
     <div className="flex flex-row w-full h-full items-center">
@@ -90,7 +92,11 @@ export default function ModelingGenerator({ element, parcour }: Props) {
         id="dnd"
       >
         <div className="flex flex-col w-full h-full">
-          <div className="overflow-scroll h-full flex items-center content-center" id="scroll" onWheel={handleWheel}>
+          <div
+            className="overflow-scroll h-full flex items-center content-center"
+            id="scroll"
+            onWheel={handleWheel}
+          >
             <SortableContext
               items={element.map((element) => element._id)}
               strategy={horizontalListSortingStrategy}

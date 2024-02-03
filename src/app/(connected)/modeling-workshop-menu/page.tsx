@@ -116,7 +116,11 @@ export default function ModelingWorkshop() {
         </div>
       </section>
 
-      <section className="w-[95%] m-auto">
+      <section
+        className={`w-[95%] m-auto min-h-[50vh] ${
+          loading ? "flex flex-col items-center justify-center" : ""
+        }`}
+      >
         {loading ? (
           <Loader />
         ) : (

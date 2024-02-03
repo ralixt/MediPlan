@@ -31,6 +31,8 @@ import {
 import { ModelingGeneratorMenu } from "./modelingGeneratorMenu";
 import { getAllEtapeType } from "@/actions/EtapeType";
 import { v4 as uuidv4 } from "uuid";
+import {updateParcoursType, updateSuccesseur} from "@/actions/ParcoursType";
+import { stringify } from 'flatted';
 
 // Définition des types
 type Props = {
@@ -44,6 +46,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   const [elements, setElements] =
     useState<(GroupeEtapeType | EtapeType | Precedence | Border)[]>(element);
 
+  const [successeur, setSuccesseur] = useState<string[]>([]);
   const [etapeType, setEtapeType] = useState<EtapeType[]>([]);
 
   useEffect(() => {
@@ -63,6 +66,33 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     fetchParcours();
   }, []);
 
+  useEffect(() => {
+    const successeurIds: string[] = [];
+
+    elements.forEach((element) => {
+      if (element.type === "EtapeType") {
+
+        const idWithoutSuffix = element._id.slice(0, -5);
+        successeurIds.push(idWithoutSuffix);
+      }
+
+    });
+
+    setSuccesseur(successeurIds);
+  }, [elements]);
+
+  useEffect(() => {
+
+    const data = {
+      name: parcour.name,
+      type: parcour.type,
+      sequencables: successeur,
+      precedences: {}
+    };
+
+    updateParcoursType(parcour._id, data);
+  }, [successeur]);
+
   // Gestion de l'événement de défilement horizontal
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
@@ -81,7 +111,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   );
 
   useEffect(() => console.log(elements), [elements]);
-
+  useEffect(() => console.log(successeur), [successeur]);
   // Rendu du composant
   return (
     <div className="flex flex-row w-full h-full items-center">
@@ -247,6 +277,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
     if (isNew(active, over)) {
       if (isEtape(activeId)) {
+
         if (isGroupeEtape(overId)) {
           const activeIndex = etapeType.findIndex(
             (item) => item._id === activeId

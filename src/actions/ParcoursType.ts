@@ -72,17 +72,17 @@ export async function createParcoursType(formData: FormData) {
     const name = formData.get("name") as string;
     const type = formData.get("type") as string;
 
-    /* const sequencablesIds =JSON.parse( formData.get("sequencables") as string);
+    const sequencablesIds =JSON.parse( formData.get("sequencables") as string);
 
-         const precedencesIds = JSON.parse(formData.get("precedences") as string);
+    const precedencesIds = JSON.parse(formData.get("precedences") as string);
 
-*/
+
 
     const newParcoursType = await ParcoursType.create({
       name,
       type,
-      //sequencables: sequencablesIds,
-      //precedences:precedencesIds,
+      sequencables: sequencablesIds,
+      precedences:precedencesIds,
     });
 
     console.log("ParcoursType créé :", newParcoursType);
@@ -99,6 +99,9 @@ export async function deleteParcoursType(id: string) {
     console.log("Erreur de suppression ParcoursType" + error);
   }
 }
+
+
+
 
 export async function getParcoursType(id: string) {
   function convertObjectIdsToStrings(obj) {
@@ -218,7 +221,7 @@ export async function searchParcoursType(phrase: string){
     }
 }*/
 
-export async function updateParcoursType(id: string, formData: FormData) {
+export async function updateParcoursType(id: string, formData: mongoose.UpdateQuery<any> | undefined) {
   try {
     const parcoursTypeUpdated = await ParcoursType.findByIdAndUpdate(
       id,
@@ -226,7 +229,6 @@ export async function updateParcoursType(id: string, formData: FormData) {
     );
     if (parcoursTypeUpdated) {
       console.log("EtapeType mis à jour", parcoursTypeUpdated);
-      return parcoursTypeUpdated;
     } else {
       console.log("Aucun parcours type trouvé");
     }

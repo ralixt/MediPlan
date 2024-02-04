@@ -49,6 +49,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   const [successeur, setSuccesseur] = useState<string[]>([]);
   const [etapeType, setEtapeType] = useState<EtapeType[]>([]);
   const [modified, setModified] = useState(false);
+  const [pushBDD, setPushBDD] = useState(false);
 
   useEffect(() => {
     const fetchParcours = async () => {
@@ -67,18 +68,18 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     fetchParcours();
   }, []);
 
-  // useEffect(() => {
-  //   const successeurIds: string[] = [];
+  useEffect(() => {
+    const successeurIds: string[] = [];
 
-  //   elements.forEach((element) => {
-  //     if (element.type === "EtapeType") {
-  //       const idWithoutSuffix = element._id.slice(0, -5);
-  //       successeurIds.push(idWithoutSuffix);
-  //     }
-  //   });
+    elements.forEach((element) => {
+      if (element.type === "EtapeType") {
+        const idWithoutSuffix = element._id.slice(0, -5);
+        successeurIds.push(idWithoutSuffix);
+      }
+    });
 
-  //   setSuccesseur(successeurIds);
-  // }, [elements]);
+    setSuccesseur(successeurIds);
+  }, [elements]);
 
   useEffect(() => {
     if (modified) {
@@ -111,22 +112,25 @@ export default function ModelingGenerator({ element, parcour }: Props) {
             return item;
           });
 
-        console.log(items);
         return items;
       });
+      setPushBDD(true);
     }
   }, [elements, modified]);
 
-  // useEffect(() => {
-  //   const data = {
-  //     name: parcour.name,
-  //     type: parcour.type,
-  //     sequencables: successeur,
-  //     precedences: {},
-  //   };
+  useEffect(() => {
+    if (pushBDD) {
+      setPushBDD(false);
+      const data = {
+        name: parcour.name,
+        type: parcour.type,
+        sequencables: successeur,
+        precedences: {},
+      };
 
-  //   updateParcoursType(parcour._id, data);
-  // }, [successeur]);
+      updateParcoursType(parcour._id, data);
+    }
+  }, [successeur, pushBDD]);
 
   // Gestion de l'événement de défilement horizontal
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {

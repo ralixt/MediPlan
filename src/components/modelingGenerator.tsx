@@ -31,8 +31,8 @@ import {
 import { ModelingGeneratorMenu } from "./modelingGeneratorMenu";
 import { getAllEtapeType } from "@/actions/EtapeType";
 import { v4 as uuidv4 } from "uuid";
-import {updateParcoursType, updateSuccesseur} from "@/actions/ParcoursType";
-import { stringify } from 'flatted';
+import { updateParcoursType, updateSuccesseur } from "@/actions/ParcoursType";
+import { stringify } from "flatted";
 
 // Définition des types
 type Props = {
@@ -48,6 +48,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
   const [successeur, setSuccesseur] = useState<string[]>([]);
   const [etapeType, setEtapeType] = useState<EtapeType[]>([]);
+  const [modified, setModified] = useState(false);
 
   useEffect(() => {
     const fetchParcours = async () => {
@@ -66,32 +67,66 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     fetchParcours();
   }, []);
 
-  useEffect(() => {
-    const successeurIds: string[] = [];
+  // useEffect(() => {
+  //   const successeurIds: string[] = [];
 
-    elements.forEach((element) => {
-      if (element.type === "EtapeType") {
+  //   elements.forEach((element) => {
+  //     if (element.type === "EtapeType") {
+  //       const idWithoutSuffix = element._id.slice(0, -5);
+  //       successeurIds.push(idWithoutSuffix);
+  //     }
+  //   });
 
-        const idWithoutSuffix = element._id.slice(0, -5);
-        successeurIds.push(idWithoutSuffix);
-      }
-
-    });
-
-    setSuccesseur(successeurIds);
-  }, [elements]);
+  //   setSuccesseur(successeurIds);
+  // }, [elements]);
 
   useEffect(() => {
+    if (modified) {
+      setModified(false);
+      setElements((element) => {
+        const items = element
+          .filter((item, index) => {
+            if (item.type === "Precedence") {
+              const antecedant = elements[index - 1];
+              const successeur = elements[index + 1];
+              if (
+                antecedant.type === "Border" ||
+                successeur.type === "Border" ||
+                successeur.type === "Precedence"
+              ) {
+                return false;
+              }
+            }
+            return true;
+          })
+          .map((item, index) => {
+            const newItem = { ...item };
+            if (newItem.type === "Precedence") {
+              const antecedant = elements[index - 1];
+              const successeur = elements[index + 1];
+              newItem.antecedent = antecedant._id;
+              newItem.successeur = successeur._id;
+              return newItem;
+            }
+            return item;
+          });
 
-    const data = {
-      name: parcour.name,
-      type: parcour.type,
-      sequencables: successeur,
-      precedences: {}
-    };
+        console.log(items);
+        return items;
+      });
+    }
+  }, [elements, modified]);
 
-    updateParcoursType(parcour._id, data);
-  }, [successeur]);
+  // useEffect(() => {
+  //   const data = {
+  //     name: parcour.name,
+  //     type: parcour.type,
+  //     sequencables: successeur,
+  //     precedences: {},
+  //   };
+
+  //   updateParcoursType(parcour._id, data);
+  // }, [successeur]);
 
   // Gestion de l'événement de défilement horizontal
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
@@ -109,8 +144,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
-
-  useEffect(() => console.log(elements), [elements]);
   useEffect(() => console.log(successeur), [successeur]);
   // Rendu du composant
   return (
@@ -277,7 +310,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
     if (isNew(active, over)) {
       if (isEtape(activeId)) {
-
         if (isGroupeEtape(overId)) {
           const activeIndex = etapeType.findIndex(
             (item) => item._id === activeId
@@ -304,6 +336,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               }
               return items;
             });
+            setModified(true);
             console.log("DragEnd - New - Etape - GET");
             return;
           }
@@ -334,6 +367,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
                 console.log(items);
                 return items;
               });
+              setModified(true);
               console.log("DragEnd - New - Etape - Child");
               return;
             }
@@ -381,6 +415,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
             }
             return items;
           });
+          setModified(true);
           console.log("DragEnd - GET");
           return;
         }
@@ -408,6 +443,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
             }
             return items;
           });
+          setModified(true);
           console.log("DragEnd - Child - GET");
           return;
         } else if (parentId !== overId) {
@@ -436,6 +472,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
             }
             return items;
           });
+          setModified(true);
           console.log("DragEnd - Child - !GET");
           return;
         }
@@ -466,6 +503,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
             return items;
           });
+          setModified(true);
           console.log("DragEnd - !GET - GET");
           return;
         }
@@ -490,6 +528,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
               return items;
             });
+            setModified(true);
             console.log("DragEnd - !GET - Child");
             return;
           }
@@ -520,6 +559,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
           }
           return items;
         });
+        setModified(true);
         console.log("DragEnd - !GET - !GET/Child");
         return;
       }
@@ -547,6 +587,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
         }
         return items;
       });
+      setModified(true);
       console.log("DragEnd - GET");
       return;
     }

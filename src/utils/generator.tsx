@@ -133,6 +133,9 @@ const generate = (parcours: parcours) => {
         newEtape._id = ajouterUidAleatoire(newEtape._id);
         return newEtape;
       });
+    } else if (newElement.type === "Precedence") {
+      newElement.antecedent = ajouterUidAleatoire(newElement.antecedent);
+      newElement.successeur = ajouterUidAleatoire(newElement.successeur);
     }
     newElement._id = ajouterUidAleatoire(newElement._id);
     return newElement;

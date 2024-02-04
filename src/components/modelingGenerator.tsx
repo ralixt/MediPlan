@@ -424,6 +424,31 @@ export default function ModelingGenerator({ element, parcour }: Props) {
           return;
         }
       }
+      if(isGroupeEtape(activeId) && isGroupeEtape(overId)) {
+        // Actions pour le déplacement de GroupeEtape
+        const activeIndex = elements.findIndex((item) => item._id === activeId);
+        const overIndex = elements.findIndex((item) => item._id === overId);
+
+        if (overIndex === -1 || activeIndex === -1) {
+          console.error("other-container", activeId, overId);
+          return;
+        }
+
+        // Logique pour déplacer GroupeEtape
+        let edit = true;
+        setElements((data) => {
+          const items = [...data];
+          if (edit) {
+            edit = false;
+            const newItem = arrayMove(items, activeIndex, overIndex);
+            return newItem;
+          }
+          return items;
+        });
+        setModified(true);
+        console.log("DragEnd - GroupeEtape - GET");
+        return;
+      }
     } else if (isChild(activeId)) {
       const parentParams = getParent(activeId);
       if (parentParams !== undefined) {

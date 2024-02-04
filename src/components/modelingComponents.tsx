@@ -350,7 +350,7 @@ export function EtapeTypeCompact({ etape, SetEtapes }) {
 }
 
 export function IconGroupeEtape({ onDragEnd }) {
-  const { attributes, listeners, setNodeRef } = useDraggable({
+  const { attributes, listeners, setNodeRef } = useSortable({
     id: "groupeEtapeBlock",
     data: { type: "GroupeEtapeBlock" },
   });

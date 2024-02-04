@@ -32,7 +32,8 @@ import {
     SortableContext,
     horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
-
+import {IconGroupeEtape} from "./modelingComponents";
+import handleDragEnd from "./modelingGenerator"
 export function ModelingGeneratorMenu({EtapeType, setEtapeType}) {
     const [menuVisible, setMenuVisible] = useState(false);
 
@@ -70,10 +71,7 @@ export function ModelingGeneratorMenu({EtapeType, setEtapeType}) {
             >
                 <div className="flex flex-row w-full justify-between mb-2">
                     <div className="flex flex-row items-center content-center w-full justify-between pr-4">
-                        <div
-                            className="flex items-center content-center justify-center border-4 border-dashed h-20 border-grey rounded-3xl p-6 text-grey w-full mr-4">
-                            <p className="text-bold text-3xl">Bloc d'étapes</p>
-                        </div>
+                        <IconGroupeEtape onDragEnd={handleDragEnd}></IconGroupeEtape>
                         <div
                             className="h-20 bg-light-blue flex flex-row items-center justify-center rounded-3xl w-full">
                             <PencilSimpleLine size={32}/>
@@ -123,7 +121,7 @@ export function ModelingGeneratorMenu({EtapeType, setEtapeType}) {
                     </div>
 
                     <div
-                        className="flex flex-row overflow-x-scroll w-full h-24 items-center content-center"
+                        className="flex flex-row overflow-x-scroll w-full h-32 items-center content-center"
                         onWheel={handleWheel}
                     >
                         <SortableContext

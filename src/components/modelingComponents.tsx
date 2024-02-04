@@ -348,3 +348,21 @@ export function EtapeTypeCompact({ etape, SetEtapes }) {
     </>
   );
 }
+
+export function IconGroupeEtape({ onDragEnd }) {
+  const { attributes, listeners, setNodeRef } = useDraggable({
+    id: "groupeEtapeBlock",
+    data: { type: "GroupeEtapeBlock" },
+  });
+
+  return (
+      <div
+          {...attributes}
+          {...listeners}
+          ref={setNodeRef}
+          className="flex items-center content-center justify-center border-4 border-dashed h-20 border-grey rounded-3xl p-6 text-grey w-full mr-4"
+      >
+        <p className="text-bold text-3xl">Bloc d'étapes</p>
+      </div>
+  );
+}

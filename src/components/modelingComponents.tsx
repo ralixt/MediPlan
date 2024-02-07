@@ -181,7 +181,7 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
 
   return (
     <div
-      className={` rounded-2xl flex flex-col m-12 pt-2 pb-8 px-12 ${
+      className={` rounded-2xl flex flex-col m-12 pt-2 pb-8 px-12 bg-lightlightgrey ${
         isOver
           ? "border-2 border-black"
           : "border-2 border-lightgrey border-dashed"
@@ -190,11 +190,11 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
       {...listeners}
       {...attributes}
     >
-      <div className="text-grey text-2xl w-full flex items-center content-center justify-center">
+      <p className="text-grey text-2xl w-full flex items-center content-center justify-center">
         Bloc d'étapes
-      </div>
+      </p>
       <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
-      <div ref={droppable.setNodeRef} className="flex flex-row">
+      <div ref={droppable.setNodeRef} className="flex flex-row h-64">
         {groupeEtapeType.Etapes.map((etape: EtapeType) => (
           <EtapeType key={etape._id} etapeType={etape} />
         ))}

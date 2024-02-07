@@ -58,12 +58,14 @@ export function EtapeType({ etapeType, SetEtapes }: propsET) {
         />
       )}
       <div
-        className={`bg-white shadow-md rounded-3xl p-8 w-[180px] h-64 mr-4 ${
-          isOver ? "border-2 border-black" : ""
+        className={`bg-white  rounded-3xl p-8 w-[210px] h-80 mr-4 flex flex-col justify-between ${
+          isOver
+            ? "shadow-[inset_0px_0px_10px_0px_rgba(6,16,19,0.25)]"
+            : "shadow-md"
         }`}
       >
         <div
-          className={`flex flex-col justify-between w-[180px]`}
+          className={`flex flex-col justify-start w-full h-full`}
           ref={setNodeRef}
           {...listeners}
           {...attributes}
@@ -75,31 +77,31 @@ export function EtapeType({ etapeType, SetEtapes }: propsET) {
           <div className="my-2">
             <div className="flex flex-row items-center">
               <Clock size={25} />
-              <p className="ml-2 text-xl">{etapeType.duree}</p>'
+              <p className="ml-2 text-lg">{etapeType.duree}</p>'
             </div>
 
             {etapeType.a_Jeun && (
               <div className="flex flex-row items-center mt-2">
-                <ForkKnife size={32} />
-                <p className="ml-2 text-xl">{etapeType.a_Jeun}</p>
+                <ForkKnife size={25} className=" flex-shrink-0" />
+                <p className="ml-2 text-lg">{etapeType.a_Jeun}</p>
               </div>
             )}
 
             <div className="flex flex-row items-center mt-2">
-              <Door size={25} />
+              <Door size={25} className=" flex-shrink-0" />
 
               {etapeType.Lieu.map((lieu, index) => (
-                <p key={index} className="ml-2 text-xl">
+                <p key={index} className="ml-2 text-lg">
                   {lieu.nom}
                 </p>
               ))}
             </div>
 
             <div className="flex flex-row items-center mt-2">
-              <User size={25} />
+              <User size={25} className=" flex-shrink-0" />
 
               {etapeType.Competence.map((competence, index) => (
-                <p key={index} className="ml-2 text-xl">
+                <p key={index} className="ml-2 text-lg">
                   {competence.nom}
                 </p>
               ))}
@@ -356,13 +358,13 @@ export function IconGroupeEtape({ onDragEnd }) {
   });
 
   return (
-      <div
-          {...attributes}
-          {...listeners}
-          ref={setNodeRef}
-          className="flex items-center content-center justify-center border-4 border-dashed h-20 border-grey rounded-3xl p-6 text-grey w-full mr-4"
-      >
-        <p className="text-bold text-3xl">Bloc d'étapes</p>
-      </div>
+    <div
+      {...attributes}
+      {...listeners}
+      ref={setNodeRef}
+      className="flex items-center content-center justify-center border-4 border-dashed h-20 border-grey rounded-3xl p-6 text-grey w-full mr-4"
+    >
+      <p className="text-bold text-3xl">Bloc d'étapes</p>
+    </div>
   );
 }

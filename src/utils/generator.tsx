@@ -140,7 +140,6 @@ const generate = (parcours: parcours) => {
     newElement._id = ajouterUidAleatoire(newElement._id);
     return newElement;
   });
-  console.log(groupeConcat);
   return groupeConcat;
 };
 

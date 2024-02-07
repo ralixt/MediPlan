@@ -78,8 +78,11 @@ export default function ModifierOverlay({ etape, setShowModifierForm }) {
 
   const handleUpdateEtapeType = async (event) => {
     event.preventDefault();
-
-    await updateEtapeType(etape._id, formData);
+    let id = etape._id;
+    if (etape._id.length > 24) {
+      id = id.slice(0, -5);
+    }
+    await updateEtapeType(id, formData);
 
     setShowModifierForm(false);
 
@@ -88,13 +91,13 @@ export default function ModifierOverlay({ etape, setShowModifierForm }) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-8 rounded shadow-md relative flex flex-col items-center w-[400px]">
+      <div className="bg-white p-8 rounded-[20px] shadow-md relative flex flex-col items-center">
         <form>
-          <div className="flex flex-col p-6 space-y-4 bg-white rounded-md shadow-md">
-            <h2 className="text-lg font-semibold text-center">
+          <div className="flex flex-col space-y-4">
+            <h2 className="text-2xl font-bold text-center pb-5">
               Ajouter une nouvelle étape type
             </h2>
-            <div className="flex flex-row w-full border-b-2 mb-8 font-bold border-black mb-10">
+            <div className="flex flex-row w-full border-b-2 mb-8 font-bold  mb-10">
               <input
                 id="stepName"
                 type="text"
@@ -190,14 +193,14 @@ export default function ModifierOverlay({ etape, setShowModifierForm }) {
                 ))}
               </select>
             </div>
-            <div className="flex flex-auto justify-center space-x-4">
-              <button className="px-4 py-2 text-white bg-gray-400 rounded-md">
+            <div className="flex flex-auto justify-center gap-12 pt-5">
+              <button className="px-4 py-2 text-white bg-lightgrey rounded-md">
                 Annuler
               </button>
               <button
                 onClick={handleUpdateEtapeType}
                 type="submit"
-                className="px-4 py-2 text-white bg-blue-500 rounded-md"
+                className="px-4 py-2 text-white bg-dark-blue rounded-md"
               >
                 Ajouter
               </button>

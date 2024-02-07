@@ -1,6 +1,13 @@
 import { deleteEtapeTypeById } from "@/actions/EtapeType";
 
-export default function OptionOverlay({setShowModifierForm, setShowOptions, setConfirmDelete,SetEtapes, confirmDelete, etape}) {
+export default function OptionOverlay({
+  setShowModifierForm,
+  setShowOptions,
+  setConfirmDelete,
+  SetEtapes,
+  confirmDelete,
+  etape,
+}) {
   const handleModifierClick = () => {
     setShowModifierForm(true);
     setShowOptions(false);
@@ -28,6 +35,7 @@ export default function OptionOverlay({setShowModifierForm, setShowOptions, setC
     SetEtapes((prevEtapeType) =>
       prevEtapeType.filter((et) => et._id !== etape._id)
     );
+    window.location.reload();
   };
 
   const handleAnnulerClick = () => {
@@ -41,16 +49,13 @@ export default function OptionOverlay({setShowModifierForm, setShowOptions, setC
         {confirmDelete ? (
           <>
             <div className="flex flex-col items-center content-center justify-center">
-              <h2 className="text-2xl font-bold mb-4">
-                Supprimer étape
-              </h2>
+              <h2 className="text-2xl font-bold mb-4">Supprimer étape</h2>
               <p>Voulez vous supprimer L’étape {etape.name} ?</p>
             </div>
 
-
             <button
-                onClick={handleConfirmationClick}
-                className="w-full bg-negative text-white px-4 py-2 rounded-xl mb-2 hover:rounded-full"
+              onClick={handleConfirmationClick}
+              className="w-full bg-negative text-white px-4 py-2 rounded-xl mb-2 hover:rounded-full"
             >
               Oui
             </button>

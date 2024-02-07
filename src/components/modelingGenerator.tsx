@@ -50,7 +50,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   const [etapeType, setEtapeType] = useState<EtapeType[]>([]);
   const [modified, setModified] = useState(false);
   const [pushBDD, setPushBDD] = useState(false);
-
+  console.log(elements);
   useEffect(() => {
     const fetchParcours = async () => {
       try {
@@ -103,8 +103,8 @@ export default function ModelingGenerator({ element, parcour }: Props) {
           .map((item, index) => {
             const newItem = { ...item };
             if (newItem.type === "Precedence") {
-              const antecedant = elements[index - 1];
-              const successeur = elements[index + 1];
+              const antecedant = { ...elements[index - 1] };
+              const successeur = { ...elements[index + 1] };
               newItem.antecedent = antecedant._id;
               newItem.successeur = successeur._id;
               return newItem;
@@ -148,7 +148,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
-  useEffect(() => console.log(successeur), [successeur]);
+  //useEffect(() => console.log(successeur), [successeur]);
   // Rendu du composant
   return (
     <div className="flex flex-row w-full h-full items-center">
@@ -311,7 +311,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     ) {
       return;
     }
-
     if (isNew(active, over)) {
       if (isEtape(activeId)) {
         if (isGroupeEtape(overId)) {
@@ -368,7 +367,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
                   etapetypepush._id = ajouterUidAleatoire(etapetypepush._id);
                   items[indexParent].Etapes.push(etapetypepush);
                 }
-                console.log(items);
+                //console.log(items);
                 return items;
               });
               setModified(true);
@@ -408,11 +407,11 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               //   overIndex -= 1;
               // }
               if (isStartBorder(overId)) {
-                console.log("is start border");
+                //console.log("is start border");
                 overIndex += 1;
               }
-              console.log(activeIndex);
-              console.log(overIndex);
+              //console.log(activeIndex);
+              //console.log(overIndex);
 
               const newItem = arrayMove(items, activeIndex, overIndex);
               return newItem;
@@ -424,7 +423,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
           return;
         }
       }
-      if(isGroupeEtape(activeId) && isGroupeEtape(overId)) {
+      if (isGroupeEtape(activeId)) {
         // Actions pour le déplacement de GroupeEtape
         const activeIndex = elements.findIndex((item) => item._id === activeId);
         const overIndex = elements.findIndex((item) => item._id === overId);

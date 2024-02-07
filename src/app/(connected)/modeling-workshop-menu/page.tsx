@@ -27,6 +27,8 @@ export default function ModelingWorkshop() {
   const [Parcours, setParcours] = useState([]); // État pour stocker les données des parcours
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
+  const [searchParcours, setSearchParcours] = useState("");
+  const [parcoursFiltre, setParcoursFiltre] = useState([]);
 
   useEffect(() => {
     const fetchParcours = async () => {
@@ -34,6 +36,7 @@ export default function ModelingWorkshop() {
         const data = await getParcoursBDD();
         //console.log("cache : " ,data)
         setParcours(data);
+        
         setLoading(false);
       } catch (error) {
         console.error(
@@ -46,6 +49,13 @@ export default function ModelingWorkshop() {
 
     fetchParcours();
   }, []);
+  /*
+  useEffect(() =>{ 
+    setParcoursFiltre(Parcours.filter((parcours) =>
+    parcours.name.toLowerCase().includes(searchParcours.toLowerCase())
+    ));
+  }, [searchParcours, Parcours]);
+  */
 
   return (
     <div className="w-full">
@@ -89,6 +99,8 @@ export default function ModelingWorkshop() {
                   name="search-modeling-workshop"
                   placeholder="Nom de la modélisation"
                   className=" border-b-2 outline-none bg-white w-full"
+                  value={searchParcours}
+                  onChange={(e) => setSearchParcours(e.target.value)}
                 />
               </div>
 

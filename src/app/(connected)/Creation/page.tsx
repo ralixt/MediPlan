@@ -86,7 +86,7 @@ export default function Creation(props) {
 
 
     return(<>
-            <form action={handleCreateEtapeType}>
+            <form action={handleCreateEtapeType} className="container">
                 <div className="flex flex-col p-6 space-y-4 bg-white rounded-md shadow-md container sm">
                     <h2 className="text-lg font-semibold text-center">Ajouter une nouvelle étape type</h2>
                     <div className="flex flex-row w-full border-b-2 mb-8 font-bold border-black mb-10">

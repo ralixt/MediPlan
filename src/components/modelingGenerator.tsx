@@ -72,7 +72,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     const successeurIds: string[] = [];
 
     elements.forEach((element) => {
-      if (element.type === "EtapeType") {
+      if (element.type === "EtapeType" || element.type === "GroupeEtapeType") {
         const idWithoutSuffix = element._id.slice(0, -5);
         successeurIds.push(idWithoutSuffix);
       }
@@ -292,7 +292,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   }
 
   function ajouterUidAleatoire(): string {
-    let uidAleatoire = uuidv4().replace(/-/g, '').substring(0, 28);
+    let uidAleatoire = uuidv4().replace(/-/g, '').substring(0, 29);
     return uidAleatoire;
   }
 
@@ -449,10 +449,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
                 const newItem = arrayMove(items, activeIndex, overIndex);
                 console.log(newItem)
                 return newItem
-
             }
-
-
         })
         setModified(true);
         console.log("DragEnd - GroupeEtape - GET");

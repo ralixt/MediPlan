@@ -101,6 +101,6 @@ export async function updateEtapeType(id: string, formData: FormData) {
       console.log("Aucune etape type trouvé");
     }
   } catch (error) {
-    console.log("Erreur de mise à jour");
+    console.log("Erreur de mise à jour - updateEtapeType");
   }
 }

@@ -194,7 +194,7 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
         Bloc d'étapes
       </p>
       <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
-      <div ref={droppable.setNodeRef} className="flex flex-row h-64">
+      <div ref={droppable.setNodeRef} className="flex flex-row h-80">
         {groupeEtapeType.Etapes.map((etape: EtapeType) => (
           <EtapeType key={etape._id} etapeType={etape} />
         ))}

@@ -464,6 +464,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
 
       }
+      //rajouter le is Precedence ici en recopiant le style de is EtapeType
     } else if (isChild(activeId)) {
       const parentParams = getParent(activeId);
       if (parentParams !== undefined) {

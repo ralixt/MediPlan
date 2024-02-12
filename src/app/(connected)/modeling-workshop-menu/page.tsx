@@ -49,13 +49,17 @@ export default function ModelingWorkshop() {
 
     fetchParcours();
   }, []);
-  /*
+  
   useEffect(() =>{ 
     setParcoursFiltre(Parcours.filter((parcours) =>
-    parcours.name.toLowerCase().includes(searchParcours.toLowerCase())
+    {if(parcours.name){
+      return diacritics.remove(parcours.name.toLowerCase()).includes(diacritics.remove(searchParcours.toLowerCase()))
+    }
+    return false
+    }
     ));
   }, [searchParcours, Parcours]);
-  */
+  
 
   return <div className="w-full">
     <section className="w-full bg-light-blue h-[50vh] flex justify-between">
@@ -92,20 +96,16 @@ export default function ModelingWorkshop() {
             {/*    /> */}
             {/* </div> */}
 
-            <div className=" bg-white mb-8 p-4 rounded w-96">
+            <div className=" bg-white mb-8 p-4 rounded w-96 flex">
               <input
                 type="text"
                 name="search-modeling-workshop"
                 placeholder="Nom de la modélisation"
+                value={searchParcours}
+                onChange={(e) => setSearchParcours(e.target.value)}
                 className=" border-b-2 outline-none bg-white w-full"
-              />
+              /> <MagnifyingGlass size={20}></MagnifyingGlass>
             </div>
-
-            <OneIconButton
-              text="Rechercher"
-              icon={<MagnifyingGlass size={32} />}
-              href="rechercher"
-            />
           </form>
           <AddParcoursType
             setloading={setLoading}
@@ -130,7 +130,7 @@ export default function ModelingWorkshop() {
         loading ? "flex flex-col items-center justify-center" : ""
       }`}
     >
-      {loading ? <Loader /> : Parcours.map((parcours, index) => (
+      {loading ? <Loader /> : parcoursFiltre.map((parcours, index) => (
           <WorkshopButton
             index={index}
             text={parcours.name}

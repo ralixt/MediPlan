@@ -101,18 +101,18 @@ export async function deleteParcoursType(id: string) {
 }
 
 
-
-
-export async function getParcoursType(id: string) {
-  function convertObjectIdsToStrings(obj) {
-    for (let key in obj) {
-      if (obj[key] instanceof mongoose.Types.ObjectId) {
-        obj[key] = obj[key].toString();
-      } else if (typeof obj[key] === "object") {
-        convertObjectIdsToStrings(obj[key]);
-      }
+function convertObjectIdsToStrings(obj) {
+  for (let key in obj) {
+    if (obj[key] instanceof mongoose.Types.ObjectId) {
+      obj[key] = obj[key].toString();
+    } else if (typeof obj[key] === "object") {
+      convertObjectIdsToStrings(obj[key]);
     }
   }
+}
+
+export async function getParcoursType(id: string) {
+  
 
   try {
     const p = await ParcoursType.findById(id)
@@ -127,7 +127,6 @@ export async function getParcoursType(id: string) {
       })
       .then((doc) => {
         if (doc) {
-          console.log("avant convert");
           convertObjectIdsToStrings(doc);
           return doc;
         }
@@ -184,6 +183,11 @@ export async function getAllParcoursType() {
           { path: "Lieu" },
           { path: "Materiel" },
         ],
+      }).then((doc) => {
+        if (doc) {
+          convertObjectIdsToStrings(doc);
+          return doc;
+        }
       });
 
     return parcoursType;
@@ -193,7 +197,12 @@ export async function getAllParcoursType() {
 }
 
 export async function getNameParcoursType() {
-  const parcoursTypeNames = await ParcoursType.find().select("name").lean();
+  const parcoursTypeNames = await ParcoursType.find().select("name").lean().then((doc) => {
+    if (doc) {
+      convertObjectIdsToStrings(doc);
+      return doc;
+    }
+  });
   return parcoursTypeNames;
 }
 

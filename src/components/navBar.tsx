@@ -63,13 +63,13 @@ export default function NavBar() {
           />
           <NavBarButton
             text="Planification"
-            href="/planificationMenu"
+            href="/#"
             icon={<ChartBar size={24} className="shrink-0" />}
             extend={isHovered}
           />
           <NavBarButton
             text="Emploi du temps"
-            href="/planningMenu"
+            href="/#"
             icon={<Calendar size={24} className="shrink-0" />}
             extend={isHovered}
           />
@@ -79,13 +79,13 @@ export default function NavBar() {
       <div className="flex flex-col gap-5">
         <NavBarButton
           text="Parametres"
-          href="/parameters"
+          href="/#"
           icon={<Gear size={24} className="shrink-0" />}
           extend={isHovered}
         />
         <NavBarButton
           text="Notifications"
-          href="/notifications"
+          href="/#"
           icon={<Bell size={24} className="shrink-0" />}
           extend={isHovered}
         />

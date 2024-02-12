@@ -88,7 +88,7 @@ export function NavBarButton({ text, href, icon, extend }: PropsNavBarButton) {
   const isActive = router == href;
   return (
     <Link
-      href={isActive ? {} : href}
+      href={isActive ? "/#" : href}
       className={`flex flex-row items-center transition-all duration-200 ease-in-out ${
         extend ? "gap-5" : "gap-0"
       } ${isActive ? "text-dark-blue font-bold" : "hover:text-light-blue"} `}

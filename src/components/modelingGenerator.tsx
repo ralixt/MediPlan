@@ -29,7 +29,7 @@ import {
   Precedence,
 } from "@/components/modelingComponents";
 import { ModelingGeneratorMenu } from "./modelingGeneratorMenu";
-import { getAllEtapeType } from "@/actions/EtapeType";
+import {createEtapeType, getAllEtapeType} from "@/actions/EtapeType";
 import { v4 as uuidv4 } from "uuid";
 import { updateParcoursType, updateSuccesseur } from "@/actions/ParcoursType";
 import { stringify } from "flatted";
@@ -148,7 +148,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
-  //useEffect(() => console.log(successeur), [successeur]);
+  useEffect(() => console.log(successeur), [successeur]);
   // Rendu du composant
   return (
     <div className="flex flex-row w-full h-full items-center">
@@ -443,6 +443,12 @@ export default function ModelingGenerator({ element, parcour }: Props) {
                 let idNewGroupeEtapeType: string;
                 idNewGroupeEtapeType = ajouterUidAleatoire();
                 newGroupeEtapeType = {_id:idNewGroupeEtapeType, name: idNewGroupeEtapeType, type:"GroupeEtapeType",Etapes: []};
+
+                const formData=new FormData();
+                formData.append('names',idNewGroupeEtapeType)
+                formData.append('type',"GroupeEtapeType")
+                createEtapeType(formData)
+
                 items.push(newGroupeEtapeType)
                 const activeIndex = elements.findIndex((item) => item._id === activeId);
                 const overIndex = elements.findIndex((item) => item._id === overId);
@@ -479,6 +485,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               );
               items[indexParent].Etapes.splice(indexChild, 1);
             }
+            console.log("dfgfdgdfgdfgdfgdfgdfgdfg")
             return items;
           });
           setModified(true);
@@ -538,6 +545,8 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               items[overIndex].Etapes.push(items[activeIndex]);
               items.splice(activeIndex, 1);
             }
+
+            console.log("eeeeezz",items[overIndex])
 
             return items;
           });

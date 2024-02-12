@@ -320,20 +320,22 @@ export function EtapeTypeCompact({ etape, SetEtapes }) {
               </div>
             )}
             {/*)}*/}
-
+            {etape.Lieu[0] ?
             <div className="flex flex-row items-center ">
               <Door size={15} />
               {/*<p className="ml-2">{etapeType.lieux}</p>*/}
               <p className="ml-2 whitespace-nowrap">{etape.Lieu[0].nom}</p>
-            </div>
-
+            </div>:<div></div>
+            }
+            { etape.Competence[0]?
             <div className="flex flex-row items-center">
               <User size={15} />
               {/*<p className="ml-2">{etapeType.competences}</p>*/}
               <p className="ml-2 whitespace-nowrap">
                 {etape.Competence[0].nom}
               </p>
-            </div>
+            </div>:<div></div>
+            }
           </div>
         </div>
         <div className="flex items-center content-center">

@@ -96,7 +96,6 @@ export async function updateEtapeType(id: string, formData: FormData) {
     const etapeTypeUpdated = await EtapeType.findByIdAndUpdate(id, formData);
     if (etapeTypeUpdated) {
       console.log("EtapeType mis à jour", etapeTypeUpdated);
-      return etapeTypeUpdated;
     } else {
       console.log("Aucune etape type trouvé");
     }

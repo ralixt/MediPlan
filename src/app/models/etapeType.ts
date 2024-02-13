@@ -4,6 +4,7 @@ import { Competence } from './competence';
 import { Ressource } from './ressource';
 
 interface IEtapeType extends Document {
+
   name: string;
   type: string;
   duree: number;
@@ -15,6 +16,7 @@ interface IEtapeType extends Document {
 }
 
 const etapeTypeSchema = new Schema<IEtapeType>({
+
 
   name: { type: String, required: true },
   type: { type: String, required: true , enum : ['EtapeType','GroupeEtapeType']},

@@ -29,7 +29,13 @@ import {
   Precedence,
 } from "@/components/modelingComponents";
 import { ModelingGeneratorMenu } from "./modelingGeneratorMenu";
-import {createEtapeType, getAllEtapeType} from "@/actions/EtapeType";
+import {
+  createEtapeType,
+  createGroupeEtapeType,
+  getAllEtapeType,
+  getEtapeTypeByName,
+  updateEtapeType
+} from "@/actions/EtapeType";
 import { v4 as uuidv4 } from "uuid";
 import { updateParcoursType, updateSuccesseur } from "@/actions/ParcoursType";
 import { stringify } from "flatted";
@@ -72,7 +78,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     const successeurIds: string[] = [];
 
     elements.forEach((element) => {
-      if (element.type === "EtapeType" || element.type === "GroupeEtapeType") {
+      if (element.type === "EtapeType" || element.type === "GroupeEtapeType" ) {
         const idWithoutSuffix = element._id.slice(0, -5);
         successeurIds.push(idWithoutSuffix);
       }
@@ -442,12 +448,12 @@ export default function ModelingGenerator({ element, parcour }: Props) {
                 let newGroupeEtapeType: GroupeEtapeType;
                 let idNewGroupeEtapeType: string;
                 idNewGroupeEtapeType = ajouterUidAleatoire();
-                newGroupeEtapeType = {_id:idNewGroupeEtapeType, name: idNewGroupeEtapeType, type:"GroupeEtapeType",Etapes: []};
+                newGroupeEtapeType = {_id:idNewGroupeEtapeType.slice(0,-5), name: idNewGroupeEtapeType, type:"GroupeEtapeType",Etapes: []};
 
                 const formData=new FormData();
-                formData.append('names',idNewGroupeEtapeType)
+                formData.append('names',newGroupeEtapeType.name.slice(0,-5))
                 formData.append('type',"GroupeEtapeType")
-                createEtapeType(formData)
+                createGroupeEtapeType(formData)
 
                 items.push(newGroupeEtapeType)
                 const activeIndex = elements.findIndex((item) => item._id === activeId);
@@ -546,8 +552,27 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               items[overIndex].Etapes.push(items[activeIndex]);
               items.splice(activeIndex, 1);
             }
+            const datas ={
 
-            console.log("eeeeezz",items[overIndex])
+              name : items[overIndex].name,
+              type : "GroupeEtapeType",
+              duree: null,
+              Competence: [],
+              Lieu: [],
+              Materiel: [],
+              a_jeun: null,
+              etapes : items[overIndex].Etapes,
+
+            }
+            console.log("update",datas.etapes)
+
+          const c = getEtapeTypeByName(items[overIndex]._id)
+
+            console.log("cc",c)
+
+            updateEtapeType(items[overIndex]._id,datas)
+
+            console.log("eeeeezz",items[overIndex]._id)
 
             return items;
           });

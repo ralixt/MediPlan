@@ -82,6 +82,43 @@ export async function createEtapeType(formData: FormData) {
   }
 }
 
+export async function createGroupeEtapeType(formData: FormData) {
+  try {
+    const id = formData.get("id")
+    const name = formData.get("names");
+    const type = formData.get("type");
+    const competenceId = formData.get("competenceId");
+    const lieuId = formData.get("lieuId");
+    const materielId = formData.get("materielId");
+    const duree = formData.get("duree");
+    const a_jeun = formData.get("AJeun");
+    const etapeId = formData.get("etapeId");
+    const competence = await Competence.findById(competenceId);
+    const lieu = await Ressource.findById(lieuId);
+    const materiel = await Ressource.findById(materielId);
+    const groupeEtape = await EtapeType.findById(etapeId);
+    const newEtapeType = await EtapeType.create({
+
+      name,
+      type,
+      duree,
+      Competence: competence ? [competence._id] : [],
+      Lieu: lieu ? [lieu._id] : [],
+      Materiel: materiel ? [materiel._id] : [],
+      a_jeun,
+      Etapes: groupeEtape ? [groupeEtape._id] : [],
+    });
+
+    console.log("EtapeType créer:", newEtapeType);
+  } catch (error) {
+    console.error("Erreur de création  EtapeType:", error);
+  }
+}
+
+export async function getEtapeTypeByName(name:string){
+  return EtapeType.findOne({name: name});
+}
+
 export async function deleteEtapeTypeById(id: string) {
   try {
     const etapeType = await EtapeType.findByIdAndDelete(id);
@@ -100,6 +137,6 @@ export async function updateEtapeType(id: string, formData: FormData) {
       console.log("Aucune etape type trouvé");
     }
   } catch (error) {
-    console.log("Erreur de mise à jour - updateEtapeType");
+    console.log(error,"Erreur de mise à jour - updateEtapeType");
   }
 }

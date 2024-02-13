@@ -56,6 +56,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   const [etapeType, setEtapeType] = useState<EtapeType[]>([]);
   const [modified, setModified] = useState(false);
   const [pushBDD, setPushBDD] = useState(false);
+  const [GroupeEtape, setGroupeEtape] = useState<>();
   console.log(elements);
   useEffect(() => {
     const fetchParcours = async () => {
@@ -78,7 +79,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     const successeurIds: string[] = [];
 
     elements.forEach((element) => {
-      if (element.type === "EtapeType" || element.type === "GroupeEtapeType" ) {
+      if (element.type === "EtapeType" || element.type==="GroupeEtapeType" ) {
         const idWithoutSuffix = element._id.slice(0, -5);
         successeurIds.push(idWithoutSuffix);
       }
@@ -448,10 +449,10 @@ export default function ModelingGenerator({ element, parcour }: Props) {
                 let newGroupeEtapeType: GroupeEtapeType;
                 let idNewGroupeEtapeType: string;
                 idNewGroupeEtapeType = ajouterUidAleatoire();
-                newGroupeEtapeType = {_id:idNewGroupeEtapeType.slice(0,-5), name: idNewGroupeEtapeType, type:"GroupeEtapeType",Etapes: []};
+                newGroupeEtapeType = {_id:idNewGroupeEtapeType, name: idNewGroupeEtapeType, type:"GroupeEtapeType",Etapes: []};
 
                 const formData=new FormData();
-                formData.append('names',newGroupeEtapeType.name.slice(0,-5))
+                formData.append('names',newGroupeEtapeType.name)
                 formData.append('type',"GroupeEtapeType")
                 createGroupeEtapeType(formData)
 
@@ -552,6 +553,12 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               items[overIndex].Etapes.push(items[activeIndex]);
               items.splice(activeIndex, 1);
             }
+            const modifiedEtapes = items[overIndex].Etapes.map(etape => {
+              // Supprimer les 5 derniers caractères de l'ID
+              const modifiedId = etape._id.slice(0, -5);
+              // Retourner un nouvel objet avec l'ID modifié
+              return { ...etape, _id: modifiedId };
+            });
             const datas ={
 
               name : items[overIndex].name,
@@ -561,18 +568,42 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               Lieu: [],
               Materiel: [],
               a_jeun: null,
-              etapes : items[overIndex].Etapes,
+              Etapes : modifiedEtapes,
 
             }
             console.log("update",datas.etapes)
 
-          const c = getEtapeTypeByName(items[overIndex]._id)
 
-            console.log("cc",c)
+            const fetchData = async () => {
+              try {
+                const result = await getEtapeTypeByName(items[overIndex]._id);
+                // Mettre à jour l'état lorsque la promesse est résolue
+                /*result.then(function(GroupeEtape) {
+                  setGroupeEtape(GroupeEtape)
+                });*/
 
-            updateEtapeType(items[overIndex]._id,datas)
+                console.log("dans",result._id)
 
-            console.log("eeeeezz",items[overIndex]._id)
+                await updateEtapeType(result._id, datas)
+                setGroupeEtape(result._id)
+
+
+              } catch (error) {
+                // Gérer les erreurs éventuelles
+                console.error('Erreur lors de la récupération des données :', error);
+              }
+            };
+
+            fetchData()
+            console.log("www",GroupeEtape)
+
+         // const c = getEtapeTypeByName(items[overIndex]._id).then(r=>r)
+
+           // console.log("cc",GroupeEtape)
+
+            //updateEtapeType(items[overIndex]._id,datas)
+
+            //console.log("eeeeezz",items[overIndex]._id)
 
             return items;
           });

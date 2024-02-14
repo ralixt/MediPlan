@@ -34,7 +34,7 @@ import {
   createGroupeEtapeType,
   getAllEtapeType,
   getEtapeTypeByName,
-  updateEtapeType
+  updateEtapeType,
 } from "@/actions/EtapeType";
 import { v4 as uuidv4 } from "uuid";
 import { updateParcoursType, updateSuccesseur } from "@/actions/ParcoursType";
@@ -79,7 +79,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     const successeurIds: string[] = [];
 
     elements.forEach((element) => {
-      if (element.type === "EtapeType" || element.type==="GroupeEtapeType" ) {
+      if (element.type === "EtapeType" || element.type === "GroupeEtapeType") {
         const idWithoutSuffix = element._id.slice(0, -5);
         successeurIds.push(idWithoutSuffix);
       }
@@ -224,13 +224,19 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   // Fonction pour déterminer si un élément est de type GroupeEtapeType
   function isGroupeEtape(id: string) {
     let element = elements.find((element) => element._id === id);
-    return !!((element && element.type === "GroupeEtapeType") || id === "groupeEtapeBlock");
+    return !!(
+      (element && element.type === "GroupeEtapeType") ||
+      id === "groupeEtapeBlock"
+    );
   }
 
   function isPrecedence(id: string) {
     const element = elements.find((element) => element._id === id);
 
-    return !!((element && element.type === "Precedence")|| id === "PrecedenceData");
+    return !!(
+      (element && element.type === "Precedence") ||
+      id === "PrecedenceData"
+    );
   }
 
   function isEtape(id: string) {
@@ -259,8 +265,14 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
   // Fonction pour déterminer si un élément est un enfant
   function isChild(id: string) {
-    let elementIndex = elements.findIndex((element) => element._id === id);
-    return elementIndex === -1;
+    for (let element of elements) {
+      if (element.type === "GroupeEtapeType") {
+        if (element.Etapes.findIndex((child) => child._id === id) !== -1) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   // Fonction pour déterminer si un élément est une bordure de fin
@@ -281,18 +293,34 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     );
   }
 
+  function isInParcours(id: string) {
+    console.log(id);
+    const element = elements.find((element) => element._id === id);
+    console.log(element, isChild(id));
+    return !!(element || isChild(id));
+  }
+
   function isNew(active: Active, over: Over) {
-    if(!over.data.current){
-      if(isChild(over.id.toString())){
-        
-      }
+    let activeData = "";
+    if (isInParcours(active.id.toString())) {
+      activeData = "InParcour";
+    } else if (active.data.current) {
+      activeData = active.data.current.sortable.containerId;
+    } else {
+      return false;
     }
-    if (
-      active.data.current !== undefined &&
-      over.data.current !== undefined &&
-      active.data.current.sortable.containerId !==
-        over.data.current.sortable.containerId
-    ) {
+    let overData = "";
+    if (isInParcours(over.id.toString())) {
+      overData = "InParcour";
+    } else if (over.data.current) {
+      overData = over.data.current.sortable.containerId;
+    } else {
+      return false;
+    }
+
+    console.log(activeData, overData);
+
+    if (activeData !== overData) {
       return true;
     }
     return false;
@@ -304,12 +332,9 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   }
 
   function ajouterUidAleatoire(): string {
-    let uidAleatoire = uuidv4().replace(/-/g, '').substring(0, 29);
+    let uidAleatoire = uuidv4().replace(/-/g, "").substring(0, 29);
     return uidAleatoire;
   }
-
-  
-
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -320,19 +345,19 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     } else {
       return;
     }
-    
+
     if (
       (isGroupeEtape(activeId) && isGroupeEtape(overId)) ||
       isEndBorder(activeId) ||
       isStartBorder(activeId) ||
       (activeId === overId && !isNew(active, over))
     ) {
-      console.log("annuler")
+      console.log("annuler");
       return;
     }
-    console.log(active, over)
+    console.log(active, over);
     if (isNew(active, over)) {
-      console.log("nouveau")
+      console.log("nouveau");
       if (isEtape(activeId)) {
         if (isGroupeEtape(overId)) {
           const activeIndex = etapeType.findIndex(
@@ -385,7 +410,9 @@ export default function ModelingGenerator({ element, parcour }: Props) {
                 if (edit) {
                   edit = false;
                   let etapetypepush = { ...etapeType[activeIndex] };
-                  etapetypepush._id = ajouterUidAleatoireCinq(etapetypepush._id);
+                  etapetypepush._id = ajouterUidAleatoireCinq(
+                    etapetypepush._id
+                  );
                   items[indexParent].Etapes.push(etapetypepush);
                 }
                 //console.log(items);
@@ -443,53 +470,65 @@ export default function ModelingGenerator({ element, parcour }: Props) {
           console.log("DragEnd - GET");
           return;
         }
-      }
-      else if(isGroupeEtape(activeId)) {
-        console.log("GET")
-        let edit = true;
-        setElements((data) => {
-            const items = [...data];
-            if(edit) {
-                edit = false;
-                let newGroupeEtapeType: GroupeEtapeType;
-                let idNewGroupeEtapeType: string;
-                idNewGroupeEtapeType = ajouterUidAleatoire();
-                newGroupeEtapeType = {_id:idNewGroupeEtapeType, name: idNewGroupeEtapeType, type:"GroupeEtapeType",Etapes: []};
-
-                const formData=new FormData();
-                formData.append('names',newGroupeEtapeType.name)
-                formData.append('type',"GroupeEtapeType")
-                createGroupeEtapeType(formData)
-
-                items.push(newGroupeEtapeType)
-                const activeIndex = elements.findIndex((item) => item._id === activeId);
-                const overIndex = elements.findIndex((item) => item._id === overId);
-                const newItem = arrayMove(items, activeIndex, overIndex);
-                console.log(newItem)
-                return newItem
-            }
-        })
-        setModified(true);
-        console.log("DragEnd - GroupeEtape - GET");
-        return;
-      }
-      else if(isPrecedence(activeId)){
-        console.log("coucou")
+      } else if (isGroupeEtape(activeId)) {
+        console.log("GET");
         let edit = true;
         setElements((data) => {
           const items = [...data];
-          if(edit){
+          if (edit) {
             edit = false;
-            let newPrecedence: Precedence;
-            newPrecedence = {_id: ajouterUidAleatoire(), type: "Precedence", antecedent: "", successeur : ""};
-            items.push(newPrecedence);
-            const activeIndex = elements.findIndex((item) => item._id === activeId);
+            let newGroupeEtapeType: GroupeEtapeType;
+            let idNewGroupeEtapeType: string;
+            idNewGroupeEtapeType = ajouterUidAleatoire();
+            newGroupeEtapeType = {
+              _id: idNewGroupeEtapeType,
+              name: idNewGroupeEtapeType,
+              type: "GroupeEtapeType",
+              Etapes: [],
+            };
+
+            const formData = new FormData();
+            formData.append("names", newGroupeEtapeType.name);
+            formData.append("type", "GroupeEtapeType");
+            createGroupeEtapeType(formData);
+
+            items.push(newGroupeEtapeType);
+            const activeIndex = elements.findIndex(
+              (item) => item._id === activeId
+            );
             const overIndex = elements.findIndex((item) => item._id === overId);
             const newItem = arrayMove(items, activeIndex, overIndex);
-            console.log(newItem)
+            console.log(newItem);
             return newItem;
           }
-        })
+        });
+        setModified(true);
+        console.log("DragEnd - GroupeEtape - GET");
+        return;
+      } else if (isPrecedence(activeId)) {
+        console.log("coucou");
+        let edit = true;
+        setElements((data) => {
+          const items = [...data];
+          if (edit) {
+            edit = false;
+            let newPrecedence: Precedence;
+            newPrecedence = {
+              _id: ajouterUidAleatoire(),
+              type: "Precedence",
+              antecedent: "",
+              successeur: "",
+            };
+            items.push(newPrecedence);
+            const activeIndex = elements.findIndex(
+              (item) => item._id === activeId
+            );
+            const overIndex = elements.findIndex((item) => item._id === overId);
+            const newItem = arrayMove(items, activeIndex, overIndex);
+            console.log(newItem);
+            return newItem;
+          }
+        });
         setModified(true);
       }
     } else if (isChild(activeId)) {
@@ -513,7 +552,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               );
               items[indexParent].Etapes.splice(indexChild, 1);
             }
-            console.log("dfgfdgdfgdfgdfgdfgdfgdfg")
+            console.log("dfgfdgdfgdfgdfgdfgdfgdfg");
             return items;
           });
           setModified(true);
@@ -573,26 +612,23 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               items[overIndex].Etapes.push(items[activeIndex]);
               items.splice(activeIndex, 1);
             }
-            const modifiedEtapes = items[overIndex].Etapes.map(etape => {
+            const modifiedEtapes = items[overIndex].Etapes.map((etape) => {
               // Supprimer les 5 derniers caractères de l'ID
               const modifiedId = etape._id.slice(0, -5);
               // Retourner un nouvel objet avec l'ID modifié
               return { ...etape, _id: modifiedId };
             });
-            const datas ={
-
-              name : items[overIndex].name,
-              type : "GroupeEtapeType",
+            const datas = {
+              name: items[overIndex].name,
+              type: "GroupeEtapeType",
               duree: null,
               Competence: [],
               Lieu: [],
               Materiel: [],
               a_jeun: null,
-              Etapes : modifiedEtapes,
-
-            }
-            console.log("update",datas.etapes)
-
+              Etapes: modifiedEtapes,
+            };
+            console.log("update", datas.etapes);
 
             const fetchData = async () => {
               try {
@@ -602,24 +638,25 @@ export default function ModelingGenerator({ element, parcour }: Props) {
                   setGroupeEtape(GroupeEtape)
                 });*/
 
-                console.log("dans",result._id)
+                console.log("dans", result._id);
 
-                await updateEtapeType(result._id, datas)
-                setGroupeEtape(result._id)
-
-
+                await updateEtapeType(result._id, datas);
+                setGroupeEtape(result._id);
               } catch (error) {
                 // Gérer les erreurs éventuelles
-                console.error('Erreur lors de la récupération des données :', error);
+                console.error(
+                  "Erreur lors de la récupération des données :",
+                  error
+                );
               }
             };
 
-            fetchData()
-            console.log("www",GroupeEtape)
+            fetchData();
+            console.log("www", GroupeEtape);
 
-         // const c = getEtapeTypeByName(items[overIndex]._id).then(r=>r)
+            // const c = getEtapeTypeByName(items[overIndex]._id).then(r=>r)
 
-           // console.log("cc",GroupeEtape)
+            // console.log("cc",GroupeEtape)
 
             //updateEtapeType(items[overIndex]._id,datas)
 

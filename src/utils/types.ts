@@ -43,3 +43,24 @@ type parcours = {
   precedences: Precedence[];
 };
 type parcoursList = parcours[];
+
+type planificationParcours = {
+  idParcours: string;
+  nbParcours: number;
+  pourcentage_utilisation: number;
+}
+
+type listeUtilisationCompetence = {
+  idCompetence: string;
+  nb_h_cible: number;
+  nb_p_cible: number;
+  nb_h_actuel: number;
+  nb_p_actuel: number;
+}
+
+type Planification = {
+  _id: string;
+  nom: string;
+  planificationParcours: planificationParcours[];
+  liste_Competence: listeUtilisationCompetence[];
+}

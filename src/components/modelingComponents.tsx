@@ -4,6 +4,7 @@ import {
   Door,
   DotsThreeOutlineVertical,
   ForkKnife,
+  PencilSimpleLine,
   User,
 } from "@phosphor-icons/react";
 import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
@@ -353,7 +354,7 @@ export function EtapeTypeCompact({ etape, SetEtapes }) {
   );
 }
 
-export function IconGroupeEtape({ onDragEnd }) {
+export function IconGroupeEtape() {
   const { attributes, listeners, setNodeRef } = useSortable({
     id: "groupeEtapeBlock",
     data: { type: "GroupeEtapeBlock" },
@@ -368,5 +369,22 @@ export function IconGroupeEtape({ onDragEnd }) {
     >
       <p className="text-bold text-3xl">Bloc d'étapes</p>
     </div>
+  );
+}
+
+export function IconPrecedence() {
+  const { attributes, listeners, setNodeRef } = useSortable({
+    id: "PrecedenceData",
+  });
+
+  return (
+    <div className="h-20 bg-light-blue flex flex-row items-center justify-center rounded-3xl w-full" 
+    {...attributes}
+    {...listeners}
+    ref={setNodeRef}>
+      <PencilSimpleLine size={32} />
+      <p className="font-bold ml-4">Lier</p>
+    </div>
+    
   );
 }

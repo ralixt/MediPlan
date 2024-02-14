@@ -230,7 +230,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   function isPrecedence(id: string) {
     const element = elements.find((element) => element._id === id);
 
-    return !!(element && element.type === "Precedence");
+    return !!((element && element.type === "Precedence")|| id === "PrecedenceData");
   }
 
   function isEtape(id: string) {
@@ -282,6 +282,11 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   }
 
   function isNew(active: Active, over: Over) {
+    if(!over.data.current){
+      if(isChild(over.id.toString())){
+        
+      }
+    }
     if (
       active.data.current !== undefined &&
       over.data.current !== undefined &&
@@ -315,14 +320,14 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     } else {
       return;
     }
-
+    
     if (
       (isGroupeEtape(activeId) && isGroupeEtape(overId)) ||
       isEndBorder(activeId) ||
       isStartBorder(activeId) ||
-      (activeId === overId && !isNew(active, over)) ||
-      (isPrecedence(activeId) && (isGroupeEtape(overId) || isChild(overId)))
+      (activeId === overId && !isNew(active, over))
     ) {
+      console.log("annuler")
       return;
     }
     console.log(active, over)
@@ -467,11 +472,26 @@ export default function ModelingGenerator({ element, parcour }: Props) {
         setModified(true);
         console.log("DragEnd - GroupeEtape - GET");
         return;
-
-
-
       }
-      //rajouter le is Precedence ici en recopiant le style de is EtapeType
+      else if(isPrecedence(activeId)){
+        console.log("coucou")
+        let edit = true;
+        setElements((data) => {
+          const items = [...data];
+          if(edit){
+            edit = false;
+            let newPrecedence: Precedence;
+            newPrecedence = {_id: ajouterUidAleatoire(), type: "Precedence", antecedent: "", successeur : ""};
+            items.push(newPrecedence);
+            const activeIndex = elements.findIndex((item) => item._id === activeId);
+            const overIndex = elements.findIndex((item) => item._id === overId);
+            const newItem = arrayMove(items, activeIndex, overIndex);
+            console.log(newItem)
+            return newItem;
+          }
+        })
+        setModified(true);
+      }
     } else if (isChild(activeId)) {
       const parentParams = getParent(activeId);
       if (parentParams !== undefined) {

@@ -23,7 +23,7 @@ import etapeType from "@/app/models/etapeType";
 import { getComp, getLieu, getMateriel } from "@/actions/CreateCompTest";
 import ModifierOverlay from "./modifierOverlay";
 import OptionOverlay from "./optionOverlay";
-import { EtapeTypeCompact } from "./modelingComponents";
+import { EtapeTypeCompact, IconPrecedence } from "./modelingComponents";
 import Popup from "reactjs-popup";
 import Creation from "@/app/(connected)/Creation/page";
 import "reactjs-popup/dist/index.css";
@@ -71,11 +71,8 @@ export function ModelingGeneratorMenu({ EtapeType, setEtapeType }) {
       >
         <div className="flex flex-row w-full justify-between mb-2">
           <div className="flex flex-row items-center content-center w-full justify-between pr-4">
-            <IconGroupeEtape onDragEnd={handleDragEnd}></IconGroupeEtape>
-            <div className="h-20 bg-light-blue flex flex-row items-center justify-center rounded-3xl w-full">
-              <PencilSimpleLine size={32} />
-              <p className="font-bold ml-4">Lier</p>
-            </div>
+            <IconGroupeEtape></IconGroupeEtape>
+            <IconPrecedence></IconPrecedence>
           </div>
 
           <div className="flex flex-row items-center content-center border-l-2 pl-4">

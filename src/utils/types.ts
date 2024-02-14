@@ -58,8 +58,8 @@ type listeUtilisationCompetence = {
   nb_p_actuel: number;
 }
 
-type Planification = {
-  _id: string;
+type JourneeType = {
+  _id: string; 
   nom: string;
   planificationParcours: planificationParcours[];
   liste_Competence: listeUtilisationCompetence[];

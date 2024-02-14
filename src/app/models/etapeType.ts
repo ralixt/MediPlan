@@ -25,7 +25,7 @@ const etapeTypeSchema = new Schema<IEtapeType>({
   Lieu: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ressource' }],
   Materiel:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ressource' }],
   a_jeun: { type: Boolean },
-  Etapes : [ {type: Schema.Types.ObjectId, ref: 'EtapeType'}]
+  Etapes : [ {type: mongoose.Schema.Types.ObjectId, ref: 'EtapeType'}]
 });
 
 const EtapeType = mongoose.models.EtapeType||mongoose.model<IEtapeType>('EtapeType', etapeTypeSchema);

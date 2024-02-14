@@ -91,17 +91,20 @@ export function EtapeType({ etapeType, SetEtapes }: propsET) {
             <div className="flex flex-row items-center mt-2">
               <Door size={25} className=" flex-shrink-0" />
 
-              {etapeType.Lieu.map((lieu, index) => (
+
+
+              { etapeType.Lieu&& etapeType.Lieu.map((lieu, index) => (
                 <p key={index} className="ml-2 text-lg">
                   {lieu.nom}
                 </p>
               ))}
+
             </div>
 
             <div className="flex flex-row items-center mt-2">
               <User size={25} className=" flex-shrink-0" />
 
-              {etapeType.Competence.map((competence, index) => (
+              { etapeType.Competence&& etapeType.Competence.map((competence, index) => (
                 <p key={index} className="ml-2 text-lg">
                   {competence.nom}
                 </p>
@@ -191,13 +194,17 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
       {...listeners}
       {...attributes}
     >
+      <>
+      { groupeEtapeType.Etapes[0]!==undefined ? console.log("etapeAffichage",groupeEtapeType.Etapes[0].name):"ee"}
+        </>
       <p className="text-grey text-2xl w-full flex items-center content-center justify-center">
         Bloc d'étapes
       </p>
       <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
       <div ref={droppable.setNodeRef} className="flex flex-row h-80">
+
         {groupeEtapeType.Etapes.map((etape: EtapeType) => (
-          <EtapeType key={etape._id} etapeType={etape} />
+          <EtapeType key={etape._id} etapeType={etape} SetEtapes={[]} />
         ))}
       </div>
     </div>

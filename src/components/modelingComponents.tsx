@@ -183,30 +183,7 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
       id: groupeEtapeType._id,
     });
   const droppable = useDroppable({ id: groupeEtapeType._id });
-
-  const [Etapess,setEtapes]=useState()
-
-  useEffect(() => {
-    // Récupérer les données asynchrones
-    const fetchData = async () => {
-      try {
-        const result = await getEtapeTypeById(groupeEtapeType._id.slice(0,-5));
-        setEtapes(result)
-        console.log("resulttttttt",result)
-
-      } catch (error) {
-        // Gérer les erreurs éventuelles
-        console.error('Erreur lors de la récupération des données :', error);
-      }
-    };
-
-    // Appeler la fonction fetchData pour récupérer les données
-    fetchData();
-
-    // Ajouter [items[overIndex]._id] comme dépendance pour s'assurer
-    // que useEffect est appelé à chaque fois que items[overIndex]._id change
-  }, []);
-
+  
   return (
     <div
       className={` rounded-2xl flex flex-col m-12 pt-2 pb-8 px-12 bg-lightlightgrey ${
@@ -227,7 +204,7 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
       <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
       <div ref={droppable.setNodeRef} className="flex flex-row h-80">
 
-        {Etapess && Etapess.Etapes.map((etape: EtapeType) => (
+        {groupeEtapeType.Etapes.map((etape: EtapeType) => (
           <EtapeType key={etape._id} etapeType={etape} SetEtapes={[]} />
         ))}
       </div>

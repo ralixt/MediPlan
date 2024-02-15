@@ -116,21 +116,22 @@ export async function getParcoursType(id: string) {
 
   try {
     const p = await ParcoursType.findById(id)
-      .lean()
-      .populate({
-        path: "sequencables",
-        populate: [
-          { path: "Competence" },
-          { path: "Lieu" },
-          { path: "Materiel" },
-        ],
-      })
-      .then((doc) => {
-        if (doc) {
-          convertObjectIdsToStrings(doc);
-          return doc;
-        }
-      });
+        .lean()
+        .populate({
+          path: "sequencables",
+          populate: [
+            { path: "Competence" },
+            { path: "Lieu" },
+            { path: "Materiel" },
+            { path: "Etapes", populate: ["Competence", "Lieu", "Materiel"] },
+          ],
+        })
+        .then((doc) => {
+          if (doc) {
+            convertObjectIdsToStrings(doc);
+            return doc;
+          }
+        });
     // .populate({
     //     path: 'precedences.antecedent',
     //     populate: [
@@ -166,6 +167,8 @@ export async function getAllParcoursType() {
           { path: "Competence" },
           { path: "Lieu" },
           { path: "Materiel" },
+          {path:"Etapes"},
+
         ],
       })
       .populate({

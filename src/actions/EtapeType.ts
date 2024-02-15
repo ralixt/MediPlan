@@ -32,6 +32,7 @@ export async function getAllEtapeType() {
     .populate({ path: "Competence" })
     .populate({ path: "Lieu" })
     .populate({ path: "Materiel" })
+
     .then((doc) => {
       if (doc) {
         console.log("avant convert");
@@ -117,6 +118,22 @@ export async function createGroupeEtapeType(formData: FormData) {
 
 export async function getEtapeTypeByName(name:string){
   return EtapeType.findOne({name: name});
+}
+
+export async function getEtapeTypeById(id:string){
+  return EtapeType.findById(id).lean()
+
+      .populate({ path: "Competence" })
+      .populate({ path: "Lieu" })
+      .populate({ path: "Materiel" })
+      .populate({
+        path: "Etapes",
+        populate: [
+          { path: "Competence" },
+          { path: "Lieu" },
+          { path: "Materiel" },
+        ],
+      })
 }
 
 export async function deleteEtapeTypeById(id: string) {

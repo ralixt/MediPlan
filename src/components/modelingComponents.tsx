@@ -219,7 +219,7 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
       {...attributes}
     >
       <>
-      { Etapess!==undefined ? console.log("etapeAffichage",Etapess.Etapes):"ee"}
+      
         </>
       <p className="text-grey text-2xl w-full flex items-center content-center justify-center">
         Bloc d'étapes

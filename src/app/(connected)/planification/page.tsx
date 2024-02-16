@@ -2,7 +2,7 @@
 import React, {cache, useEffect, useRef, useState} from "react";
 import {getNameParcoursType} from "@/actions/ParcoursType";
 import Image from "next/image";
-import {MagnifyingGlass, User} from "@phosphor-icons/react";
+import {MagnifyingGlass, Password, User} from "@phosphor-icons/react";
 import {AddParcoursType} from "@/components/addParcoursTypeForm";
 import {Loader} from "@/components/loader";
 import {WorkshopButton} from "@/components/buttons";
@@ -76,37 +76,32 @@ export default function Planification() {
                         <h1>Planifications</h1>
                     </div>
 
-                    <div className="flex flex-row justify-around items-center content-center w-full">
-                        <form
-                            method="POST"
-                            className="h-full flex flex-col justify-center items-center content-center"
-                        >
+                    <div className="flex flex-row justify-around items-center w-full">
 
-                            
-
+                            {/*flex flex-row w-full border-b-2 mb-8*/}
                             <div
-                                className={`flex flex-row w-full border-b-2 mb-8 ${searchBarFocused || userName.current ? 'border-black' : 'text-lightgrey'}`}>
+                                className={`bg-white mb-8 p-4 rounded-lg w-96 flex  ${searchBarFocused || userName.current ? 'border-black' : 'text-lightgrey'}`}>
                                 <input
                                     type="text"
                                     name="search-modeling-workshop"
                                     placeholder="Nom de la planification"
-                                       className="w-full outline-none bg-white"
+                                    className={`w-full outline-none bg-white border-b-2 ${searchBarFocused || userName.current ? 'border-black' : 'text-lightgrey'}`}
+                                    // className="w-full outline-none bg-white"
                                     value={searchPlanification}
-                                       onChange={(e) =>
-                                           setSearchPlanification(e.target.value)}
-                                       onFocus={() => setSearchBarFocused(true)}
-                                       onBlur={() => setSearchBarFocused(false)}
+                                    onChange={(e) =>
+                                        setSearchPlanification(e.target.value)}
+                                    onFocus={() => setSearchBarFocused(true)}
+                                    onBlur={() => setSearchBarFocused(false)}
                                 />
                                 <MagnifyingGlass size={32}/>
                             </div>
 
 
-
-                        </form>
                         <AddParcoursType
                             setloading={setLoading}
                             SetParcours={setPlanification}
                         />
+
                     </div>
                 </div>
 

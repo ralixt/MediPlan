@@ -57,7 +57,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   const [modified, setModified] = useState(false);
   const [pushBDD, setPushBDD] = useState(false);
 
-
   // const precedenceIds: Precedence[] = [] ;
   // const [precedence, setPrecedence]=useState<Precedence>()
   // const [items,setItem]=useState<Precedence  | EtapeType | GroupeEtapeType |Border >([])
@@ -84,9 +83,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     const successeurIds: string[] = [];
 
     elements.forEach((element) => {
-
-
-      if (element.type==="EtapeType" || element.type==="GroupeEtapeType"  ) {
+      if (element.type === "EtapeType" || element.type === "GroupeEtapeType") {
         const idWithoutSuffix = element._id.slice(0, -5);
         successeurIds.push(idWithoutSuffix);
       }
@@ -121,10 +118,9 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               const successeur = { ...elements[index + 1] };
               newItem.antecedent = antecedant._id;
               newItem.successeur = successeur._id;
-              console.log("newItem",newItem)
+              console.log("newItem", newItem);
               return newItem;
             }
-
 
             return item;
           });
@@ -133,10 +129,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
         // console.log("itemss",items)
         //
         return items;
-
-
-
-
       });
       setPushBDD(true);
     }
@@ -244,9 +236,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
         />
       );
     } else if (element.type === "GroupeEtapeType") {
-
-
-
       return (
         <GroupeEtapeType
           key={element._id}
@@ -541,33 +530,35 @@ export default function ModelingGenerator({ element, parcour }: Props) {
             formData.append("type", "GroupeEtapeType");
             createGroupeEtapeType(formData);
 
+            const fetchData = async () => {
+              try {
+                const result = await getEtapeTypeByName(idNewGroupeEtapeType);
+                newGroupeEtapeType._id = result._id;
+                newGroupeEtapeType._id = ajouterUidAleatoireCinq(
+                  newGroupeEtapeType._id
+                );
+              } catch (error) {
+                // Gérer les erreurs éventuelles
+                console.error(
+                  "Erreur lors de la récupération des données :",
+                  error
+                );
+              }
+            };
 
+            fetchData();
 
-              const fetchData = async () => {
-                try {
-                  const result = await getEtapeTypeByName(idNewGroupeEtapeType);
-                  newGroupeEtapeType._id = result._id
-                  newGroupeEtapeType._id=ajouterUidAleatoireCinq(newGroupeEtapeType._id)
-
-                } catch (error) {
-                  // Gérer les erreurs éventuelles
-                  console.error('Erreur lors de la récupération des données :', error);
-                }
-              };
-
-              fetchData()
-
-
-
-                items.push(newGroupeEtapeType)
-                const activeIndex = elements.findIndex((item) => item._id === activeId);
-                const overIndex = elements.findIndex((item) => item._id === overId);
-                const newItem = arrayMove(items, activeIndex, overIndex);
-                console.log(newItem)
-                return newItem
-            }
-        })
-
+            items.push(newGroupeEtapeType);
+            const activeIndex = elements.findIndex(
+              (item) => item._id === activeId
+            );
+            const overIndex = elements.findIndex((item) => item._id === overId);
+            const newItem = arrayMove(items, activeIndex, overIndex);
+            console.log(newItem);
+            return newItem;
+          }
+          return items;
+        });
 
         setModified(true);
         console.log("DragEnd - GroupeEtape - GET");
@@ -724,7 +715,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
                     console.log("dans", result._id);
 
                     await updateEtapeType(result._id, datas);
-                    setGroupeEtape(result._id);
                   } catch (error) {
                     // Gérer les erreurs éventuelles
                     console.error(

@@ -12,7 +12,7 @@ type EtapeType = {
   Competence: competence[];
   Lieu: lieu[];
   Materiel: lieu[];
-  a_Jeun: boolean;
+  a_jeun: boolean;
 };
 
 type GroupeEtapeType = {

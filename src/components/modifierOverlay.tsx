@@ -88,7 +88,7 @@ export default function ModifierOverlay({ etape, setShowModifierForm }: props) {
     setCompetenceId(etape.Competence[0]._id);
     setLieuId(etape.Lieu[0]._id);
     setMaterielId(etape.Materiel[0]._id);
-    setAJeun(etape.a_Jeun);
+    setAJeun(etape.a_jeun);
     setDuree(etape.duree);
   }, [etape]);
 

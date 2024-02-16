@@ -142,7 +142,7 @@ type PropsWorkshopButton = {
 export function WorkshopButton({ index, text, href }: PropsWorkshopButton) {
   return (
     <Link key={index} href={href}>
-      <div className="bg-dark-blue flex  rounded-xl shadow-sm my-8">
+      <div className="bg-dark-blue flex  rounded-2xl shadow-sm my-8">
         <div className=" flex flex-row font-bold justify-between content-center w-full h-full p-8 bg-white hover:translate-x-[-0.5rem] rounded-xl hover:translate-y-[-0.5rem] transition-all duration-200 ease-in-out active:translate-x-0 active:translate-y-0">
           <p>{text}</p>
           <CaretRight size={32} />

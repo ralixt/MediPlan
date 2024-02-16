@@ -19,7 +19,8 @@ import {
 import { useEffect, useState } from "react";
 import ModifierOverlay from "./modifierOverlay";
 import OptionOverlay from "./optionOverlay";
-import { getEtapeTypeById } from "@/actions/EtapeType";
+import {getEtapeTypeById} from "@/actions/EtapeType";
+import Image from "next/image";
 
 type propsET = {
   etapeType: EtapeType;
@@ -230,12 +231,18 @@ export function Precedence({ precedence }: propsP) {
     });
   return (
     <div
-      className={`m-5 ${isOver ? "border-2 border-black" : ""}`}
+      className={` w-80 ${isOver ? "border-2 border-black" : ""}`}
       ref={setNodeRef}
       {...listeners}
       {...attributes}
     >
-      <p>precedence</p>
+      <Image
+          src="/precedence.svg"
+          alt="Flèche précédence"
+          width={300}
+          height={300}
+          className="relative w-full"
+      ></Image>
     </div>
   );
 }

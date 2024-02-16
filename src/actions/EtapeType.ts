@@ -145,15 +145,15 @@ export async function deleteEtapeTypeById(id: string) {
   }
 }
 
-export async function updateEtapeType(id: string, formData: FormData) {
+export async function updateEtapeType(id: string, formData: object) {
   try {
     const etapeTypeUpdated = await EtapeType.findByIdAndUpdate(id, formData);
     if (etapeTypeUpdated) {
       console.log("EtapeType mis à jour", etapeTypeUpdated);
     } else {
-      console.log("Aucune etape type trouvé");
+      console.error("Aucune etape type trouvé");
     }
   } catch (error) {
-    console.log(error,"Erreur de mise à jour - updateEtapeType");
+    console.error(error,"Erreur de mise à jour - updateEtapeType");
   }
 }

@@ -34,7 +34,13 @@ import {
 } from "@dnd-kit/sortable";
 import { IconGroupeEtape } from "./modelingComponents";
 import handleDragEnd from "./modelingGenerator";
-export function ModelingGeneratorMenu({ EtapeType, setEtapeType }) {
+
+type ModelingGeneratorMenuProps = {
+  EtapeType : EtapeType;
+  setEtapeType : EtapeType;
+}
+
+export function ModelingGeneratorMenu({ EtapeType, setEtapeType } : ModelingGeneratorMenuProps) {
   const [menuVisible, setMenuVisible] = useState(false);
 
   const toggleMenuVisibility = () => {
@@ -120,21 +126,28 @@ export function ModelingGeneratorMenu({ EtapeType, setEtapeType }) {
               strategy={horizontalListSortingStrategy}
             >
               {EtapeType.filter((etape) =>
-                diacritics
-                  .remove(etape.name.toLowerCase())
-                  .includes(diacritics.remove(searchEtape.toLowerCase()))
+                  {
+                    return etape.type === "EtapeType" &&
+                    diacritics
+                        .remove(etape.name.toLowerCase())
+                        .includes(diacritics.remove(searchEtape.toLowerCase()))
+                  }
               ).length > 0 ? (
-                EtapeType.filter((etape) =>
-                  diacritics
-                    .remove(etape.name.toLowerCase())
-                    .includes(diacritics.remove(searchEtape.toLowerCase()))
-                ).map((etapes) => (
-                  <EtapeTypeCompact
-                    etape={etapes}
-                    SetEtapes={setEtapeType}
-                    key={etapes._id}
-                  />
-                ))
+                EtapeType.filter((etape) => {
+                      return etape.type === "EtapeType" &&
+                      diacritics
+                          .remove(etape.name.toLowerCase())
+                          .includes(diacritics.remove(searchEtape.toLowerCase()))
+
+                }
+
+                ).map((etapes) =>
+                      <EtapeTypeCompact
+                          etape={etapes}
+                          SetEtapes={setEtapeType}
+                          key={etapes._id}
+                      />
+                )
               ) : (
                 <div className="flex items-center content-center justify-center w-full">
                   <p className="text-2xl">Aucune étape trouvée</p>

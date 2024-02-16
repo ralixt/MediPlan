@@ -304,7 +304,7 @@ export function EtapeTypeCompact({ etape, SetEtapes }) {
           etape={etape}
         />
       )}
-      <div className="bg-lightlightgrey shadow-lg rounded-3xl px-8 py-4 w-full h-20 mr-4 flex flex-row justify-between items-center">
+      <div className="bg-lightlightgrey shadow-lg rounded-3xl px-8 py-4 w-full h-20 mr-4 flex flex-row justify-between items-center max-w-fit">
         <div
           className="flex flex-row justify-between items-center"
           ref={setNodeRef}

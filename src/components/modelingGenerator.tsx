@@ -56,7 +56,12 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   const [etapeType, setEtapeType] = useState<EtapeType[]>([]);
   const [modified, setModified] = useState(false);
   const [pushBDD, setPushBDD] = useState(false);
-  const [GroupeEtape, setGroupeEtape] = useState();
+
+
+  // const precedenceIds: Precedence[] = [] ;
+  // const [precedence, setPrecedence]=useState<Precedence>()
+  // const [items,setItem]=useState<Precedence  | EtapeType | GroupeEtapeType |Border >([])
+
   console.log(elements);
   useEffect(() => {
     const fetchParcours = async () => {
@@ -79,8 +84,9 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     const successeurIds: string[] = [];
 
     elements.forEach((element) => {
-      if (element.type === "EtapeType" || element.type === "GroupeEtapeType") {
-        console.log("element", element);
+
+
+      if (element.type==="EtapeType" || element.type==="GroupeEtapeType"  ) {
         const idWithoutSuffix = element._id.slice(0, -5);
         successeurIds.push(idWithoutSuffix);
       }
@@ -115,16 +121,47 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               const successeur = { ...elements[index + 1] };
               newItem.antecedent = antecedant._id;
               newItem.successeur = successeur._id;
+              console.log("newItem",newItem)
               return newItem;
             }
+
+
             return item;
           });
 
+        // setItem(items)
+        // console.log("itemss",items)
+        //
         return items;
+
+
+
+
       });
       setPushBDD(true);
     }
   }, [elements, modified]);
+
+  // useEffect(()=>{
+  //   console.log("items",items)
+  //
+  //   items.map((item) =>  {
+  //     if(item.type === "Precedence"){
+  //       console.log("item",item)
+  //       precedenceIds.push(item)
+  //       precedence.push(precedenceIds)
+  //
+  //
+  //     }
+  //
+  //   })
+  //   console.log("precedenceIds",precedenceIds)
+  //   //precedence.push(precedenceIds)
+  //  setPrecedence(precedenceIds)
+  //
+  //   console.log("prec",precedence)
+  //
+  // },[items])
 
   useEffect(() => {
     if (pushBDD) {
@@ -207,7 +244,9 @@ export default function ModelingGenerator({ element, parcour }: Props) {
         />
       );
     } else if (element.type === "GroupeEtapeType") {
-      console.log("elementssss", element);
+
+
+
       return (
         <GroupeEtapeType
           key={element._id}
@@ -421,7 +460,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
                   );
                   items[indexParent].Etapes.push(etapetypepush);
                 }
-                //console.log(items);
+
                 return items;
               });
               setModified(true);
@@ -498,50 +537,33 @@ export default function ModelingGenerator({ element, parcour }: Props) {
             formData.append("type", "GroupeEtapeType");
             createGroupeEtapeType(formData);
 
-            const fetchData = async () => {
-              try {
-                const result = await getEtapeTypeByName(idNewGroupeEtapeType);
-                // Mettre à jour l'état lorsque la promesse est résolue
-                /*result.then(function(GroupeEtape) {
-                    setGroupeEtape(GroupeEtape)
-                  });*/
 
-                console.log("resultat BDD", result._id);
 
-                newGroupeEtapeType._id = result._id;
-                newGroupeEtapeType._id = ajouterUidAleatoireCinq(
-                  newGroupeEtapeType._id
-                );
-                //newGroupeEtapeType._id=ajouterUidAleatoire()
+              const fetchData = async () => {
+                try {
+                  const result = await getEtapeTypeByName(idNewGroupeEtapeType);
+                  newGroupeEtapeType._id = result._id
+                  newGroupeEtapeType._id=ajouterUidAleatoireCinq(newGroupeEtapeType._id)
 
-                console.log("GroupeEtapeType", newGroupeEtapeType);
+                } catch (error) {
+                  // Gérer les erreurs éventuelles
+                  console.error('Erreur lors de la récupération des données :', error);
+                }
+              };
 
-                console.log("dans", result._id);
+              fetchData()
 
-                //setGroupeEtape(result._id)
-              } catch (error) {
-                // Gérer les erreurs éventuelles
-                console.error(
-                  "Erreur lors de la récupération des données :",
-                  error
-                );
-              }
-            };
 
-            fetchData();
 
-            console.log("newGroupe", newGroupeEtapeType);
+                items.push(newGroupeEtapeType)
+                const activeIndex = elements.findIndex((item) => item._id === activeId);
+                const overIndex = elements.findIndex((item) => item._id === overId);
+                const newItem = arrayMove(items, activeIndex, overIndex);
+                console.log(newItem)
+                return newItem
+            }
+        })
 
-            items.push(newGroupeEtapeType);
-            const activeIndex = elements.findIndex(
-              (item) => item._id === activeId
-            );
-            const overIndex = elements.findIndex((item) => item._id === overId);
-            const newItem = arrayMove(items, activeIndex, overIndex);
-            console.log(newItem);
-            return newItem;
-          }
-        });
 
         setModified(true);
         console.log("DragEnd - GroupeEtape - GET");
@@ -566,7 +588,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
             );
             const overIndex = elements.findIndex((item) => item._id === overId);
             const newItem = arrayMove(items, activeIndex, overIndex);
-            console.log(newItem);
             return newItem;
           }
         });
@@ -593,7 +614,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               );
               items[indexParent].Etapes.splice(indexChild, 1);
             }
-            console.log("dfgfdgdfgdfgdfgdfgdfgdfg");
+
             return items;
           });
           setModified(true);
@@ -654,9 +675,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               items.splice(activeIndex, 1);
             }
             const modifiedEtapes = items[overIndex].Etapes.map((etape) => {
-              // Supprimer les 5 derniers caractères de l'ID
               const modifiedId = etape._id.slice(0, -5);
-              // Retourner un nouvel objet avec l'ID modifié
               return { ...etape, _id: modifiedId };
             });
             const datas = {
@@ -667,25 +686,20 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               Lieu: [],
               Materiel: [],
               a_jeun: null,
+
               Etapes: modifiedEtapes,
             };
+
 
             console.log("update", modifiedEtapes);
 
             const fetchData = async () => {
               try {
-                const result = await getEtapeTypeByName(items[overIndex].name);
-                // Mettre à jour l'état lorsque la promesse est résolue
-                /*result.then(function(GroupeEtape) {
-                  setGroupeEtape(GroupeEtape)
-                });*/
+                const result = await getEtapeTypeByName(items[overIndex].name)
 
-                console.log("dans", result._id);
 
                 await updateEtapeType(result._id, datas);
-                setGroupeEtape(result._id);
               } catch (error) {
-                // Gérer les erreurs éventuelles
                 console.error(
                   "Erreur lors de la récupération des données :",
                   error
@@ -693,17 +707,11 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               }
             };
 
-            fetchData();
 
-            // const c = getEtapeTypeByName(items[overIndex]._id).then(r=>r)
 
-            // console.log("cc",GroupeEtape)
+            fetchData()
 
-            //updateEtapeType(items[overIndex]._id,datas)
 
-            //console.log("eeeeezz",items[overIndex]._id)
-
-            console.log("items", items);
 
             return items;
           });

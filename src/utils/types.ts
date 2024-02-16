@@ -44,7 +44,7 @@ type parcours = {
 };
 type parcoursList = parcours[];
 
-type planificationParcours = {
+type parcoursJourneeType = {
   idParcours: string;
   nbParcours: number;
   pourcentage_utilisation: number;
@@ -61,6 +61,12 @@ type listeUtilisationCompetence = {
 type JourneeType = {
   _id: string; 
   nom: string;
-  planificationParcours: planificationParcours[];
+  planificationParcours: parcoursJourneeType[];
   liste_Competence: listeUtilisationCompetence[];
+}
+
+type Planification = {
+  _id: string;
+  nom: string;
+  liste_JourneeType: JourneeType[];
 }

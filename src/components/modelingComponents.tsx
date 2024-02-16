@@ -183,7 +183,9 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
       id: groupeEtapeType._id,
     });
   const droppable = useDroppable({ id: groupeEtapeType._id });
+
   
+
   return (
     <div
       className={` rounded-2xl flex flex-col m-12 pt-2 pb-8 px-12 bg-lightlightgrey ${
@@ -196,7 +198,7 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
       {...attributes}
     >
       <>
-      
+
         </>
       <p className="text-grey text-2xl w-full flex items-center content-center justify-center">
         Bloc d'étapes

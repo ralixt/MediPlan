@@ -118,7 +118,5 @@ export default function Planification() {
 
         </div>
 
-
-
     );
 }

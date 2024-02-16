@@ -5,7 +5,7 @@ import {Clock, Door, User, PersonSimple, PersonArmsSpread} from "@phosphor-icons
 import {
     createEtapeType
 } from "@/actions/EtapeType";
-import "./style.css"
+import "./creation-etape.css"
 
 
 export default function Creation(props) {

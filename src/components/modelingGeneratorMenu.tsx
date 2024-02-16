@@ -25,7 +25,7 @@ import ModifierOverlay from "./modifierOverlay";
 import OptionOverlay from "./optionOverlay";
 import { EtapeTypeCompact, IconPrecedence } from "./modelingComponents";
 import Popup from "reactjs-popup";
-import Creation from "@/app/(connected)/Creation/page";
+import Creation from "@/components/creation-etape";
 import "reactjs-popup/dist/index.css";
 import diacritics from "diacritics";
 import {

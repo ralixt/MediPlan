@@ -63,7 +63,7 @@ export default function NavBar() {
           />
           <NavBarButton
             text="Planification"
-            href="/#"
+            href="/planification"
             icon={<ChartBar size={24} className="shrink-0" />}
             extend={isHovered}
           />

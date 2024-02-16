@@ -3,20 +3,32 @@
 import { getComp, getLieu, getMateriel } from "@/actions/CreateCompTest";
 import { updateEtapeType } from "@/actions/EtapeType";
 import { Clock, Door, User } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import {
+  ChangeEventHandler,
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { EtapeType } from "./modelingComponents";
 
-export default function ModifierOverlay({ etape, setShowModifierForm }) {
+type props = {
+  etape: EtapeType;
+  setShowModifierForm: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function ModifierOverlay({ etape, setShowModifierForm }: props) {
   const [nameEtapeType, setNameEtapeType] = useState("");
   const [type, setType] = useState("");
   const [competenceId, setCompetenceId] = useState("");
   const [lieuId, setLieuId] = useState("");
   const [materielId, setMaterielId] = useState("");
   const [AJeun, setAJeun] = useState(false);
-  const [Duree, setDuree] = useState("");
-  const [competence, setCompetence] = useState([]);
-  const [lieu, setLieu] = useState([]);
-  const [materiel, setMateriel] = useState([]);
+  const [Duree, setDuree] = useState(0);
+  const [competence, setCompetence] = useState<competence[]>([]);
+  const [lieu, setLieu] = useState<lieu[]>([]);
+  const [materiel, setMateriel] = useState<materiel[]>([]);
   const formData = {
     name: nameEtapeType,
     type: type,
@@ -27,11 +39,15 @@ export default function ModifierOverlay({ etape, setShowModifierForm }) {
     a_jeun: AJeun,
   };
 
-  const handleEtapeTypeChangeCompetence = async (event) => {
+  const handleEtapeTypeChangeCompetence: ChangeEventHandler<
+    HTMLSelectElement
+  > = async (event) => {
     setCompetenceId(event.target.value);
   };
 
-  const handleEtapeTypeChangeMateriel = (event) => {
+  const handleEtapeTypeChangeMateriel: ChangeEventHandler<HTMLSelectElement> = (
+    event
+  ) => {
     setMaterielId(event.target.value);
   };
 
@@ -72,11 +88,13 @@ export default function ModifierOverlay({ etape, setShowModifierForm }) {
     setCompetenceId(etape.Competence[0]._id);
     setLieuId(etape.Lieu[0]._id);
     setMaterielId(etape.Materiel[0]._id);
-    setAJeun(etape.a_jeun);
+    setAJeun(etape.a_Jeun);
     setDuree(etape.duree);
   }, [etape]);
 
-  const handleUpdateEtapeType = async (event) => {
+  const handleUpdateEtapeType: MouseEventHandler<HTMLButtonElement> = async (
+    event
+  ) => {
     event.preventDefault();
     let id = etape._id;
     if (etape._id.length > 24) {
@@ -97,7 +115,7 @@ export default function ModifierOverlay({ etape, setShowModifierForm }) {
             <h2 className="text-2xl font-bold text-center pb-5">
               Ajouter une nouvelle étape type
             </h2>
-            <div className="flex flex-row w-full border-b-2 mb-8 font-bold  mb-10">
+            <div className="flex flex-row w-full border-b-2 font-bold  mb-10">
               <input
                 id="stepName"
                 type="text"
@@ -109,7 +127,7 @@ export default function ModifierOverlay({ etape, setShowModifierForm }) {
                 }}
               />
             </div>
-            <div className="flex flex-row w-full border-b-2 mb-8 mb-10">
+            <div className="flex flex-row w-full border-b-2  mb-10">
               <input
                 id="time"
                 type="number"
@@ -117,7 +135,7 @@ export default function ModifierOverlay({ etape, setShowModifierForm }) {
                 placeholder="Temps"
                 value={Duree}
                 onChange={(e) => {
-                  setDuree(e.target.value);
+                  setDuree(e.target.valueAsNumber);
                 }}
               ></input>
               <Clock size={24} />

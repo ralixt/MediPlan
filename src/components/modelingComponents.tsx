@@ -23,7 +23,9 @@ import { getEtapeTypeById } from "@/actions/EtapeType";
 
 type propsET = {
   etapeType: EtapeType;
-  SetEtapes: any;
+  SetEtapes: React.Dispatch<
+    React.SetStateAction<(EtapeType | GroupeEtapeType | Precedence | Border)[]>
+  >;
 };
 
 export function EtapeType({ etapeType, SetEtapes }: propsET) {

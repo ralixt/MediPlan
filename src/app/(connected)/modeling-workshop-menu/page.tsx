@@ -25,18 +25,18 @@ const getParcoursBDD = cache(async () => {
 });
 
 export default function ModelingWorkshop() {
-  const [Parcours, setParcours] = useState([]); // État pour stocker les données des parcours
+  const [Parcours, setParcours] = useState<parcoursList>([]); // État pour stocker les données des parcours
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const [searchParcours, setSearchParcours] = useState("");
-  const [parcoursFiltre, setParcoursFiltre] = useState([]);
+  const [parcoursFiltre, setParcoursFiltre] = useState<parcoursList>([]);
 
   useEffect(() => {
     const fetchParcours = async () => {
       try {
         const data = await getParcoursBDD();
         //console.log("cache : " ,data)
-        setParcours(data);
+        setParcours(data as parcoursList);
         setLoading(false);
       } catch (error) {
         console.error(
@@ -111,9 +111,7 @@ export default function ModelingWorkshop() {
                 <MagnifyingGlass size={20}></MagnifyingGlass>
               </div>
             </form>
-            <AddParcoursType
-              setloading={setLoading}
-            />
+            <AddParcoursType setloading={setLoading} />
           </div>
         </div>
 

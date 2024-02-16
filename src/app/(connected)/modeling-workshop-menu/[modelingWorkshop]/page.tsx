@@ -14,9 +14,11 @@ import { Loader } from "@/components/loader";
 import { param } from "ts-interface-checker";
 import { ModelingGeneratorMenu } from "@/components/modelingGeneratorMenu";
 import DownloadParcours from "@/components/telechargement";
+import NotFound from "@/app/not-found";
+import { notFound } from "next/navigation";
 
 type props = {
-  uid: string;
+  modelingWorkshop: string;
 };
 
 export type NextPageProps<T = Record<string, string>> = {
@@ -49,8 +51,10 @@ export default async function ModelingWorkshop({
   //console.log(parcours)
   const parcours = await getParcoursType(params.modelingWorkshop);
   if (parcours !== undefined) {
-    elements = generate(parcours);
+    elements = generate(parcours as parcours);
     //console.log(elements);
+  } else {
+    notFound();
   }
   //console.log(parcours, elements);
   return elements == undefined && parcours == undefined ? (
@@ -64,11 +68,11 @@ export default async function ModelingWorkshop({
           classname=" bg-lightgrey transition-all duration-300 ease-in-out hover:rounded-full w-14 h-14 rounded-2xl flex items-center content-center justify-center"
           // absolute top-6 left-24
         />
-        <h1 className=" text-3xl font-bold">{parcours.name}</h1>
-        <DownloadParcours parcours={parcours}></DownloadParcours>
+        <h1 className=" text-3xl font-bold">{(parcours as parcours).name}</h1>
+        <DownloadParcours parcours={parcours as parcours}></DownloadParcours>
       </div>
 
-      <ModelingGenerator element={elements} parcour={parcours} />
+      <ModelingGenerator element={elements} parcour={parcours as parcours} />
     </div>
   );
 }

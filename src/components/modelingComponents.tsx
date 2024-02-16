@@ -7,24 +7,17 @@ import {
   PencilSimpleLine,
   User,
 } from "@phosphor-icons/react";
-import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
-import { set } from "mongoose";
-import { CSS } from "@dnd-kit/utilities";
-import {
-  horizontalListSortingStrategy,
-  rectSortingStrategy,
-  SortableContext,
-  useSortable,
-} from "@dnd-kit/sortable";
-import { useEffect, useState } from "react";
+import { useDroppable } from "@dnd-kit/core";
+import { useSortable } from "@dnd-kit/sortable";
+import { useState } from "react";
 import ModifierOverlay from "./modifierOverlay";
 import OptionOverlay from "./optionOverlay";
-import {getEtapeTypeById} from "@/actions/EtapeType";
+
 import Image from "next/image";
 
 type propsET = {
   etapeType: EtapeType;
-  SetEtapes: React.Dispatch<
+  SetEtapes?: React.Dispatch<
     React.SetStateAction<(EtapeType | GroupeEtapeType | Precedence | Border)[]>
   >;
 };
@@ -45,14 +38,14 @@ export function EtapeType({ etapeType, SetEtapes }: propsET) {
   };
   return (
     <>
-      {showModifierForm && (
+      {showModifierForm && SetEtapes && (
         <ModifierOverlay
           etape={etapeType}
           setShowModifierForm={setShowModifierForm}
         />
       )}
 
-      {showOptions && (
+      {showOptions && SetEtapes && (
         <OptionOverlay
           setShowModifierForm={setShowModifierForm}
           setShowOptions={setShowOptions}
@@ -63,7 +56,7 @@ export function EtapeType({ etapeType, SetEtapes }: propsET) {
         />
       )}
       <div
-        className={`bg-white  rounded-3xl p-8 w-[210px] h-80 mr-4 flex flex-col justify-between ${
+        className={`bg-white  rounded-3xl p-8 w-[210px] h-80 mx-2 flex flex-col justify-between ${
           isOver
             ? "shadow-[inset_0px_0px_10px_0px_rgba(6,16,19,0.25)]"
             : "shadow-md"
@@ -85,10 +78,10 @@ export function EtapeType({ etapeType, SetEtapes }: propsET) {
               <p className="ml-2 text-lg">{etapeType.duree}</p>'
             </div>
 
-            {etapeType.a_Jeun && (
+            {etapeType.a_jeun && (
               <div className="flex flex-row items-center mt-2">
                 <ForkKnife size={25} className=" flex-shrink-0" />
-                <p className="ml-2 text-lg">{etapeType.a_Jeun}</p>
+                <p className="ml-2 text-lg">A jeun</p>
               </div>
             )}
 
@@ -115,63 +108,22 @@ export function EtapeType({ etapeType, SetEtapes }: propsET) {
             </div>
           </div>
         </div>
-        <div className="flex justify-end mt-4">
-          <button className="rounded-full hover:bg-gray-200">
-            <DotsThreeOutlineVertical
-              size={32}
-              weight="fill"
-              color="#009BD4"
-              onClick={handleOptionsClick}
-            />
-          </button>
-        </div>
+        {SetEtapes ? (
+          <div className="flex justify-end mt-4">
+            <button className="rounded-full hover:bg-gray-200">
+              <DotsThreeOutlineVertical
+                size={32}
+                weight="fill"
+                color="#009BD4"
+                onClick={handleOptionsClick}
+              />
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </>
-  );
-}
-
-export function EtapeTypeOver({ etapeType }: propsET) {
-  return (
-    <div className="flex flex-col justify-between bg-white shadow-md rounded-3xl p-8 w-52 h-64">
-      <h2 className="font-bold text-2xl">{etapeType.name}</h2>
-
-      <div className="my-2">
-        <div className="flex flex-row items-center">
-          <Clock size={25} />
-          <p className="ml-2 text-xl">{etapeType.duree}</p>'
-        </div>
-
-        {etapeType.a_Jeun && (
-          <div className="flex flex-row items-center mt-2">
-            <ForkKnife size={32} />
-            <p className="ml-2 text-xl">{etapeType.a_Jeun}</p>
-          </div>
-        )}
-
-        <div className="flex flex-row items-center mt-2">
-          <Door size={25} />
-          {etapeType.Lieu.map((lieu, index) => (
-            <p key={index} className="ml-2">
-              {lieu.nom}
-            </p>
-          ))}
-        </div>
-
-        <div className="flex flex-row items-center mt-2">
-          <User size={25} />
-          {etapeType.Competence.map((competence, index) => (
-            <p key={index} className="ml-2 text-xl">
-              {competence.nom}
-            </p>
-          ))}
-        </div>
-      </div>
-      <div className="flex justify-end mt-4">
-        <button className="rounded-full">
-          <DotsThreeOutlineVertical size={32} weight="fill" color="#009BD4" />
-        </button>
-      </div>
-    </div>
   );
 }
 
@@ -188,7 +140,7 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
 
   return (
     <div
-      className={` rounded-2xl flex flex-col m-12 pt-2 pb-8 px-12 bg-lightlightgrey ${
+      className={` rounded-2xl flex flex-col m-5 pt-2 pb-8 px-12 min-w-[18rem] bg-lightlightgrey ${
         isOver
           ? "border-2 border-black"
           : "border-2 border-lightgrey border-dashed"
@@ -198,25 +150,16 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
       {...attributes}
     >
       <></>
-      <p className="text-grey text-2xl w-full flex items-center content-center justify-center">
+      <p className="text-grey text-2xl w-full flex items-center content-center justify-center mb-5">
         Bloc d'étapes
       </p>
-      <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
-      <div ref={droppable.setNodeRef} className="flex flex-row h-80">
+      <div
+        ref={droppable.setNodeRef}
+        className="flex flex-row h-80 justify-center items-center w-full"
+      >
         {groupeEtapeType.Etapes.map((etape: EtapeType) => (
-          <EtapeType key={etape._id} etapeType={etape} SetEtapes={[]} />
+          <EtapeType key={etape._id} etapeType={etape} />
         ))}
-      </div>
-    </div>
-  );
-}
-
-export function GroupeEtapeTypeOver({ groupeEtapeType }: propsGET) {
-  return (
-    <div className="border-2 border-lightgrey rounded-2xl border-dashed p-4 flex flex-row">
-      <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
-      <div className="flex flex-row">
-        {groupeEtapeType.Etapes.length + " Etapes types"}
       </div>
     </div>
   );
@@ -233,26 +176,18 @@ export function Precedence({ precedence }: propsP) {
     });
   return (
     <div
-      className={` w-80 ${isOver ? "border-2 border-black" : ""}`}
+      className={`w-fit ${isOver ? "border-2 border-black" : ""}`}
       ref={setNodeRef}
       {...listeners}
       {...attributes}
     >
       <Image
-          src="/precedence.svg"
-          alt="Flèche précédence"
-          width={300}
-          height={300}
-          className="relative w-full"
+        src="/precedence.svg"
+        alt="Flèche précédence"
+        width={100}
+        height={100}
+        className="w-32 "
       ></Image>
-    </div>
-  );
-}
-
-export function PrecedenceOver({ precedence }: propsP) {
-  return (
-    <div className={`m-5`}>
-      <p>precedence</p>
     </div>
   );
 }
@@ -309,7 +244,13 @@ export function EtapeTypeCompact({ etape, setEtapes }: propsETC) {
           setShowModifierForm={setShowModifierForm}
           setShowOptions={setShowOptions}
           setConfirmDelete={setConfirmDelete}
-          SetEtapes={setEtapes}
+          SetEtapes={
+            setEtapes as React.Dispatch<
+              React.SetStateAction<
+                (EtapeType | GroupeEtapeType | Border | Precedence)[]
+              >
+            >
+          }
           confirmDelete={confirmDelete}
           etape={etape}
         />
@@ -332,7 +273,7 @@ export function EtapeTypeCompact({ etape, setEtapes }: propsETC) {
             </div>
 
             {/*{etapeType.aJeun && (*/}
-            {etape.a_Jeun && (
+            {etape.a_jeun && (
               <div className="flex flex-row items-center ">
                 <ForkKnife size={15} />
                 <p className="ml-2">AJeun</p>

@@ -5,11 +5,12 @@ type props = {
   setShowModifierForm: Dispatch<SetStateAction<boolean>>;
   setShowOptions: Dispatch<SetStateAction<boolean>>;
   setConfirmDelete: Dispatch<SetStateAction<boolean>>;
-  SetEtapes: React.Dispatch<
-    React.SetStateAction<
-      EtapeType[] | (EtapeType | GroupeEtapeType | Border | Precedence)[]
-    >
-  >;
+  SetEtapes:
+    | React.Dispatch<
+        React.SetStateAction<
+          (EtapeType | GroupeEtapeType | Border | Precedence)[]
+        >
+      >
   confirmDelete: boolean;
   etape: EtapeType;
 };
@@ -38,7 +39,9 @@ export default function OptionOverlay({
     setConfirmDelete(false);
   };
 
-  const handleConfirmationClick : MouseEventHandler<HTMLButtonElement> = async (event) => {
+  const handleConfirmationClick: MouseEventHandler<HTMLButtonElement> = async (
+    event
+  ) => {
     event.preventDefault();
     await deleteEtapeTypeById(etape._id);
     console.log("Supprimer confirmed");

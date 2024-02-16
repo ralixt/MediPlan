@@ -47,7 +47,7 @@ export const Login = (props: Props) => {
 
         <form method="POST" onSubmit={onSubmit} className="flex flex-col w-4/5 mx-auto mt-12">
             <div className="w-full flex justify-center font-bold text-4xl mb-24 mt-8">
-                <h1>Connexion a votre compte</h1>
+                <h1>Connexion à votre compte</h1>
             </div>
 
             <div

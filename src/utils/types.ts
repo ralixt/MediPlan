@@ -10,8 +10,8 @@ type EtapeType = {
   type: "EtapeType";
   duree: number;
   Competence: competence[];
-  Lieu: ressource[];
-  Materiel: ressource[];
+  Lieu: lieu[];
+  Materiel: lieu[];
   a_Jeun: boolean;
 };
 
@@ -29,12 +29,20 @@ type Precedence = {
   type: "Precedence";
 };
 type competence = {
+  _id: string
   nom: string;
 };
-type ressource = {
+type lieu = {
+  _id:string
   nom: string;
   type: "Lieu";
 };
+
+type materiel= {
+  _id:string
+  nom: string;
+  type: "materiel";
+}
 type parcours = {
   _id: string;
   name: string;

@@ -16,10 +16,10 @@ import {
   SortableContext,
   useSortable,
 } from "@dnd-kit/sortable";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import ModifierOverlay from "./modifierOverlay";
 import OptionOverlay from "./optionOverlay";
-import {getEtapeTypeById} from "@/actions/EtapeType";
+import { getEtapeTypeById } from "@/actions/EtapeType";
 
 type propsET = {
   etapeType: EtapeType;
@@ -92,24 +92,23 @@ export function EtapeType({ etapeType, SetEtapes }: propsET) {
             <div className="flex flex-row items-center mt-2">
               <Door size={25} className=" flex-shrink-0" />
 
-
-
-              { etapeType.Lieu&& etapeType.Lieu.map((lieu, index) => (
-                <p key={index} className="ml-2 text-lg">
-                  {lieu.nom}
-                </p>
-              ))}
-
+              {etapeType.Lieu &&
+                etapeType.Lieu.map((lieu, index) => (
+                  <p key={index} className="ml-2 text-lg">
+                    {lieu.nom}
+                  </p>
+                ))}
             </div>
 
             <div className="flex flex-row items-center mt-2">
               <User size={25} className=" flex-shrink-0" />
 
-              { etapeType.Competence&& etapeType.Competence.map((competence, index) => (
-                <p key={index} className="ml-2 text-lg">
-                  {competence.nom}
-                </p>
-              ))}
+              {etapeType.Competence &&
+                etapeType.Competence.map((competence, index) => (
+                  <p key={index} className="ml-2 text-lg">
+                    {competence.nom}
+                  </p>
+                ))}
             </div>
           </div>
         </div>
@@ -184,8 +183,6 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
     });
   const droppable = useDroppable({ id: groupeEtapeType._id });
 
-  
-
   return (
     <div
       className={` rounded-2xl flex flex-col m-12 pt-2 pb-8 px-12 bg-lightlightgrey ${
@@ -197,15 +194,12 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
       {...listeners}
       {...attributes}
     >
-      <>
-
-        </>
+      <></>
       <p className="text-grey text-2xl w-full flex items-center content-center justify-center">
         Bloc d'étapes
       </p>
       <p>Groupe Etape Type: {groupeEtapeType.name} :</p>
       <div ref={droppable.setNodeRef} className="flex flex-row h-80">
-
         {groupeEtapeType.Etapes.map((etape: EtapeType) => (
           <EtapeType key={etape._id} etapeType={etape} SetEtapes={[]} />
         ))}
@@ -249,7 +243,7 @@ export function Precedence({ precedence }: propsP) {
 export function PrecedenceOver({ precedence }: propsP) {
   return (
     <div className={`m-5`}>
-      <p>precedence: {precedence.name}</p>
+      <p>precedence</p>
     </div>
   );
 }
@@ -273,7 +267,12 @@ export function Border({ border }: propsB) {
   );
 }
 
-export function EtapeTypeCompact({ etape, SetEtapes }) {
+type propsETC = {
+  etape: EtapeType;
+  setEtapes: React.Dispatch<React.SetStateAction<EtapeType[]>>;
+};
+
+export function EtapeTypeCompact({ etape, setEtapes }: propsETC) {
   const { attributes, listeners, setNodeRef, transform, transition, isOver } =
     useSortable({
       id: etape._id,
@@ -301,7 +300,7 @@ export function EtapeTypeCompact({ etape, SetEtapes }) {
           setShowModifierForm={setShowModifierForm}
           setShowOptions={setShowOptions}
           setConfirmDelete={setConfirmDelete}
-          SetEtapes={SetEtapes}
+          SetEtapes={setEtapes}
           confirmDelete={confirmDelete}
           etape={etape}
         />
@@ -324,29 +323,33 @@ export function EtapeTypeCompact({ etape, SetEtapes }) {
             </div>
 
             {/*{etapeType.aJeun && (*/}
-            {etape.a_jeun && (
+            {etape.a_Jeun && (
               <div className="flex flex-row items-center ">
                 <ForkKnife size={15} />
                 <p className="ml-2">AJeun</p>
               </div>
             )}
             {/*)}*/}
-            {etape.Lieu[0] ?
-            <div className="flex flex-row items-center ">
-              <Door size={15} />
-              {/*<p className="ml-2">{etapeType.lieux}</p>*/}
-              <p className="ml-2 whitespace-nowrap">{etape.Lieu[0].nom}</p>
-            </div>:<div></div>
-            }
-            { etape.Competence[0]?
-            <div className="flex flex-row items-center">
-              <User size={15} />
-              {/*<p className="ml-2">{etapeType.competences}</p>*/}
-              <p className="ml-2 whitespace-nowrap">
-                {etape.Competence[0].nom}
-              </p>
-            </div>:<div></div>
-            }
+            {etape.Lieu[0] ? (
+              <div className="flex flex-row items-center ">
+                <Door size={15} />
+                {/*<p className="ml-2">{etapeType.lieux}</p>*/}
+                <p className="ml-2 whitespace-nowrap">{etape.Lieu[0].nom}</p>
+              </div>
+            ) : (
+              <div></div>
+            )}
+            {etape.Competence[0] ? (
+              <div className="flex flex-row items-center">
+                <User size={15} />
+                {/*<p className="ml-2">{etapeType.competences}</p>*/}
+                <p className="ml-2 whitespace-nowrap">
+                  {etape.Competence[0].nom}
+                </p>
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
         <div className="flex items-center content-center">
@@ -388,13 +391,14 @@ export function IconPrecedence() {
   });
 
   return (
-    <div className="h-20 bg-light-blue flex flex-row items-center justify-center rounded-3xl w-full" 
-    {...attributes}
-    {...listeners}
-    ref={setNodeRef}>
+    <div
+      className="h-20 bg-light-blue flex flex-row items-center justify-center rounded-3xl w-full"
+      {...attributes}
+      {...listeners}
+      ref={setNodeRef}
+    >
       <PencilSimpleLine size={32} />
       <p className="font-bold ml-4">Lier</p>
     </div>
-    
   );
 }

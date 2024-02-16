@@ -12,8 +12,8 @@ export async function CreateUser(formData: FormData) {
         const username = formData.get("username");
         const password = formData.get("password");
 
-
-        const hashedPassword = await bcrypt.hash(password, 10);
+        if(password){
+            const hashedPassword = await bcrypt.hash(password?.toString(), 10);
 
         const comptes = await Compte.create({
             username: username,
@@ -22,13 +22,14 @@ export async function CreateUser(formData: FormData) {
 
         console.log("Un compte créé :", comptes);
         return comptes;
+        }
+        
     } catch (e) {
         console.error(e);
     }
 }
 
-export const authenticateUser = async (credentials: { username: any; password: any; }) => {
-    const { username, password } = credentials;
+export const authenticateUser = async (username:string, password:string) => {
 
     try {
 

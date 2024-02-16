@@ -18,10 +18,13 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-       const users = authenticateUser(credentials)
+        if(credentials && credentials?.username && credentials.password){
+          const users = authenticateUser(credentials?.username, credentials?.password)
         console.log(credentials)
         const user = { id: "1", name: "admin", email: "admin@admin.com",password:"cc"};
         return users;
+        }
+       
       },
     }),
   ],

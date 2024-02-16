@@ -9,8 +9,14 @@ class Database {
 
     private async _connect() {
         try {
-            await mongoose.connect(process.env.MONGO_URI);
+            if(process.env.MONGO_URI){
+                await mongoose.connect(process.env.MONGO_URI);
             console.log('Connected to MongoDB');
+            }
+            else{
+                throw "il n'y a pas la variable d'environement"
+            }
+            
         } catch (error) {
             console.error('Error connecting to MongoDB:', error);
             throw error;

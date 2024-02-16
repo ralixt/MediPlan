@@ -1,5 +1,13 @@
 "use client";
-import { cache, useCallback, useEffect, useState } from "react";
+import {
+  Dispatch,
+  FormEventHandler,
+  SetStateAction,
+  cache,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 import { createParcoursType, getAllParcoursType } from "@/actions/ParcoursType";
 
@@ -8,8 +16,11 @@ import { OneIconButtonAddParcoursType } from "@/components/buttons";
 import ParcoursType from "@/app/models/parcoursType";
 import { Loader } from "@/components/loader";
 import { Plus } from "@phosphor-icons/react";
+import { validate } from "uuid";
 
-export function AddParcoursType({ setloading, SetParcours }) {
+type props = { setloading: Dispatch<SetStateAction<boolean>> };
+
+export function AddParcoursType({ setloading }: props) {
   const [showPopup, setShowPopup] = useState(false);
   const [parcoursTypeName, setParcoursTypeName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -23,15 +34,7 @@ export function AddParcoursType({ setloading, SetParcours }) {
     setShowPopup(false);
   };
 
-  const handleInputSubmit = (e) => {
-    e.preventDefault();
-
-    console.log("Nom du parcours type:", parcoursTypeName);
-
-    setShowPopup(false);
-  };
-
-  const handleSubmit = async (event) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     let formData = new FormData();

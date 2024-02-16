@@ -101,7 +101,7 @@ export async function deleteParcoursType(id: string) {
 }
 
 
-function convertObjectIdsToStrings(obj) {
+function convertObjectIdsToStrings(obj:any) {
   for (let key in obj) {
     if (obj[key] instanceof mongoose.Types.ObjectId) {
       obj[key] = obj[key].toString();

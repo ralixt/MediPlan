@@ -36,12 +36,16 @@ import { IconGroupeEtape } from "./modelingComponents";
 import handleDragEnd from "./modelingGenerator";
 
 type ModelingGeneratorMenuProps = {
-  EtapeType : EtapeType;
-  setEtapeType : EtapeType;
-}
+  EtapeType: EtapeType[];
+  setEtapeType: React.Dispatch<React.SetStateAction<EtapeType[]>>;
+};
 
-export function ModelingGeneratorMenu({ EtapeType, setEtapeType } : ModelingGeneratorMenuProps) {
+export function ModelingGeneratorMenu({
+  EtapeType,
+  setEtapeType,
+}: ModelingGeneratorMenuProps) {
   const [menuVisible, setMenuVisible] = useState(false);
+  const [newET, setNewET] = useState(false);
 
   const toggleMenuVisibility = () => {
     setMenuVisible(!menuVisible);
@@ -57,8 +61,13 @@ export function ModelingGeneratorMenu({ EtapeType, setEtapeType } : ModelingGene
     }
   };
 
+  const handleClickNew = () => {
+    setNewET(true);
+  };
+
   return (
     <div className="w-full pl-12 pr-8 mb-4">
+      {newET ? <Creation fonctionClose={setNewET} /> : ""}
       <div className="flex justify-end items-center content-center">
         <div
           className={`w-20 h-20 bg-light-blue rounded-3xl flex items-center justify-center mr-4 cursor-pointer hover:rounded-full ${
@@ -82,16 +91,12 @@ export function ModelingGeneratorMenu({ EtapeType, setEtapeType } : ModelingGene
           </div>
 
           <div className="flex flex-row items-center content-center border-l-2 pl-4">
-            <div className="w-20 h-20 bg-dark-blue rounded-3xl flex items-center justify-center mr-4 hover:rounded-full">
-              <Popup
-                trigger={<Plus size={32} />}
-                position="left center"
-                modal
-                nested
-              >
-                {(close) => <Creation fonctionClose={close}></Creation>}
-              </Popup>
-            </div>
+            <button
+              className="w-20 h-20 bg-dark-blue rounded-3xl flex items-center justify-center mr-4 hover:rounded-full"
+              onClick={handleClickNew}
+            >
+              <Plus size={32} />
+            </button>
 
             <button
               className="w-20 h-20 bg-light-blue rounded-3xl flex items-center justify-center hover:rounded-full"
@@ -125,29 +130,28 @@ export function ModelingGeneratorMenu({ EtapeType, setEtapeType } : ModelingGene
               items={EtapeType.map((element) => element._id)}
               strategy={horizontalListSortingStrategy}
             >
-              {EtapeType.filter((etape) =>
-                  {
-                    return etape.type === "EtapeType" &&
-                    diacritics
-                        .remove(etape.name.toLowerCase())
-                        .includes(diacritics.remove(searchEtape.toLowerCase()))
-                  }
-              ).length > 0 ? (
+              {EtapeType.filter((etape) => {
+                return (
+                  etape.type === "EtapeType" &&
+                  diacritics
+                    .remove(etape.name.toLowerCase())
+                    .includes(diacritics.remove(searchEtape.toLowerCase()))
+                );
+              }).length > 0 ? (
                 EtapeType.filter((etape) => {
-                      return etape.type === "EtapeType" &&
-                      diacritics
-                          .remove(etape.name.toLowerCase())
-                          .includes(diacritics.remove(searchEtape.toLowerCase()))
-
-                }
-
-                ).map((etapes) =>
-                      <EtapeTypeCompact
-                          etape={etapes}
-                          SetEtapes={setEtapeType}
-                          key={etapes._id}
-                      />
-                )
+                  return (
+                    etape.type === "EtapeType" &&
+                    diacritics
+                      .remove(etape.name.toLowerCase())
+                      .includes(diacritics.remove(searchEtape.toLowerCase()))
+                  );
+                }).map((etapes) => (
+                  <EtapeTypeCompact
+                    etape={etapes}
+                    SetEtapes={setEtapeType}
+                    key={etapes._id}
+                  />
+                ))
               ) : (
                 <div className="flex items-center content-center justify-center w-full">
                   <p className="text-2xl">Aucune étape trouvée</p>

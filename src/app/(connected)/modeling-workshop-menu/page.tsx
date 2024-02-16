@@ -113,7 +113,6 @@ export default function ModelingWorkshop() {
             </form>
             <AddParcoursType
               setloading={setLoading}
-              SetParcours={setParcours}
             />
           </div>
         </div>

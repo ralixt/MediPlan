@@ -120,27 +120,48 @@ export async function getParcoursType(id: string) {
         .populate({
           path: "sequencables",
           populate: [
-            { path: "Competence" },
-            { path: "Lieu" },
-            { path: "Materiel" },
-            { path: "Etapes", populate: ["Competence", "Lieu", "Materiel"] },
+            {path: "Competence"},
+            {path: "Lieu"},
+            {path: "Materiel"},
+            {path: "Etapes", populate: ["Competence", "Lieu", "Materiel"]},
           ],
         })
+        /*.populate({
+          path:"precedences",
+          populate:[
+            {path:"antecedent",populate: ["Competence", "Lieu", "Materiel"]},
+            {path:"successeur",populate: ["Competence", "Lieu", "Materiel"]}
+
+          ]
+        })*/
+       /* .populate({
+            path: 'precedences.antecedent',
+            populate: [
+              {path: 'Competence'},
+              {path: 'Lieu'},
+              {path: 'Materiel'},
+              {path: "Etapes", populate: ["Competence", "Lieu", "Materiel"]},
+            ]
+
+        })
+        .populate({
+            path: 'precedences.successeur',
+            populate: [
+               { path: 'Competence' },
+               { path: 'Lieu' },
+               { path: 'Materiel' },
+               {path: "Etapes", populate: ["Competence", "Lieu", "Materiel"]},
+            ]
+
+        })*/
+
         .then((doc) => {
           if (doc) {
             convertObjectIdsToStrings(doc);
             return doc;
           }
         });
-    // .populate({
-    //     path: 'precedences.antecedent',
-    //     populate: [
-    //         { path: 'Competence' },
-    //         { path: 'Lieu' },
-    //         { path: 'Materiel' }
-    //     ]
 
-    // })
     // .populate({
     //     path: 'precedences.successeur',
     //     populate: [

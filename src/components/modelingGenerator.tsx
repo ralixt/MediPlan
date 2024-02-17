@@ -56,10 +56,9 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   const [etapeType, setEtapeType] = useState<EtapeType[]>([]);
   const [modified, setModified] = useState(false);
   const [pushBDD, setPushBDD] = useState(false);
+  const [precedenceElements, setPrecedenceElements] = useState<Precedence[]>([]);
 
-  // const precedenceIds: Precedence[] = [] ;
-  // const [precedence, setPrecedence]=useState<Precedence>()
-  // const [items,setItem]=useState<Precedence  | EtapeType | GroupeEtapeType |Border >([])
+
 
   console.log(elements);
   useEffect(() => {
@@ -95,6 +94,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   useEffect(() => {
     if (modified) {
       setModified(false);
+      //setPrecedenceElements([]);
       setElements((element) => {
         const items = element
           .filter((item, index) => {
@@ -125,35 +125,24 @@ export default function ModelingGenerator({ element, parcour }: Props) {
             return item;
           });
 
-        // setItem(items)
-        // console.log("itemss",items)
-        //
+
+        const precedenceItems = items.filter(item => item.type === "Precedence");
+        const formattedPrecedenceElements:Precedence[] = precedenceItems.map(item => ({
+          //_id: item._id.slice(0,-5),
+          type: item.type,
+          antecedent: item.antecedent.slice(0,-5),
+          successeur: item.successeur.slice(0,-5)
+        }));
+
+        setPrecedenceElements(formattedPrecedenceElements);
+        //setPrecedenceElements((prevState) => [...prevState, ...items]);
+        console.log("it",items)
         return items;
       });
       setPushBDD(true);
     }
   }, [elements, modified]);
 
-  // useEffect(()=>{
-  //   console.log("items",items)
-  //
-  //   items.map((item) =>  {
-  //     if(item.type === "Precedence"){
-  //       console.log("item",item)
-  //       precedenceIds.push(item)
-  //       precedence.push(precedenceIds)
-  //
-  //
-  //     }
-  //
-  //   })
-  //   console.log("precedenceIds",precedenceIds)
-  //   //precedence.push(precedenceIds)
-  //  setPrecedence(precedenceIds)
-  //
-  //   console.log("prec",precedence)
-  //
-  // },[items])
 
   useEffect(() => {
     if (pushBDD) {
@@ -162,12 +151,12 @@ export default function ModelingGenerator({ element, parcour }: Props) {
         name: parcour.name,
         type: parcour.type,
         sequencables: successeur,
-        precedences: {},
+        precedences: precedenceElements,
       };
 
       updateParcoursType(parcour._id, data);
     }
-  }, [successeur, pushBDD]);
+  }, [successeur, pushBDD,precedenceElements]);
 
   // Gestion de l'événement de défilement horizontal
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
@@ -186,6 +175,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     })
   );
   useEffect(() => console.log(successeur), [successeur]);
+  useEffect(() => console.log("prec",precedenceElements), [precedenceElements]);
   // Rendu du composant
   return (
     <div className="flex flex-row w-full h-full items-center">

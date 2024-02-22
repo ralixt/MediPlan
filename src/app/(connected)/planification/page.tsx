@@ -43,69 +43,9 @@ export default function Planification() {
     };
 
     fetchParcours();
-  }, []);
-
-                    <div className="flex flex-row justify-around items-center w-full">
-
-                            {/*flex flex-row w-full border-b-2 mb-8*/}
-                            <div
-                                className={`bg-white mb-8 p-4 rounded-lg w-96 flex  ${searchBarFocused || userName.current ? 'border-black' : 'text-lightgrey'}`}>
-                                <input
-                                    type="text"
-                                    name="search-modeling-workshop"
-                                    placeholder="Nom de la planification"
-                                    className={`w-full outline-none bg-white border-b-2 ${searchBarFocused || userName.current ? 'border-black' : 'text-lightgrey'}`}
-                                    // className="w-full outline-none bg-white"
-                                    value={searchPlanification}
-                                    onChange={(e) =>
-                                        setSearchPlanification(e.target.value)}
-                                    onFocus={() => setSearchBarFocused(true)}
-                                    onBlur={() => setSearchBarFocused(false)}
-                                />
-                                <MagnifyingGlass size={32}/>
-                            </div>
-
-
-                        <AddParcoursType
-                            setloading={setLoading}
-                            SetParcours={setPlanification}
-                        />
-
-                    </div>
-                </div>
-
-                <div className="w-[15%] h-full mt-16">
-                    <Image
-                        src="/planification_vector_2.svg"
-                        alt="Arrow design"
-                        width={350}
-                        height={350}
-                        // className={}
-                    ></Image>
-                </div>
-            </section>
-
-            <section
-                className={`w-[95%] m-auto min-h-[50vh] ${
-                    loading ? "flex flex-col items-center justify-center" : ""
-                }`}
-            >
-                {loading ? (
-                    <Loader />
-                ) : (
-                    planifiactionFiltre.map((planification, index) => (
-                        <WorkshopButton
-                            key={index}
-                            index={index}
-                            text={planification.name}
-                            href={pathname + "/" + planification._id}
-                        />
-                    ))
-                )}
-            </section>
-        </div>
-    );
   }, [searchPlanification, planification]);
+
+
 
   return (
     <div className="w-full">
@@ -124,67 +64,64 @@ export default function Planification() {
             <h1>Planifications</h1>
           </div>
 
-          <div className="flex flex-row justify-around items-center content-center w-full">
-            <form
-              method="POST"
-              className="h-full flex flex-col justify-center items-center content-center"
-            >
-              <div
-                className={`flex flex-row w-full border-b-2 mb-8 ${
-                  searchBarFocused || userName.current
-                    ? "border-black"
-                    : "text-lightgrey"
-                }`}
-              >
-                <input
-                  type="text"
-                  name="search-modeling-workshop"
-                  placeholder="Nom de la planification"
-                  className="w-full outline-none bg-white"
-                  value={searchPlanification}
-                  onChange={(e) => setSearchPlanification(e.target.value)}
-                  onFocus={() => setSearchBarFocused(true)}
-                  onBlur={() => setSearchBarFocused(false)}
+            <div className="flex flex-row justify-around items-center content-center w-full">
+                {/*<form*/}
+                {/*  method="POST"*/}
+                {/*  className="h-full flex flex-col justify-center items-center content-center"*/}
+                {/*>*/}
+                <div
+                    className={`bg-white mb-8 p-4 rounded-lg w-96 flex  ${searchBarFocused || userName.current ? 'border-black' : 'text-lightgrey'}`}>
+                    <input
+                        type="text"
+                        name="search-modeling-workshop"
+                        placeholder="Nom de la planification"
+                        className={`w-full outline-none bg-white border-b-2 ${searchBarFocused || userName.current ? 'border-black' : 'text-lightgrey'}`}
+                        // className="w-full outline-none bg-white"
+                        value={searchPlanification}
+                        onChange={(e) =>
+                            setSearchPlanification(e.target.value)}
+                        onFocus={() => setSearchBarFocused(true)}
+                        onBlur={() => setSearchBarFocused(false)}
+                    />
+                    <MagnifyingGlass size={32}/>
+                </div>
+                {/*</form>*/}
+                <AddParcoursType
+                    setloading={setLoading}
+                    SetParcours={setPlanification}
                 />
-                <MagnifyingGlass size={32} />
-              </div>
-            </form>
-            <AddParcoursType
-              setloading={setLoading}
-              SetParcours={setPlanification}
-            />
+            </div>
+        </div>
+
+          <div className="w-[15%] h-full mt-16">
+              <Image
+                  src="/planification_vector_2.svg"
+                  alt="Arrow design"
+                  width={350}
+                  height={350}
+                  // className={}
+              ></Image>
           </div>
-        </div>
-
-        <div className="w-[15%] h-full mt-16">
-          <Image
-            src="/planification_vector_2.svg"
-            alt="Arrow design"
-            width={350}
-            height={350}
-            // className={}
-          ></Image>
-        </div>
       </section>
 
-      <section
-        className={`w-[95%] m-auto min-h-[50vh] ${
-          loading ? "flex flex-col items-center justify-center" : ""
-        }`}
-      >
-        {loading ? (
-          <Loader />
-        ) : (
-          planifiactionFiltre.map((planification, index) => (
-            <WorkshopButton
-              key={index}
-              index={index}
-              text={planification.name}
-              href={pathname + "/" + planification._id}
-            />
-          ))
-        )}
-      </section>
+        <section
+            className={`w-[95%] m-auto min-h-[50vh] ${
+                loading ? "flex flex-col items-center justify-center" : ""
+            }`}
+        >
+            {loading ? (
+                <Loader/>
+            ) : (
+                planifiactionFiltre.map((planification, index) => (
+                    <WorkshopButton
+                        key={index}
+                        index={index}
+                        text={planification.name}
+                        href={pathname + "/" + planification._id}
+                    />
+                ))
+            )}
+        </section>
     </div>
   );
 }

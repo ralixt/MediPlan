@@ -40,7 +40,7 @@ export default async function Home() {
             />
             <TwoIconButton
               text="Planifications"
-              href="/modelingWorkshopMenu"
+              href="/planification"
               icon1={<ChartBar size={24} />}
               icon2={<ArrowRight size={24} />}
             />

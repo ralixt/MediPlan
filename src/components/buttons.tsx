@@ -1,9 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { CaretRight, MagnifyingGlass, Plus } from "@phosphor-icons/react";
 import { signOut } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+import { DotsThreeOutlineVertical } from "@phosphor-icons/react/dist/ssr";
+import OptionMenuOverlay from "./optionMenuOverlay";
+import { deleteParcoursType } from "@/actions/ParcoursType";
 
 // Bouton qui permet de se connecter avec NextAuthJS
 export const LoginButton = () => {
@@ -135,20 +138,65 @@ export function LogOutButton({ text, icon, extend }: PropsLogOutButton) {
 
 type PropsWorkshopButton = {
   index: number;
-  text: string;
   href: string;
+  handleClick?: (id: string) => void;
+  parcours: parcours;
 };
 
-export function WorkshopButton({ index, text, href }: PropsWorkshopButton) {
+export function WorkshopButton({
+  index,
+  href,
+  handleClick,
+  parcours,
+}: PropsWorkshopButton) {
+  const [showOptions, setShowOptions] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const handleOptionsClick = () => {
+    setShowOptions(!showOptions);
+    setConfirmDelete(false);
+  };
+
+  const handleDelete = () => {
+    if (handleClick && confirmDelete) {
+      handleClick(parcours._id);
+      setShowOptions(false);
+    }
+  };
   return (
-    <Link key={index} href={href}>
+    <>
+      {showOptions ? (
+        <OptionMenuOverlay
+          setShowOptions={setShowOptions}
+          setConfirmDelete={setConfirmDelete}
+          handleClick={handleDelete}
+          confirmDelete={confirmDelete}
+          parcours={parcours}
+        />
+      ) : (
+        ""
+      )}
       <div className="bg-dark-blue flex  rounded-2xl shadow-sm my-8">
-        <div className=" flex flex-row font-bold justify-between content-center w-full h-full p-8 bg-white hover:translate-x-[-0.5rem] rounded-xl hover:translate-y-[-0.5rem] transition-all duration-200 ease-in-out active:translate-x-0 active:translate-y-0">
-          <p>{text}</p>
+        <div className="flex flex-row justify-between content-center w-full h-full p-8 bg-lightlightgrey hover:translate-x-[-0.5rem] rounded-xl hover:translate-y-[-0.5rem] transition-all duration-200 ease-in-out active:translate-x-0 active:translate-y-0">
+          <Link key={index} href={href} className="w-full h-full">
+            <div className="flex flex-row font-bold justify-between content-center w-full h-full">
+              <p>{parcours.name}</p>
+            </div>
+          </Link>
+          {handleClick ? (
+            <button
+              className="rounded-full hover:bg-gray-200"
+              onClick={handleOptionsClick}
+            >
+              <DotsThreeOutlineVertical size={24} weight="fill" />
+            </button>
+          ) : (
+            ""
+          )}
           <CaretRight size={32} />
         </div>
       </div>
-    </Link>
+    </>
   );
 }
 

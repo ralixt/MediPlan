@@ -7,6 +7,7 @@ import { MagnifyingGlass, Plus } from "@phosphor-icons/react";
 import { cache } from "react";
 import { usePathname } from "next/navigation";
 import {
+  deleteParcoursType,
   getAllParcoursType,
   getNameParcoursType,
 } from "@/actions/ParcoursType";
@@ -63,6 +64,12 @@ export default function ModelingWorkshop() {
     );
   }, [searchParcours, Parcours]);
 
+  const handleDelete = (id: string) => {
+    deleteParcoursType(id);
+    setParcours((listParcours) => [
+      ...listParcours.filter((value) => value._id !== id),
+    ]);
+  };
   return (
     <div className="w-full">
       <section className="w-full bg-light-blue h-[50vh] flex justify-between">
@@ -138,7 +145,8 @@ export default function ModelingWorkshop() {
             <WorkshopButton
               key={index}
               index={index}
-              text={parcours.name}
+              handleClick={handleDelete}
+              parcours={parcours}
               href={pathname + "/" + parcours._id}
             />
           ))

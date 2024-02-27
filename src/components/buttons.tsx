@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, MouseEventHandler, SetStateAction, useState } from "react";
 import { CaretRight, MagnifyingGlass, Plus } from "@phosphor-icons/react";
 import { signOut } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
@@ -238,6 +238,40 @@ export function OneIconButtonAddParcoursType({
           <p>{text}</p>
         </div>
         {icon}
+      </div>
+    </button>
+  );
+}
+
+type propsJourneeTypeButton = {
+  journeeType: JourneeType;
+  active: boolean;
+  setSelectedJourneeType: Dispatch<SetStateAction<JourneeType | undefined>>;
+};
+
+export function JourneeTypeButton({
+  journeeType,
+  active,
+  setSelectedJourneeType,
+}: propsJourneeTypeButton) {
+  const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    setSelectedJourneeType(journeeType);
+  };
+  return (
+    <button
+      className="rounded-md w-16 h-20 bg-dark-blue"
+      disabled={active}
+      onClick={handleClick}
+    >
+      <div
+        className={` bg-lightlightgrey rounded-md w-full h-full flex items-center justify-center ${
+          active
+            ? "translate-x-[-0.3rem] translate-y-[-0.3rem]"
+            : "hover:translate-x-[-0.3rem] hover:translate-y-[-0.3rem] transition-all duration-200 ease-in-out"
+        }`}
+      >
+        <p className="font-bold">{journeeType.nom.slice(0, 3)}</p>
       </div>
     </button>
   );

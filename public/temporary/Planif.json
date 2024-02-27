@@ -1,0 +1,142 @@
+[
+  {
+    "_id": "1",
+    "nom": "planif 1",
+    "liste_JourneeType": [
+      {
+        "_id": "j1",
+        "nom": "Lundi",
+        "planificationParcours": [
+          {
+            "idParcours": "6585914cdb771bb938489134",
+            "nbParcours": 0,
+            "pourcentage_utilisation": 2
+          },
+          {
+            "idParcours": "658768f1e2cc466a09942852",
+            "nbParcours": 5,
+            "pourcentage_utilisation": 3
+          }
+        ],
+        "liste_Competence": [
+          {
+            "idCompetence": "65858269db771bb938488e6d",
+            "nb_h_cible": 8,
+            "nb_p_cible": 2,
+            "nb_h_actuel": 8,
+            "nb_p_actuel": 3
+          },
+          {
+            "idCompetence": "6585828fdb771bb938488e6f",
+            "nb_h_cible": 0,
+            "nb_p_cible": 0,
+            "nb_h_actuel": 0,
+            "nb_p_actuel": 0
+          }
+        ]
+      },
+      {
+        "_id": "j2",
+        "nom": "Mardi",
+        "planificationParcours": [
+          {
+            "idParcours": "6585914cdb771bb938489134",
+            "nbParcours": 0,
+            "pourcentage_utilisation": 0
+          },
+          {
+            "idParcours": "658768f1e2cc466a09942852",
+            "nbParcours": 2,
+            "pourcentage_utilisation": 1
+          }
+        ],
+        "liste_Competence": [
+          {
+            "idCompetence": "65858269db771bb938488e6d",
+            "nb_h_cible": 0,
+            "nb_p_cible": 0,
+            "nb_h_actuel": 0,
+            "nb_p_actuel": 0
+          },
+          {
+            "idCompetence": "6585828fdb771bb938488e6f",
+            "nb_h_cible": 8,
+            "nb_p_cible": 1,
+            "nb_h_actuel": 5,
+            "nb_p_actuel": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "2",
+    "nom": "planif 2",
+    "liste_JourneeType": [
+      {
+        "_id": "j3",
+        "nom": "Lundi",
+        "planificationParcours": [
+          {
+            "idParcours": "6585914cdb771bb938489134",
+            "nbParcours": 0,
+            "pourcentage_utilisation": 2
+          },
+          {
+            "idParcours": "658768f1e2cc466a09942852",
+            "nbParcours": 5,
+            "pourcentage_utilisation": 3
+          }
+        ],
+        "liste_Competence": [
+          {
+            "idCompetence": "65858269db771bb938488e6d",
+            "nb_h_cible": 8,
+            "nb_p_cible": 2,
+            "nb_h_actuel": 8,
+            "nb_p_actuel": 3
+          },
+          {
+            "idCompetence": "6585828fdb771bb938488e6f",
+            "nb_h_cible": 0,
+            "nb_p_cible": 0,
+            "nb_h_actuel": 0,
+            "nb_p_actuel": 0
+          }
+        ]
+      },
+      {
+        "_id": "j4",
+        "nom": "Mardi",
+        "planificationParcours": [
+          {
+            "idParcours": "6585914cdb771bb938489134",
+            "nbParcours": 0,
+            "pourcentage_utilisation": 0
+          },
+          {
+            "idParcours": "658768f1e2cc466a09942852",
+            "nbParcours": 2,
+            "pourcentage_utilisation": 1
+          }
+        ],
+        "liste_Competence": [
+          {
+            "idCompetence": "65858269db771bb938488e6d",
+            "nb_h_cible": 0,
+            "nb_p_cible": 0,
+            "nb_h_actuel": 0,
+            "nb_p_actuel": 0
+          },
+          {
+            "idCompetence": "6585828fdb771bb938488e6f",
+            "nb_h_cible": 8,
+            "nb_p_cible": 1,
+            "nb_h_actuel": 5,
+            "nb_p_actuel": 1
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,7 +1,8 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { Types } from 'mongoose';
-import { Competence } from './competence';
-import { Ressource } from './ressource';
+import {Ressource} from './ressource';
+import {Competence} from './competence';
+
 
 interface IEtapeType extends Document {
 

@@ -13,6 +13,7 @@ type props = {
 export default function PlanificationPage({ params }: NextPageProps<props>) {
   const [planification, setPlanification] = useState<Planification>();
   const [selectedJourneeType, setSelectedJourneeType] = useState<JourneeType>();
+  const [maj, setMaj] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchParcours = async () => {
@@ -35,21 +36,36 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
     fetchParcours();
   }, []);
 
+  useEffect(() => {
+    if (maj) {
+      setMaj(false);
+      console.log(planification);
+    }
+  }, [maj, planification]);
+
   return planification && selectedJourneeType ? (
-    <div className="flex flex-row items-start justify-start w-full h-[100vh] p-12 bg-white">
-      <div className="flex flex-col gap-5 fixed">
-        {planification.liste_JourneeType.map((value, index) => (
-          <JourneeTypeButton
-            key={index}
-            journeeType={value}
-            active={value === selectedJourneeType}
-            setSelectedJourneeType={setSelectedJourneeType}
+    <div className="">
+      <h1 className="w-full text-center flex items-center justify-center font-bold text-2xl fixed bg-light-blue pl-5 py-8 h-12">
+        {planification.nom}
+      </h1>
+      <div className="flex flex-row items-start justify-start w-full h-[100vh] pt-24 ml-12 bg-white">
+        <div className="flex flex-col gap-5 fixed">
+          {planification.liste_JourneeType.map((value, index) => (
+            <JourneeTypeButton
+              key={index}
+              journeeType={value}
+              active={value === selectedJourneeType}
+              setSelectedJourneeType={setSelectedJourneeType}
+            />
+          ))}
+        </div>
+        <div className="pl-24 w-full">
+          <ParcoursTypeSection
+            journeeType={selectedJourneeType}
+            setMaj={setMaj}
           />
-        ))}
-      </div>
-      <div className="pl-24">
-        {/* <ParcoursTypeSection journeeType={selectedJourneeType} /> */}
-        <CompetenceSection />
+          <CompetenceSection />
+        </div>
       </div>
     </div>
   ) : (

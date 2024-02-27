@@ -19,9 +19,7 @@ export default function Planification() {
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const [searchPlanification, setSearchPlanification] = useState("");
-  const [planifiactionFiltre, setPlanificationFiltre] = useState<
-    Planification[]
-  >([]);
+  const [planifiactionFiltre, setPlanificationFiltre] = useState<Planification[]>([]);
 
   const userName = useRef("");
   const [searchBarFocused, setSearchBarFocused] = useState(false);

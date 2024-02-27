@@ -1,11 +1,12 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { NextPageProps } from "../../modeling-workshop-menu/[modelingWorkshop]/page";
 import { Loader } from "@/components/loader";
 import ParcoursTypeSection from "@/components/parcoursTypeSection";
 import CompetenceSection from "@/components/CompetenceSection";
 import JourneeType from "@/app/models/journeeType";
 import { JourneeTypeButton } from "@/components/buttons";
+import Image from "next/image";
 
 type props = {
   planificationId: number;
@@ -45,9 +46,25 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
 
   return planification && selectedJourneeType ? (
     <div className="">
-      <h1 className="w-full text-center flex items-center justify-center font-bold text-2xl fixed bg-light-blue pl-5 py-8 h-12">
-        {planification.nom}
-      </h1>
+      <div className="h-32 w-full text-center flex items-center justify-around font-bold text-2xl bg-light-blue pl-5 h-12">
+        <Image
+            src="/planification-parcours_arrow1.svg"
+            alt="Arrow design"
+            width={100}
+            height={100}
+            // className={}
+        ></Image>
+        <h1>{planification.nom}</h1>
+        <Image
+            src="/planification-parcours_arrow2.svg"
+            alt="Arrow design"
+            width={100}
+            height={100}
+            // className={}
+        ></Image>
+      </div>
+
+
       <div className="flex flex-row items-start justify-start w-full h-[100vh] pt-24 ml-12 bg-white">
         <div className="flex flex-col gap-5 fixed">
           {planification.liste_JourneeType.map((value, index) => (

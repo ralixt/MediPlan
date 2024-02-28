@@ -36,6 +36,8 @@ export default function ParcoursTypeSection({journeeType, setMaj}: props) {
         fetchParcours();
     }, []);
 
+    // console.log(parcours)
+
     return (
         <div>
             <h2>{journeeType.nom}</h2>

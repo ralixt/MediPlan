@@ -46,7 +46,7 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
 
   return planification && selectedJourneeType ? (
     <div className="">
-      <div className="h-32 w-full text-center flex items-center justify-around font-bold text-2xl bg-light-blue pl-5 h-12">
+      <div className="h-32 w-full text-center flex items-center justify-around font-bold text-2xl bg-light-blue pl-5">
         <Image
             src="/planification-parcours_arrow1.svg"
             alt="Arrow design"
@@ -81,7 +81,7 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
             journeeType={selectedJourneeType}
             setMaj={setMaj}
           />
-          <CompetenceSection />
+          <CompetenceSection  journeeType={selectedJourneeType} setMaj={setMaj}/>
         </div>
       </div>
     </div>

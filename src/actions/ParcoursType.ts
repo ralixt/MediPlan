@@ -8,6 +8,7 @@ import Database from "@/lib/mongoConnect";
 import EtapeType from "@/app/models/etapeType";
 import mongoose from "mongoose";
 import { disconnect } from "process";
+import Competence from "@/app/models/competence";
 
 const dbInstance = Database.getInstance();
 
@@ -275,4 +276,14 @@ export async function deleteAllParcoursType() {
   } catch (error) {
     console.log("erreur du suppression du parcours type");
   }
+}
+
+export async function getNameCompetences() {
+  const competencesNames = await Competence.find().select("nom").lean().then((doc) => {
+    if (doc) {
+      convertObjectIdsToStrings(doc);
+      return doc;
+    }
+  });
+  return competencesNames;
 }

@@ -78,3 +78,5 @@ type Planification = {
   nom: string;
   liste_JourneeType: JourneeType[];
 }
+
+type competencesList = competence[];

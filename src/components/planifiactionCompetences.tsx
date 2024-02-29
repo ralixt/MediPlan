@@ -17,6 +17,49 @@ export default function PlanifiactionCompetences({
   dataPlanif,
 }: PlanificationParcoursProps) {
   const [heuresRequises, setHeuresRequises] = useState<String>("0h");
+  const [heuresCible,setHeuresCible]=useState<number>(dataPlanif.nb_h_cible)
+  const [heuresActuel,setHeuresActuel]=useState<number>(dataPlanif.nb_h_actuel)
+  const [personnelCible,setPersonnelCible]=useState<number>(dataPlanif.nb_p_cible)
+  const [personnelActuel,setPersonnelActuel]=useState<number>(dataPlanif.nb_p_actuel)
+
+  const handleHeureCiblePlusClick = () => {
+    setHeuresCible((i)=>i+1)
+  };
+
+  const handleMinusHeureCibleClick = () => {
+    if (heuresCible > 0) {
+      setHeuresCible((i)=>i-1)
+    }
+  };
+  const handleHeureActuelPlusClick = () => {
+    setHeuresActuel((i)=>i+1)
+  };
+
+  const handleMinusHeureActuelClick = () => {
+    if (heuresActuel > 0) {
+      setHeuresActuel((i)=>i-1)
+    }
+  };
+
+  const handlePersonnelCiblePlusClick = () => {
+    setPersonnelCible((i)=>i+1)
+  };
+
+  const handleMinusPersonnelCibleClick = () => {
+    if (personnelCible > 0) {
+      setPersonnelCible((i)=>i-1)
+    }
+  };
+
+  const handlePersonnelActuelPlusClick = () => {
+    setPersonnelActuel((i)=>i+1)
+  };
+
+  const handleMinusPersonnelActuelClick = () => {
+    if (personnelActuel > 0) {
+      setPersonnelActuel((i)=>i-1)
+    }
+  };
 
   // useEffect(() => {
   //   let minutes = 0;
@@ -102,21 +145,21 @@ export default function PlanifiactionCompetences({
           </div>
 
           <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md">
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center">
+            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handleMinusHeureCibleClick} >
               <Minus size={20} />
             </button>
-            <p>{dataPlanif.nb_h_cible}</p>
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center">
+            <p>{heuresCible}</p>
+            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handleHeureCiblePlusClick}>
               <Plus size={20} />
             </button>
           </div>
 
           <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md mx-12">
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center ">
+            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center " onClick={handleMinusHeureActuelClick}>
               <Minus size={20} />
             </button>
-            <p>{dataPlanif.nb_h_actuel}</p>
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center">
+            <p>{heuresActuel}</p>
+            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handleHeureActuelPlusClick}>
               <Plus size={20} />
             </button>
           </div>
@@ -132,21 +175,21 @@ export default function PlanifiactionCompetences({
           </div>
 
           <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md">
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center">
+            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handleMinusPersonnelCibleClick}>
               <Minus size={20} />
             </button>
-            <p>{dataPlanif.nb_p_cible}</p>
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center">
+            <p>{personnelCible}</p>
+            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handlePersonnelCiblePlusClick}>
               <Plus size={20} />
             </button>
           </div>
 
           <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md mx-12">
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center">
+            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handleMinusPersonnelActuelClick}>
               <Minus size={20} />
             </button>
-            <p>{dataPlanif.nb_p_actuel}</p>
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center">
+            <p>{personnelActuel}</p>
+            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handlePersonnelActuelPlusClick}>
               <Plus size={20} />
             </button>
           </div>

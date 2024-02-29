@@ -1,4 +1,5 @@
 import {Minus, Plus} from "@phosphor-icons/react";
+import {useState} from "react";
 
 type PlanificationParcoursProps = {
   id: string;
@@ -11,6 +12,18 @@ export default function PlanificationParcours({
   name,
   dataPlanif,
 }: PlanificationParcoursProps) {
+
+    const [nbParcours, setNbParcours] = useState<number>(dataPlanif.nbParcours);
+
+    const handlePlusClick = () => {
+        setNbParcours((i)=>i+1)
+    };
+
+    const handleMinusClick = () => {
+        if (nbParcours > 0) {
+            setNbParcours((i)=>i-1)
+        }
+    };
   return (
       <div key={id} className="flex flex-row text-xl my-4 w-1/2">
         <div className="w-52 h-20 bg-lightlightgrey shadow-md rounded-xl flex items-center content-center justify-center p-4">
@@ -25,14 +38,14 @@ export default function PlanificationParcours({
         </div>
         <div className="w-48 h-20 bg-light-blue rounded-xl ">
             <div className="w-full h-full bg-lightlightgrey text-4xl flex items-center justify-around shadow-md rounded-xl p-4 translate-x-[-0.3rem] translate-y-[-0.3rem]">
-                <button>
+                <button onClick={handleMinusClick}>
                     <Minus size={32}/>
                 </button>
 
                 <div>
-                    {dataPlanif.nbParcours}
+                    {nbParcours}
                 </div>
-                <button>
+                <button onClick={handlePlusClick}>
                     <Plus size={32}/>
                 </button>
             </div>

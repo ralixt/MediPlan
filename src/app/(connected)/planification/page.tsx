@@ -19,7 +19,7 @@ export default function Planification() {
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const [searchPlanification, setSearchPlanification] = useState("");
-  const [planifiactionFiltre, setPlanificationFiltre] = useState<Planification[]>([]);
+  const [planificationFiltre, setPlanificationFiltre] = useState<Planification[]>([]);
 
   const userName = useRef("");
   const [searchBarFocused, setSearchBarFocused] = useState(false);
@@ -110,7 +110,7 @@ export default function Planification() {
             {loading ? (
                 <Loader/>
             ) : (
-                planifiactionFiltre.map((planification, index) => (
+                planificationFiltre.map((planification, index) => (
                     <WorkshopButton
                         key={index}
                         index={index}

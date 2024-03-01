@@ -14,7 +14,7 @@ interface IParcoursJourneeType {
     pourcentage_utilisation: number;
 }
 
-interface IJourneeType extends Document {
+export interface IJourneeType extends Document {
     nom: string;
     liste_Parcours: IParcoursJourneeType[];
     liste_Comp: IUtilisationCompetence[];
@@ -34,7 +34,7 @@ const parcoursJourneeTypeSchema = new Schema<IParcoursJourneeType>({
     pourcentage_utilisation: { type: Number, required: true },
 });
 
-const journeeTypeSchema = new Schema<IJourneeType>({
+export const journeeTypeSchema = new Schema<IJourneeType>({
     nom: { type: String, required: true },
     liste_Parcours: {type: [parcoursJourneeTypeSchema], required: true},
     liste_Comp: { type: [utilisationCompetenceSchema], required: true },

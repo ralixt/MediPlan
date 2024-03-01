@@ -5,39 +5,56 @@ import "@/app/models/etapeType";
 import "@/app/models/competence";
 import "@/app/models/ressource";
 import Database from "@/lib/mongoConnect";
-import EtapeType from "@/app/models/etapeType";
 import mongoose from "mongoose";
-import { disconnect } from "process";
 import Competence from "@/app/models/competence";
+import Planification from "@/app/models/planification";
+import JourneeType from "@/app/models/journeeType";
 
 const dbInstance = Database.getInstance();
 
 
-export async function createParcoursType(formData: FormData) {
+export async function createPlanification(formData: FormData) {
   try {
     const name = formData.get("name") as string;
-    const type = formData.get("type") as string;
-
-    const sequencablesIds = JSON.parse( formData.get("sequencables") as string);
-
-    const precedencesIds = JSON.parse(formData.get("precedences") as string);
-
-
-
-    const newParcoursType = await ParcoursType.create({
-      name,
-      type,
-      sequencables: sequencablesIds,
-      precedences:precedencesIds,
+    const JourneeTypesBase = [
+        {
+            nom: name + "Lundi",
+            liste_Parcours: [],
+            liste_Comp: [],
+        },
+        {
+            nom: name + "Mardi",
+            liste_Parcours: [],
+            liste_Comp: [],
+        },
+        {
+            nom: name + "Mercredi",
+            liste_Parcours: [],
+            liste_Comp: [],
+        },
+        {
+            nom: name + "Jeudi",
+            liste_Parcours: [],
+            liste_Comp: [],
+        },
+        {
+            nom: name + "Vendredi",
+            liste_Parcours: [],
+            liste_Comp: [],
+        },
+    ]
+    const newPlanification = await Planification.create({
+        name,
+        JourneeTypesBase,
     });
 
-    console.log("ParcoursType créé :", newParcoursType);
+    console.log("Planification créé :", newPlanification);
   } catch (error) {
-    console.error("Erreur de création ParcoursType :", error);
+    console.error("Erreur de création Planification :", error);
   }
 }
 
-export async function deleteParcoursType(id: string) {
+export async function deletePlanification(id: string) {
   try {
     const parcoursType = await ParcoursType.findByIdAndDelete(id);
     console.log("ParcoursType supprimé", parcoursType);
@@ -127,13 +144,13 @@ export async function getAllPlanification() {
 }
 
 export async function getNamePlanification() {
-  const parcoursTypeNames = await ParcoursType.find().select("name").lean().then((doc) => {
+  const planificationNames = await Planification.find().select("name").lean().then((doc) => {
     if (doc) {
       convertObjectIdsToStrings(doc);
       return doc;
     }
   });
-  return parcoursTypeNames;
+  return planificationNames;
 }
 
 export async function searchPlanification(phrase: string){

@@ -1,16 +1,16 @@
 "use client";
 import React, { cache, useEffect, useRef, useState } from "react";
-import { getNameParcoursType } from "@/actions/ParcoursType";
 import Image from "next/image";
 import {MagnifyingGlass, Password, User} from "@phosphor-icons/react";
-import {AddParcoursType} from "@/components/addParcoursTypeForm";
 import {Loader} from "@/components/loader";
 import {WorkshopButton} from "@/components/buttons";
 import {usePathname} from "next/navigation";
 import diacritics from "diacritics";
+import { AddPlanification } from "@/components/addPlanificationForm";
+import { getNamePlanification } from "@/actions/Planification";
 
 const getPlanificationBDD = cache(async () => {
-  const response = await getNameParcoursType();
+  const response = await getNamePlanification();
   return response;
 });
 
@@ -84,7 +84,7 @@ export default function Planification() {
                     <MagnifyingGlass size={32}/>
                 </div>
                 {/*</form>*/}
-                <AddParcoursType
+                <AddPlanification
                     setloading={setLoading}
                     SetParcours={setPlanification}
                 />

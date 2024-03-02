@@ -7,8 +7,10 @@ import "@/app/models/ressource";
 import Database from "@/lib/mongoConnect";
 import mongoose from "mongoose";
 import Competence from "@/app/models/competence";
-import Planification from "@/app/models/planification";
-import JourneeType from "@/app/models/journeeType";
+import Planifications from "@/app/models/planification";
+import JourneeType, {journeeTypeSchema} from "@/app/models/journeeType";
+import {getAllParcoursType} from "@/actions/ParcoursType";
+import {getComp} from "@/actions/CreateCompTest";
 
 const dbInstance = Database.getInstance();
 
@@ -16,13 +18,35 @@ const dbInstance = Database.getInstance();
 export async function createPlanification(formData: FormData) {
   try {
     const name = formData.get("name") as string;
-    const JourneeTypesBase = [
+
+    const parcoursType = await getAllParcoursType()
+    const competence = await getComp()
+
+      console.log("pp",parcoursType)
+      //const name : string = "rrrrrr"
+   /* const JourneeTypesBase = [
         {
             nom: name + "Lundi",
-            liste_Parcours: [],
-            liste_Comp: [],
+            liste_Parcours: [
+
+
+                {
+                    idParcours: "6585914cdb771bb938489134",
+                    nbParcours: 5,
+                    pourcentage_utilisation: 2
+                }
+            ],
+            liste_Comp: [
+                {
+                    idCompetence: "65858269db771bb938488e6d",
+                    nb_h_cible: 8,
+                    nb_p_cible: 2,
+                    nb_h_actuel: 8,
+                    nb_p_actuel: 3
+                }
+            ],
         },
-        {
+        /*{
             nom: name + "Mardi",
             liste_Parcours: [],
             liste_Comp: [],
@@ -41,14 +65,110 @@ export async function createPlanification(formData: FormData) {
             nom: name + "Vendredi",
             liste_Parcours: [],
             liste_Comp: [],
+        },*/
+
+      const JourneeTypesBase = [
+        {
+          nom: name + "Lundi",
+          liste_Parcours: parcoursType.map(parcours => ({
+            idParcours: parcours._id,
+            nbParcours: 0,
+            pourcentage_utilisation: 0
+          })),
+          liste_Comp: competence.map(comp => ({
+
+            id_comp: comp._id,
+            nb_h_cible: 0,
+            nb_p_cible: 0,
+            nb_h_actuel: 0,
+            nb_p_actuel: 0
+
+
+          })),
         },
-    ]
-    const newPlanification = await Planification.create({
-        name,
-        JourneeTypesBase,
+        {
+          nom: name + "Mardi",
+          liste_Parcours: parcoursType.map(parcours => ({
+            idParcours: parcours._id,
+            nbParcours: 0,
+            pourcentage_utilisation: 0
+          })),
+          liste_Comp: competence.map(comp => ({
+
+            id_comp: comp._id,
+            nb_h_cible: 0,
+            nb_p_cible: 0,
+            nb_h_actuel: 0,
+            nb_p_actuel: 0
+
+
+          })),
+        },
+        {
+          nom: name + "Mercredi",
+          liste_Parcours: parcoursType.map(parcours => ({
+            idParcours: parcours._id,
+            nbParcours: 0,
+            pourcentage_utilisation: 0
+          })),
+          liste_Comp: competence.map(comp => ({
+
+            id_comp: comp._id,
+            nb_h_cible: 0,
+            nb_p_cible: 0,
+            nb_h_actuel: 0,
+            nb_p_actuel: 0
+
+
+          })),
+        },
+
+        {
+          nom: name + "Jeudi",
+          liste_Parcours: parcoursType.map(parcours => ({
+            idParcours: parcours._id,
+            nbParcours: 0,
+            pourcentage_utilisation: 0
+          })),
+          liste_Comp: competence.map(comp => ({
+
+            id_comp: comp._id,
+            nb_h_cible: 0,
+            nb_p_cible: 0,
+            nb_h_actuel: 0,
+            nb_p_actuel: 0
+
+
+          })),
+        },
+        {
+          nom: name + "vendredi",
+          liste_Parcours: parcoursType.map(parcours => ({
+            idParcours: parcours._id,
+            nbParcours: 0,
+            pourcentage_utilisation: 0
+          })),
+          liste_Comp: competence.map(comp => ({
+
+            id_comp: comp._id,
+            nb_h_cible: 0,
+            nb_p_cible: 0,
+            nb_h_actuel: 0,
+            nb_p_actuel: 0
+
+
+          })),
+        },
+      ];
+
+      console.log(JourneeTypesBase);
+
+  const newPlanification = await Planifications.create({
+        nom: name,
+        listeJourneeType:JourneeTypesBase,
     });
 
-    console.log("Planification créé :", newPlanification);
+    console.log("Planification créés :", newPlanification);
   } catch (error) {
     console.error("Erreur de création Planification :", error);
   }
@@ -76,18 +196,8 @@ function convertObjectIdsToStrings(obj:any) {
 
 export async function getPlanification(id: string) {
   try {
-    const p = await ParcoursType.findById(id)
+    const p = await Planifications.findById(id)
         .lean()
-        .populate({
-          path: "sequencables",
-          populate: [
-            {path: "Competence"},
-            {path: "Lieu"},
-            {path: "Materiel"},
-            {path: "Etapes", populate: ["Competence", "Lieu", "Materiel"]},
-          ],
-        })
-
         .then((doc) => {
           if (doc) {
             convertObjectIdsToStrings(doc);
@@ -144,7 +254,7 @@ export async function getAllPlanification() {
 }
 
 export async function getNamePlanification() {
-  const planificationNames = await Planification.find().select("name").lean().then((doc) => {
+  const planificationNames = await Planifications.find().select("nom").lean().then((doc) => {
     if (doc) {
       convertObjectIdsToStrings(doc);
       return doc;

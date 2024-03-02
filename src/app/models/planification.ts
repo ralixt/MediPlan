@@ -7,11 +7,11 @@ interface IPlanification extends Document {
 }
 
 const planificationSchema = new Schema<IPlanification>({
-    nom: { type: String, required: true },
-    listeJourneeType: {type: [journeeTypeSchema], required: true},
+    nom: { type: String },
+    listeJourneeType: {type: [journeeTypeSchema]},
 });
 
 
-const Planification = mongoose.models.JourneeType||mongoose.model<IPlanification>('Planification', planificationSchema);
+const Planifications = mongoose.models.Planifications||mongoose.model<IPlanification>('Planifications', planificationSchema);
 
-export default Planification;
+export default Planifications;

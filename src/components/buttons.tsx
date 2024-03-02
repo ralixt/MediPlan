@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { DotsThreeOutlineVertical } from "@phosphor-icons/react/dist/ssr";
 import OptionMenuOverlay from "./optionMenuOverlay";
 import { deleteParcoursType } from "@/actions/ParcoursType";
+import planification from "@/app/models/planification";
 
 // Bouton qui permet de se connecter avec NextAuthJS
 export const LoginButton = () => {
@@ -199,6 +200,72 @@ export function WorkshopButton({
     </>
   );
 }
+
+
+type PropsWorkshopButtonPlanif = {
+  index: number;
+  href: string;
+  handleClick?: (id: string) => void;
+  planification: planification;
+};
+
+export function WorkshopButtonPlanif({
+                                 index,
+                                 href,
+                                 handleClick,
+                                 planification,
+                               }: PropsWorkshopButtonPlanif) {
+  const [showOptions, setShowOptions] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const handleOptionsClick = () => {
+    setShowOptions(!showOptions);
+    setConfirmDelete(false);
+  };
+
+  const handleDelete = () => {
+    if (handleClick && confirmDelete) {
+      handleClick(planification._id);
+      setShowOptions(false);
+    }
+  };
+  return (
+      <>
+        {showOptions ? (
+            <OptionMenuOverlay
+                setShowOptions={setShowOptions}
+                setConfirmDelete={setConfirmDelete}
+                handleClick={handleDelete}
+                confirmDelete={confirmDelete}
+                parcours={planification}
+            />
+        ) : (
+            ""
+        )}
+        <div className="bg-dark-blue flex  rounded-2xl shadow-sm my-8">
+          <div className="flex flex-row justify-between content-center w-full h-full p-8 bg-lightlightgrey hover:translate-x-[-0.5rem] rounded-xl hover:translate-y-[-0.5rem] transition-all duration-200 ease-in-out active:translate-x-0 active:translate-y-0">
+            <Link key={index} href={href} className="w-full h-full">
+              <div className="flex flex-row font-bold justify-between content-center w-full h-full">
+                <p>{planification.nom}</p>
+              </div>
+            </Link>
+            {handleClick ? (
+                <button
+                    className="rounded-full hover:bg-gray-200"
+                    onClick={handleOptionsClick}
+                >
+                  <DotsThreeOutlineVertical size={24} weight="fill" />
+                </button>
+            ) : (
+                ""
+            )}
+            <CaretRight size={32} />
+          </div>
+        </div>
+      </>
+  );
+}
+
 
 type PropsWorkshopOneIconButton = {
   icon: React.ReactNode;

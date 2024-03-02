@@ -3,7 +3,7 @@ import React, { cache, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {MagnifyingGlass, Password, User} from "@phosphor-icons/react";
 import {Loader} from "@/components/loader";
-import {WorkshopButton} from "@/components/buttons";
+import {WorkshopButton, WorkshopButtonPlanif} from "@/components/buttons";
 import {usePathname} from "next/navigation";
 import diacritics from "diacritics";
 import { AddPlanification } from "@/components/addPlanificationForm";
@@ -28,7 +28,7 @@ export default function Planification() {
     const fetchParcours = async () => {
       try {
         const data = await getPlanificationBDD();
-        //console.log("cache : " ,data)
+        console.log("cache : " ,data)
         setPlanification(data as Planification[]);
         setLoading(false);
       } catch (error) {
@@ -110,11 +110,11 @@ export default function Planification() {
             {loading ? (
                 <Loader/>
             ) : (
-                planificationFiltre.map((planification, index) => (
-                    <WorkshopButton
+                planification.map((planification, index) => (
+                    <WorkshopButtonPlanif
                         key={index}
                         index={index}
-                        text={planification.name}
+                        planification={planification}
                         href={pathname + "/" + planification._id}
                     />
                 ))

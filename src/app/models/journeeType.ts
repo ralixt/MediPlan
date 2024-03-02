@@ -21,26 +21,25 @@ export interface IJourneeType extends Document {
 }
 
 const utilisationCompetenceSchema = new Schema<IUtilisationCompetence>({
-    id_comp:{type: Schema.Types.ObjectId, ref: 'Competence', required: true},
-    nb_h_cible: { type: Number, required: true },
-    nb_p_cible: { type: Number, required: true },
-    nb_h_actuel: { type: Number, required: true },
-    nb_p_actuel: { type: Number, required: true },
+    id_comp:{type: Schema.Types.ObjectId, ref: 'Competence'},
+    nb_h_cible: { type: Number },
+    nb_p_cible: { type: Number },
+    nb_h_actuel: { type: Number },
+    nb_p_actuel: { type: Number },
 });
 
 const parcoursJourneeTypeSchema = new Schema<IParcoursJourneeType>({
-    idParcours: { type: Schema.Types.ObjectId, ref: 'ParcoursType', required: true },
-    nbParcours: { type: Number, required: true },
-    pourcentage_utilisation: { type: Number, required: true },
+    idParcours: { type: Schema.Types.ObjectId, ref: 'ParcoursType' },
+    nbParcours: { type: Number },
+    pourcentage_utilisation: { type: Number },
 });
 
 export const journeeTypeSchema = new Schema<IJourneeType>({
-    nom: { type: String, required: true },
-    liste_Parcours: {type: [parcoursJourneeTypeSchema], required: true},
-    liste_Comp: { type: [utilisationCompetenceSchema], required: true },
+    nom: { type: String },
+    liste_Parcours: {type: [parcoursJourneeTypeSchema]},
+    liste_Comp: { type: [utilisationCompetenceSchema] },
 });
 
 
-const JourneeType = mongoose.models.JourneeType||mongoose.model<IJourneeType>('JourneeType', journeeTypeSchema);
-
+const JourneeType = mongoose.models.JourneeType
 export default JourneeType;

@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
 
 interface IUtilisationCompetence {
-    id_comp : Types.ObjectId;
+    idCompetence : Types.ObjectId;
     nb_h_cible: number;
     nb_p_cible: number;
     nb_h_actuel: number;
@@ -16,12 +16,12 @@ interface IParcoursJourneeType {
 
 export interface IJourneeType extends Document {
     nom: string;
-    liste_Parcours: IParcoursJourneeType[];
-    liste_Comp: IUtilisationCompetence[];
+    planificationParcours: IParcoursJourneeType[];
+    liste_Competence: IUtilisationCompetence[];
 }
 
 const utilisationCompetenceSchema = new Schema<IUtilisationCompetence>({
-    id_comp:{type: Schema.Types.ObjectId, ref: 'Competence'},
+    idCompetence:{type: Schema.Types.ObjectId, ref: 'Competence'},
     nb_h_cible: { type: Number },
     nb_p_cible: { type: Number },
     nb_h_actuel: { type: Number },
@@ -36,8 +36,8 @@ const parcoursJourneeTypeSchema = new Schema<IParcoursJourneeType>({
 
 export const journeeTypeSchema = new Schema<IJourneeType>({
     nom: { type: String },
-    liste_Parcours: {type: [parcoursJourneeTypeSchema]},
-    liste_Comp: { type: [utilisationCompetenceSchema] },
+    planificationParcours: {type: [parcoursJourneeTypeSchema]},
+    liste_Competence: { type: [utilisationCompetenceSchema] },
 });
 
 

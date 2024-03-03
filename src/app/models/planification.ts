@@ -3,12 +3,12 @@ import { IJourneeType, journeeTypeSchema } from './journeeType';
 
 interface IPlanification extends Document {
     nom: string;
-    listeJourneeType: IJourneeType[];
+    liste_JourneeType: IJourneeType[];
 }
 
 const planificationSchema = new Schema<IPlanification>({
     nom: { type: String },
-    listeJourneeType: {type: [journeeTypeSchema]},
+    liste_JourneeType: {type: [journeeTypeSchema]},
 });
 
 

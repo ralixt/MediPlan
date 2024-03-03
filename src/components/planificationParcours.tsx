@@ -1,17 +1,28 @@
 import {Minus, Plus} from "@phosphor-icons/react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {updateNumberParcours} from "@/actions/Planification";
+import JourneeType from "@/app/models/journeeType";
 
 type PlanificationParcoursProps = {
   id: string;
+    Planification_id:string;
   name: string;
+  JourneeType_id:string;
+    JourneeType:JourneeType;
   dataPlanif: parcoursJourneeType;
 };
 
 export default function PlanificationParcours({
   id,
+                                                  Planification_id,
   name,
+                                                  JourneeType_id,
+                                                  JourneeType,
   dataPlanif,
+
 }: PlanificationParcoursProps) {
+
+
 
     const [nbParcours, setNbParcours] = useState<number>(dataPlanif.nbParcours);
 
@@ -24,6 +35,14 @@ export default function PlanificationParcours({
             setNbParcours((i)=>i-1)
         }
     };
+
+    useEffect(() => {
+        async function updateParcours() {
+            await updateNumberParcours(Planification_id,JourneeType_id, nbParcours, dataPlanif.idParcours,JourneeType);
+        }
+
+        updateParcours();
+    }, [nbParcours]);
   return (
       <div key={id} className="flex flex-row text-xl my-4 w-1/2">
         <div className="w-52 h-20 bg-lightlightgrey shadow-md rounded-xl flex items-center content-center justify-center p-4">

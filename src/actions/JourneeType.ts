@@ -13,25 +13,7 @@ export async function getJourneeTypeById(id:string){
 
 }
 
-export async function updateNumberParcours(id:string , newNumberParcours:number){
 
-    try {
-
-        const journeeType = await JourneeType.findById(id);
-
-        if (!journeeType) {
-            throw new Error('JourneeType non trouvé');
-        }
-        journeeType.nbParcours = newNumberParcours;
-
-        const updatedJourneeType = await journeeType.save();
-        console.log("JourneeType mis à jour avec les nouvelles compétences :", updatedJourneeType);
-        return updatedJourneeType;
-    } catch (error) {
-        console.error("Erreur lors de la mise à jour de la JourneeType :", error);
-        throw error;
-    }
-}
 
 export async function updateCompetencesInJourneeType(id: string, newCompetences: any[]) {
     try {

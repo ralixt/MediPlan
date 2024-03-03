@@ -70,50 +70,14 @@ export async function createPlanification(formData: FormData) {
       const JourneeTypesBase = [
         {
           nom: name + "Lundi",
-          liste_Parcours: parcoursType.map(parcours => ({
+          planificationParcours: parcoursType.map(parcours => ({
             idParcours: parcours._id,
             nbParcours: 0,
             pourcentage_utilisation: 0
           })),
-          liste_Comp: competence.map(comp => ({
+          liste_Competence: competence.map(comp => ({
 
-            id_comp: comp._id,
-            nb_h_cible: 0,
-            nb_p_cible: 0,
-            nb_h_actuel: 0,
-            nb_p_actuel: 0
-
-
-          })),
-        },
-        {
-          nom: name + "Mardi",
-          liste_Parcours: parcoursType.map(parcours => ({
-            idParcours: parcours._id,
-            nbParcours: 0,
-            pourcentage_utilisation: 0
-          })),
-          liste_Comp: competence.map(comp => ({
-
-            id_comp: comp._id,
-            nb_h_cible: 0,
-            nb_p_cible: 0,
-            nb_h_actuel: 0,
-            nb_p_actuel: 0
-
-
-          })),
-        },
-        {
-          nom: name + "Mercredi",
-          liste_Parcours: parcoursType.map(parcours => ({
-            idParcours: parcours._id,
-            nbParcours: 0,
-            pourcentage_utilisation: 0
-          })),
-          liste_Comp: competence.map(comp => ({
-
-            id_comp: comp._id,
+            idCompetence: comp._id,
             nb_h_cible: 0,
             nb_p_cible: 0,
             nb_h_actuel: 0,
@@ -123,49 +87,13 @@ export async function createPlanification(formData: FormData) {
           })),
         },
 
-        {
-          nom: name + "Jeudi",
-          liste_Parcours: parcoursType.map(parcours => ({
-            idParcours: parcours._id,
-            nbParcours: 0,
-            pourcentage_utilisation: 0
-          })),
-          liste_Comp: competence.map(comp => ({
-
-            id_comp: comp._id,
-            nb_h_cible: 0,
-            nb_p_cible: 0,
-            nb_h_actuel: 0,
-            nb_p_actuel: 0
-
-
-          })),
-        },
-        {
-          nom: name + "vendredi",
-          liste_Parcours: parcoursType.map(parcours => ({
-            idParcours: parcours._id,
-            nbParcours: 0,
-            pourcentage_utilisation: 0
-          })),
-          liste_Comp: competence.map(comp => ({
-
-            id_comp: comp._id,
-            nb_h_cible: 0,
-            nb_p_cible: 0,
-            nb_h_actuel: 0,
-            nb_p_actuel: 0
-
-
-          })),
-        },
       ];
 
       console.log(JourneeTypesBase);
 
   const newPlanification = await Planifications.create({
         nom: name,
-        listeJourneeType:JourneeTypesBase,
+        liste_JourneeType:JourneeTypesBase,
     });
 
     console.log("Planification créés :", newPlanification);
@@ -173,6 +101,77 @@ export async function createPlanification(formData: FormData) {
     console.error("Erreur de création Planification :", error);
   }
 }
+
+/*export async function updateNumberParcours(id: string,idJourneeType:string, newNumberParcours: number, idParcours: string,JourneeType:JourneeType) {
+  try {
+    const Planif = await Planifications.findById(id);
+
+    //const journeeType = await Planifications.findById(idJourneeType);
+
+    //console.log("jjjj",JourneeType)
+
+    //console.log("idd",idJourneeType)
+    if (!Planif) {
+      throw new Error('JourneeType non trouvé');
+    }
+
+    const planificationParcoursToUpdate = JourneeType.planificationParcours.find(journee => journee.idParcours === "6585914cdb771bb938489134");
+
+    console.log("pppp",JourneeType.planificationParcours.find(journee => journee.idParcours === idParcours))
+
+    if (!planificationParcoursToUpdate) {
+      throw new Error(`PlanificationParcours avec idParcours ${idParcours} non trouvé`);
+    }
+    planificationParcoursToUpdate.nbParcours = newNumberParcours;
+
+
+   //const updatedJourneeType = await Planif.save();
+
+    console.log("JourneeType mis à jour avec les nouvelles compétences :", planificationParcoursToUpdate);
+    //return planificationParcoursToUpdate;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de la JourneeType :", error);
+    throw error;
+  }
+}*/
+
+export async function updateNumberParcours(id: string,idJourneeType:string, newNumberParcours: number, idParcours: string,JourneeType:JourneeType) {
+  try {
+    const updatedPlanification = await Planifications.findByIdAndUpdate(
+        id,
+        { $set: { "liste_JourneeType.$[outer].planificationParcours.$[inner].nbParcours": newNumberParcours } },
+        { arrayFilters: [{ "outer._id": idJourneeType }, { "inner.idParcours": idParcours }], new: true }
+    );
+
+    if (!updatedPlanification) {
+      throw new Error('Planification non trouvée');
+    }
+
+    console.log("Planification mise à jour avec succès :", updatedPlanification);
+    console.log("idParcours",idParcours)
+    console.log("num",newNumberParcours)
+    console.log(id)
+
+   // return updatedPlanification;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de la planification :", error);
+    throw error;
+  }
+}
+
+
+/*export async function updateNumberParcours(id: string,idJourneeType:string, newNumberParcours: number, idParcours: string,JourneeType:JourneeType) {
+  const planificationTrouvee = JourneeType.planificationParcours.find(journee => journee.idParcours === "6585914cdb771bb938489134");
+
+  if (!planificationTrouvee) {
+    throw new Error(`PlanificationParcours avec idParcours ${idParcours} non trouvé`);
+  }
+
+  console.log("PlanificationParcours trouvé :", planificationTrouvee);
+
+
+}*/
+
 
 export async function deletePlanification(id: string) {
   try {

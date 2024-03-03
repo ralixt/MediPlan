@@ -13,12 +13,14 @@ import { Parachute } from "@phosphor-icons/react";
 import PlanificationParcours from "./planificationParcours";
 
 type props = {
+  Planification_id:string;
   journeeType: JourneeType;
   setMaj: Dispatch<SetStateAction<boolean>>;
   parcours: parcoursList;
 };
 
 export default function ParcoursTypeSection({
+                                              Planification_id,
   journeeType,
   setMaj,
   parcours,
@@ -33,6 +35,7 @@ export default function ParcoursTypeSection({
             (value) => value.idParcours === parcour._id
           );
           if (!dataPlanif) {
+
             journeeType.planificationParcours.push({
               idParcours: parcour._id,
               nbParcours: 0,
@@ -45,11 +48,18 @@ export default function ParcoursTypeSection({
             );
             console.log(dataPlanif);
           }
+
+
           if (dataPlanif) {
+
+            console.log("cc",dataPlanif);
             return (
               <PlanificationParcours
                 key={parcour._id}
                 id={parcour._id}
+                Planification_id={Planification_id}
+                JourneeType_id={journeeType._id}
+                JourneeType = {journeeType}
                 name={parcour.name}
                 dataPlanif={dataPlanif}
               />

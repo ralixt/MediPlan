@@ -28,7 +28,7 @@ export default function Planification() {
     const fetchParcours = async () => {
       try {
         const data = await getPlanificationBDD();
-        console.log("cache : " ,data)
+        // console.log("cache : " ,data)
         setPlanification(data as Planification[]);
         setLoading(false);
       } catch (error) {
@@ -42,6 +42,19 @@ export default function Planification() {
 
     fetchParcours();
   }, [searchPlanification, planification]);
+
+    useEffect(() => {
+        setPlanificationFiltre(
+            planification.filter((planif) => {
+                if (planif.nom) {
+                    return diacritics
+                        .remove(planif.nom.toLowerCase())
+                        .includes(diacritics.remove(searchPlanification.toLowerCase()));
+                }
+                return false;
+            })
+        );
+    }, [searchPlanification, planification]);
 
 
 
@@ -110,7 +123,7 @@ export default function Planification() {
             {loading ? (
                 <Loader/>
             ) : (
-                planification.map((planification, index) => (
+                planificationFiltre.map((planification, index) => (
                     <WorkshopButtonPlanif
                         key={index}
                         index={index}

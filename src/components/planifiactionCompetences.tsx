@@ -115,6 +115,8 @@ export default function PlanifiactionCompetences({
         ? "0h"
         : `${hours}h${minutes < 10 ? "0" : ""}${minutes}`
     );
+
+    
   }, [parcours, journeeType]);
 
   return (

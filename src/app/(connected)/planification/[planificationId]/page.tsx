@@ -8,10 +8,10 @@ import JourneeType from "@/app/models/journeeType";
 import { JourneeTypeButton } from "@/components/buttons";
 import Image from "next/image";
 import { getAllParcoursType } from "@/actions/ParcoursType";
-import {getPlanification} from "@/actions/Planification";
+import { getPlanification } from "@/actions/Planification";
 
 type props = {
-  planificationId: number;
+  planificationId: string;
 };
 export default function PlanificationPage({ params }: NextPageProps<props>) {
   const [planification, setPlanification] = useState<Planification>();
@@ -24,12 +24,12 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
       try {
         let data: Planification[];
         const response = await fetch("/temporary/Planif.json");
-        const response2 = await getPlanification(params.planificationId)
+        const response2 = await getPlanification(params.planificationId);
         data = await response.json();
 
-        setPlanification(response2);
-        console.log("data",response2)
-        setSelectedJourneeType(response2.liste_JourneeType[0]);
+        setPlanification(response2 as Planification);
+        console.log("data", response2);
+        setSelectedJourneeType((response2 as Planification).liste_JourneeType[0]);
         const reponse2: parcoursList =
           (await getAllParcoursType()) as parcoursList;
         setParcours(reponse2);
@@ -84,12 +84,12 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
         </div>
         <div className="pl-24 w-full">
           <ParcoursTypeSection
-              Planification_id={params.planificationId}
+            Planification_id={params.planificationId}
             journeeType={selectedJourneeType}
             setMaj={setMaj}
             parcours={parcours}
           />
-          
+
           <CompetenceSection
             journeeType={selectedJourneeType}
             setMaj={setMaj}

@@ -71,8 +71,8 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
         ></Image>
       </div>
 
-      <div className="flex flex-row items-start justify-start w-full h-[100vh] pt-24 ml-12 bg-white">
-        <div className="flex flex-col gap-5 fixed">
+      <div className="flex flex-row items-start justify-start w-full pt-24 bg-white">
+        <div className="flex items-center content-center justify-center flex-col gap-5 fixed ml-12">
           {planification.liste_JourneeType.map((value, index) => (
             <JourneeTypeButton
               key={index}
@@ -82,7 +82,7 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
             />
           ))}
         </div>
-        <div className="pl-24 w-full">
+        <div className="pl-48 w-full">
           <ParcoursTypeSection
             Planification_id={params.planificationId}
             journeeType={selectedJourneeType}

@@ -52,7 +52,7 @@ export default function CompetenceSection({
 
   return (
     <div>
-      <div className="mt-8 mb-16 border-dashed border-lightlightgrey border-4 rounded-xl"></div>
+      <div className="mt-8 mb-16 border-dashed border-lightlightgrey border-4 rounded-xl w-9/12 mx-auto"></div>
       <div className="flex flex-row text-xl mb-6">
         <div className="w-52 h-12 bg-positive flex items-center content-center justify-center rounded-xl ml-[470px]">
           Cible

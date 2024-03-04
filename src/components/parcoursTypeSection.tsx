@@ -29,7 +29,7 @@ export default function ParcoursTypeSection({
 
   return (
     <div>
-      <div className="flex flex-wrap">
+      <div className="flex items-center content-center justify-center flex-wrap">
         {parcours.map((parcour) => {
           let dataPlanif = journeeType.planificationParcours.find(
             (value) => value.idParcours === parcour._id

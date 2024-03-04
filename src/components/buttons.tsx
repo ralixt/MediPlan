@@ -327,7 +327,7 @@ export function JourneeTypeButton({
   };
   return (
     <button
-      className="rounded-md w-16 h-20 bg-dark-blue"
+      className="rounded-lg w-16 h-20 bg-dark-blue"
       disabled={active}
       onClick={handleClick}
     >

@@ -44,7 +44,7 @@ export default function PlanificationParcours({
         updateParcours();
     }, [nbParcours]);
   return (
-      <div key={id} className="flex flex-row text-xl my-4 w-1/2">
+      <div key={id} className="flex flex-row items-center content-center justify-center text-xl my-4 w-1/2">
         <div className="w-52 h-20 bg-lightlightgrey shadow-md rounded-xl flex items-center content-center justify-center p-4">
           <p>{name}</p>
         </div>

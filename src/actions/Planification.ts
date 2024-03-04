@@ -83,6 +83,66 @@ export async function createPlanification(formData: FormData) {
             nb_p_actuel: 0
           })),
         },
+        {
+          nom: "Mardi" + name,
+          planificationParcours: parcoursType.map(parcours => ({
+            idParcours: parcours._id,
+            nbParcours: 0,
+            pourcentage_utilisation: 0
+          })),
+          liste_Competence: competence.map(comp => ({
+            idCompetence: comp._id,
+            nb_h_cible: 0,
+            nb_p_cible: 0,
+            nb_h_actuel: 0,
+            nb_p_actuel: 0
+          })),
+        },
+        {
+          nom: "Mercredi" + name,
+          planificationParcours: parcoursType.map(parcours => ({
+            idParcours: parcours._id,
+            nbParcours: 0,
+            pourcentage_utilisation: 0
+          })),
+          liste_Competence: competence.map(comp => ({
+            idCompetence: comp._id,
+            nb_h_cible: 0,
+            nb_p_cible: 0,
+            nb_h_actuel: 0,
+            nb_p_actuel: 0
+          })),
+        },
+        {
+          nom: "Jeudi" + name,
+          planificationParcours: parcoursType.map(parcours => ({
+            idParcours: parcours._id,
+            nbParcours: 0,
+            pourcentage_utilisation: 0
+          })),
+          liste_Competence: competence.map(comp => ({
+            idCompetence: comp._id,
+            nb_h_cible: 0,
+            nb_p_cible: 0,
+            nb_h_actuel: 0,
+            nb_p_actuel: 0
+          })),
+        },
+        {
+          nom: "Vendredi" + name,
+          planificationParcours: parcoursType.map(parcours => ({
+            idParcours: parcours._id,
+            nbParcours: 0,
+            pourcentage_utilisation: 0
+          })),
+          liste_Competence: competence.map(comp => ({
+            idCompetence: comp._id,
+            nb_h_cible: 0,
+            nb_p_cible: 0,
+            nb_h_actuel: 0,
+            nb_p_actuel: 0
+          })),
+        },
 
       ];
 

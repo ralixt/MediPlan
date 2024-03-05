@@ -9,7 +9,7 @@ type PlanificationParcoursProps = {
   dataPlanif: listeUtilisationCompetence;
 };
 
-export default function PlanifiactionCompetences({
+export default function PlanificationCompetences({
   id,
   name,
   journeeType,

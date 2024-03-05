@@ -11,7 +11,7 @@ import {
 } from "@/actions/ParcoursType";
 import competence from "@/app/models/competence";
 import PlanificationParcours from "@/components/planificationParcours";
-import PlanifiactionCompetences from "@/components/planifiactionCompetences";
+import PlanificationCompetences from "@/components/planificationCompetences";
 
 type props = {
   journeeType: JourneeType;
@@ -87,7 +87,7 @@ export default function CompetenceSection({
           }
           if (dataPlanif) {
             return (
-              <PlanifiactionCompetences
+              <PlanificationCompetences
                 key={competence._id}
                 id={competence._id}
                 name={competence.nom}

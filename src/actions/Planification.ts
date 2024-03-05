@@ -23,49 +23,6 @@ export async function createPlanification(formData: FormData) {
     const competence = await getComp()
 
       console.log("pp",parcoursType)
-      //const name : string = "rrrrrr"
-   /* const JourneeTypesBase = [
-        {
-            nom: name + "Lundi",
-            liste_Parcours: [
-
-
-                {
-                    idParcours: "6585914cdb771bb938489134",
-                    nbParcours: 5,
-                    pourcentage_utilisation: 2
-                }
-            ],
-            liste_Comp: [
-                {
-                    idCompetence: "65858269db771bb938488e6d",
-                    nb_h_cible: 8,
-                    nb_p_cible: 2,
-                    nb_h_actuel: 8,
-                    nb_p_actuel: 3
-                }
-            ],
-        },
-        /*{
-            nom: name + "Mardi",
-            liste_Parcours: [],
-            liste_Comp: [],
-        },
-        {
-            nom: name + "Mercredi",
-            liste_Parcours: [],
-            liste_Comp: [],
-        },
-        {
-            nom: name + "Jeudi",
-            liste_Parcours: [],
-            liste_Comp: [],
-        },
-        {
-            nom: name + "Vendredi",
-            liste_Parcours: [],
-            liste_Comp: [],
-        },*/
 
       const JourneeTypesBase = [
         {

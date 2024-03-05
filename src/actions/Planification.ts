@@ -23,49 +23,6 @@ export async function createPlanification(formData: FormData) {
     const competence = await getComp()
 
       console.log("pp",parcoursType)
-      //const name : string = "rrrrrr"
-   /* const JourneeTypesBase = [
-        {
-            nom: name + "Lundi",
-            liste_Parcours: [
-
-
-                {
-                    idParcours: "6585914cdb771bb938489134",
-                    nbParcours: 5,
-                    pourcentage_utilisation: 2
-                }
-            ],
-            liste_Comp: [
-                {
-                    idCompetence: "65858269db771bb938488e6d",
-                    nb_h_cible: 8,
-                    nb_p_cible: 2,
-                    nb_h_actuel: 8,
-                    nb_p_actuel: 3
-                }
-            ],
-        },
-        /*{
-            nom: name + "Mardi",
-            liste_Parcours: [],
-            liste_Comp: [],
-        },
-        {
-            nom: name + "Mercredi",
-            liste_Parcours: [],
-            liste_Comp: [],
-        },
-        {
-            nom: name + "Jeudi",
-            liste_Parcours: [],
-            liste_Comp: [],
-        },
-        {
-            nom: name + "Vendredi",
-            liste_Parcours: [],
-            liste_Comp: [],
-        },*/
 
       const JourneeTypesBase = [
         {
@@ -210,6 +167,102 @@ export async function updateNumberParcours(id: string,idJourneeType:string, newN
     console.log(id)
 
    // return updatedPlanification;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de la planification :", error);
+    throw error;
+  }
+}
+
+export async function updateHeuresCible(id: string,idJourneeType:string, newNumberHeuresCible: number, idCompetence: string) {
+  try {
+    const updatedPlanification = await Planifications.findByIdAndUpdate(
+        id,
+        { $set: { "liste_JourneeType.$[outer].liste_Competence.$[inner].nb_h_cible": newNumberHeuresCible } },
+        { arrayFilters: [{ "outer._id": idJourneeType }, { "inner.idCompetence": idCompetence }], new: true }
+    );
+
+    if (!updatedPlanification) {
+      throw new Error('Planification non trouvée');
+    }
+
+    console.log("Planification mise à jour avec succès :", updatedPlanification);
+    console.log("idParcours",idCompetence)
+    console.log("num",newNumberHeuresCible)
+    console.log(id)
+
+    // return updatedPlanification;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de la planification :", error);
+    throw error;
+  }
+}
+
+export async function updateHeuresActuel(id: string,idJourneeType:string, newNumberHeureActuel: number, idCompetence: string) {
+  try {
+    const updatedPlanification = await Planifications.findByIdAndUpdate(
+        id,
+        { $set: { "liste_JourneeType.$[outer].liste_Competence.$[inner].nb_h_actuel": newNumberHeureActuel } },
+        { arrayFilters: [{ "outer._id": idJourneeType }, { "inner.idCompetence": idCompetence }], new: true }
+    );
+
+    if (!updatedPlanification) {
+      throw new Error('Planification non trouvée');
+    }
+
+    console.log("Planification mise à jour avec succès :", updatedPlanification);
+    console.log("idParcours",idCompetence)
+    console.log("num",newNumberHeureActuel)
+    console.log(id)
+
+    // return updatedPlanification;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de la planification :", error);
+    throw error;
+  }
+}
+
+export async function updatePersonnelCible(id: string,idJourneeType:string, newPersonnelCible: number, idCompetence: string) {
+  try {
+    const updatedPlanification = await Planifications.findByIdAndUpdate(
+        id,
+        { $set: { "liste_JourneeType.$[outer].liste_Competence.$[inner].nb_p_cible": newPersonnelCible } },
+        { arrayFilters: [{ "outer._id": idJourneeType }, { "inner.idCompetence": idCompetence }], new: true }
+    );
+
+    if (!updatedPlanification) {
+      throw new Error('Planification non trouvée');
+    }
+
+    console.log("Planification mise à jour avec succès :", updatedPlanification);
+    console.log("idParcours",idCompetence)
+    console.log("num",newPersonnelCible)
+    console.log(id)
+
+    // return updatedPlanification;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de la planification :", error);
+    throw error;
+  }
+}
+
+export async function updatePersonnelActuel(id: string,idJourneeType:string, newNumberPersonnelActuel: number, idCompetence: string) {
+  try {
+    const updatedPlanification = await Planifications.findByIdAndUpdate(
+        id,
+        { $set: { "liste_JourneeType.$[outer].liste_Competence.$[inner].nb_p_actuel": newNumberPersonnelActuel } },
+        { arrayFilters: [{ "outer._id": idJourneeType }, { "inner.idCompetence": idCompetence }], new: true }
+    );
+
+    if (!updatedPlanification) {
+      throw new Error('Planification non trouvée');
+    }
+
+    console.log("Planification mise à jour avec succès :", updatedPlanification);
+    console.log("idParcours",idCompetence)
+    console.log("num",newNumberPersonnelActuel)
+    console.log(id)
+
+    // return updatedPlanification;
   } catch (error) {
     console.error("Erreur lors de la mise à jour de la planification :", error);
     throw error;

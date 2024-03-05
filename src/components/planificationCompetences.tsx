@@ -1,7 +1,14 @@
 import { Clock, Minus, Plus, Users } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
+import {
+  updateHeuresActuel,
+  updateHeuresCible,
+  updateNumberParcours,
+  updatePersonnelActuel, updatePersonnelCible
+} from "@/actions/Planification";
 
 type PlanificationParcoursProps = {
+  planificationId:string,
   id: string;
   name: string;
   journeeType: JourneeType;
@@ -9,7 +16,8 @@ type PlanificationParcoursProps = {
   dataPlanif: listeUtilisationCompetence;
 };
 
-export default function PlanifiactionCompetences({
+export default function PlanificationCompetences({
+                                                   planificationId,
   id,
   name,
   journeeType,
@@ -21,6 +29,71 @@ export default function PlanifiactionCompetences({
   const [heuresActuel,setHeuresActuel]=useState<number>(dataPlanif.nb_h_actuel)
   const [personnelCible,setPersonnelCible]=useState<number>(dataPlanif.nb_p_cible)
   const [personnelActuel,setPersonnelActuel]=useState<number>(dataPlanif.nb_p_actuel)
+
+
+  useEffect(() => {
+    async function updateHeuresCibles() {
+      console.log("journne",journeeType._id)
+      await updateHeuresCible(
+          planificationId,
+          journeeType._id,
+          heuresCible,
+          dataPlanif.idCompetence
+
+
+      );
+    }
+
+    updateHeuresCibles();
+  }, [heuresCible]);
+
+ useEffect(() => {
+    async function updateHeuresActuels() {
+      console.log("journne",journeeType._id)
+      await updateHeuresActuel(
+          planificationId,
+          journeeType._id,
+          heuresActuel,
+          dataPlanif.idCompetence
+
+
+      );
+    }
+
+    updateHeuresActuels();
+  }, [heuresActuel]);
+
+  useEffect(() => {
+    async function updatePersonelActuels() {
+      console.log("journne",journeeType._id)
+      await updatePersonnelActuel(
+          planificationId,
+          journeeType._id,
+          personnelActuel,
+          dataPlanif.idCompetence
+
+
+      );
+    }
+
+    updatePersonelActuels();
+  }, [personnelActuel]);
+
+  useEffect(() => {
+    async function updatePersonelCibles() {
+      console.log("journne",journeeType._id)
+      await updatePersonnelCible(
+          planificationId,
+          journeeType._id,
+          personnelCible,
+          dataPlanif.idCompetence
+
+
+      );
+    }
+
+    updatePersonelCibles();
+  }, [personnelCible]);
 
   const handleHeureCiblePlusClick = () => {
     setHeuresCible((i)=>i+1)
@@ -143,7 +216,7 @@ export default function PlanifiactionCompetences({
       <div className="flex flex-col items-center content-center">
         <div className="flex flex-row items-center justify-center">
           <div className="h-12 w-12 flex items-center content-center justify-center mx-8">
-            <Users size={25} />
+            <Clock size={25} />
           </div>
 
           <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md">
@@ -167,13 +240,13 @@ export default function PlanifiactionCompetences({
           </div>
 
           <div className="w-[170px] h-12 flex items-center justify-around rounded-xl shadow-md">
-            <p>-1</p>
+            <p>{heuresCible - heuresActuel}</p>
           </div>
         </div>
 
         <div className="flex flex-row items-center content-center justify-center mt-2">
           <div className="h-12 w-12 flex items-center content-center justify-center mx-8">
-            <Clock size={25} />
+            <Users size={25} />
           </div>
 
           <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md">
@@ -197,7 +270,7 @@ export default function PlanifiactionCompetences({
           </div>
 
           <div className="w-[170px] h-12 flex items-center justify-around rounded-xl shadow-md">
-            <p>-1</p>
+            <p>{personnelCible - personnelActuel}</p>
           </div>
         </div>
       </div>

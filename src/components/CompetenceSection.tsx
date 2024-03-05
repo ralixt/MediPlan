@@ -11,9 +11,10 @@ import {
 } from "@/actions/ParcoursType";
 import competence from "@/app/models/competence";
 import PlanificationParcours from "@/components/planificationParcours";
-import PlanifiactionCompetences from "@/components/planifiactionCompetences";
+import PlanificationCompetences from "@/components/planificationCompetences";
 
 type props = {
+  planificationId:string;
   journeeType: JourneeType;
   setMaj: Dispatch<SetStateAction<boolean>>;
   parcours: parcoursList;
@@ -25,6 +26,7 @@ const getCompBDD = cache(async () => {
 });
 
 export default function CompetenceSection({
+                                            planificationId,
   journeeType,
   setMaj,
   parcours,
@@ -87,7 +89,8 @@ export default function CompetenceSection({
           }
           if (dataPlanif) {
             return (
-              <PlanifiactionCompetences
+              <PlanificationCompetences
+                  planificationId={planificationId}
                 key={competence._id}
                 id={competence._id}
                 name={competence.nom}

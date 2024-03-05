@@ -143,7 +143,7 @@ export default function PlanificationCompetences({
       <div className="flex flex-col items-center content-center">
         <div className="flex flex-row items-center justify-center">
           <div className="h-12 w-12 flex items-center content-center justify-center mx-8">
-            <Users size={25} />
+            <Clock size={25} />
           </div>
 
           <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md">
@@ -173,7 +173,7 @@ export default function PlanificationCompetences({
 
         <div className="flex flex-row items-center content-center justify-center mt-2">
           <div className="h-12 w-12 flex items-center content-center justify-center mx-8">
-            <Clock size={25} />
+            <Users size={25} />
           </div>
 
           <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md">

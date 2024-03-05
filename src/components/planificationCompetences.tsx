@@ -167,7 +167,7 @@ export default function PlanificationCompetences({
           </div>
 
           <div className="w-[170px] h-12 flex items-center justify-around rounded-xl shadow-md">
-            <p>-1</p>
+            <p>{heuresCible - heuresActuel}</p>
           </div>
         </div>
 
@@ -197,7 +197,7 @@ export default function PlanificationCompetences({
           </div>
 
           <div className="w-[170px] h-12 flex items-center justify-around rounded-xl shadow-md">
-            <p>-1</p>
+            <p>{personnelCible - personnelActuel}</p>
           </div>
         </div>
       </div>

@@ -1,7 +1,14 @@
 import { Clock, Minus, Plus, Users } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
+import {
+  updateHeuresActuel,
+  updateHeuresCible,
+  updateNumberParcours,
+  updatePersonnelActuel, updatePersonnelCible
+} from "@/actions/Planification";
 
 type PlanificationParcoursProps = {
+  planificationId:string,
   id: string;
   name: string;
   journeeType: JourneeType;
@@ -10,6 +17,7 @@ type PlanificationParcoursProps = {
 };
 
 export default function PlanificationCompetences({
+                                                   planificationId,
   id,
   name,
   journeeType,
@@ -27,6 +35,71 @@ export default function PlanificationCompetences({
   const [personnelActuel, setPersonnelActuel] = useState<number>(
     dataPlanif.nb_p_actuel
   );
+
+
+  useEffect(() => {
+    async function updateHeuresCibles() {
+      console.log("journne",journeeType._id)
+      await updateHeuresCible(
+          planificationId,
+          journeeType._id,
+          heuresCible,
+          dataPlanif.idCompetence
+
+
+      );
+    }
+
+    updateHeuresCibles();
+  }, [heuresCible]);
+
+ useEffect(() => {
+    async function updateHeuresActuels() {
+      console.log("journne",journeeType._id)
+      await updateHeuresActuel(
+          planificationId,
+          journeeType._id,
+          heuresActuel,
+          dataPlanif.idCompetence
+
+
+      );
+    }
+
+    updateHeuresActuels();
+  }, [heuresActuel]);
+
+  useEffect(() => {
+    async function updatePersonelActuels() {
+      console.log("journne",journeeType._id)
+      await updatePersonnelActuel(
+          planificationId,
+          journeeType._id,
+          personnelActuel,
+          dataPlanif.idCompetence
+
+
+      );
+    }
+
+    updatePersonelActuels();
+  }, [personnelActuel]);
+
+  useEffect(() => {
+    async function updatePersonelCibles() {
+      console.log("journne",journeeType._id)
+      await updatePersonnelCible(
+          planificationId,
+          journeeType._id,
+          personnelCible,
+          dataPlanif.idCompetence
+
+
+      );
+    }
+
+    updatePersonelCibles();
+  }, [personnelCible]);
 
   const handleHeureCiblePlusClick = () => {
     setHeuresCible((i) => i + 1);

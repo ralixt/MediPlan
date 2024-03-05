@@ -56,7 +56,6 @@ export default async function ModelingWorkshop({
   } else {
     notFound();
   }
-  //console.log(parcours, elements);
   return elements == undefined && parcours == undefined ? (
     <Loader></Loader>
   ) : (

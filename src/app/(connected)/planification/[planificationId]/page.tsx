@@ -17,7 +17,7 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
   const [planification, setPlanification] = useState<Planification>();
   const [selectedJourneeType, setSelectedJourneeType] = useState<JourneeType>();
   const [maj, setMaj] = useState<boolean>(false);
-  const [parcours, setParcours] = useState<parcoursList>([]);
+  const [parcours, setParcours] = useState<parcoursList>();
 
   useEffect(() => {
     const fetchParcours = async () => {
@@ -29,7 +29,9 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
 
         setPlanification(response2 as Planification);
         console.log("data", response2);
-        setSelectedJourneeType((response2 as Planification).liste_JourneeType[0]);
+        setSelectedJourneeType(
+          (response2 as Planification).liste_JourneeType[0]
+        );
         const reponse2: parcoursList =
           (await getAllParcoursType()) as parcoursList;
         setParcours(reponse2);
@@ -46,12 +48,25 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
   }, []);
 
   useEffect(() => {
-    if (maj) {
-      setMaj(false);
+    if (planification) {
+      console.log("mise a jour ...");
+      const nouvellePlanification: Planification = {
+        ...(planification as Planification),
+      };
+      const journeeIndex = nouvellePlanification.liste_JourneeType.findIndex(
+        (journee) => journee._id === selectedJourneeType?._id
+      );
+      nouvellePlanification.liste_JourneeType[journeeIndex] =
+        selectedJourneeType as JourneeType; // Nouveau nombre de parcours
+      setPlanification(nouvellePlanification);
     }
-  }, [maj, planification]);
+  }, [selectedJourneeType]);
 
-  return planification && selectedJourneeType ? (
+  useEffect(() => {
+    console.log(planification);
+  }, [planification]);
+
+  return planification && selectedJourneeType && parcours ? (
     <div className="">
       <div className="h-32 w-full text-center flex items-center justify-around font-bold text-2xl bg-light-blue pl-5">
         <Image
@@ -84,9 +99,8 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
         </div>
         <div className="flex flex-col items-center content-center justify-center pl-48 w-full">
           <ParcoursTypeSection
-            Planification_id={params.planificationId}
             journeeType={selectedJourneeType}
-            setMaj={setMaj}
+            setJourneeType={setSelectedJourneeType}
             parcours={parcours}
           />
 

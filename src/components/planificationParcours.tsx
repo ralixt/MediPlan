@@ -5,46 +5,49 @@ import JourneeType from "@/app/models/journeeType";
 
 type PlanificationParcoursProps = {
   id: string;
-  Planification_id: string;
   name: string;
-  JourneeType_id: string;
   JourneeType: JourneeType;
+  setJourneeType: React.Dispatch<React.SetStateAction<JourneeType | undefined>>;
   dataPlanif: parcoursJourneeType;
 };
 
 export default function PlanificationParcours({
   id,
-  Planification_id,
   name,
-  JourneeType_id,
   JourneeType,
+  setJourneeType,
   dataPlanif,
 }: PlanificationParcoursProps) {
   const [nbParcours, setNbParcours] = useState<number>(dataPlanif.nbParcours);
+  const [maj, setMaj] = useState<boolean>(false);
 
   const handlePlusClick = () => {
     setNbParcours((i) => i + 1);
+    setMaj(true);
   };
 
   const handleMinusClick = () => {
     if (nbParcours > 0) {
       setNbParcours((i) => i - 1);
+      setMaj(true);
     }
   };
-
   useEffect(() => {
-    async function updateParcours() {
-      await updateNumberParcours(
-        Planification_id,
-        JourneeType_id,
-        nbParcours,
-        dataPlanif.idParcours,
-        JourneeType
+    if (maj) {
+      setMaj(false);
+      const nouvellePlanification = { ...JourneeType };
+      const index = nouvellePlanification.planificationParcours.findIndex(
+        (planifParcours) => planifParcours.idParcours === dataPlanif.idParcours
       );
+      nouvellePlanification.planificationParcours[index].nbParcours =
+        nbParcours;
+      setJourneeType(nouvellePlanification);
     }
+  });
+  useEffect(() => {
+    setNbParcours(dataPlanif.nbParcours);
+  }, [dataPlanif]);
 
-    updateParcours();
-  }, [nbParcours]);
   return (
     <div key={id} className="w-96 text-xl my-4 ">
       <div className="flex flex-row mr-10">

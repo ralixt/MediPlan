@@ -48,6 +48,24 @@ export default function CompetenceSection({
     fetchCompetences();
   }, []);
 
+  useEffect(() => {
+    competences.map((competence) => {
+      let dataPlanif = journeeType.liste_Competence.find(
+        (value) => value.idCompetence === competence._id
+      );
+      if (!dataPlanif) {
+        journeeType.liste_Competence.push({
+          idCompetence: competence._id,
+          nb_h_cible: 0,
+          nb_p_cible: 0,
+          nb_h_actuel: 0,
+          nb_p_actuel: 0,
+        });
+        setMaj(true);
+      }
+    });
+  }, [competences]);
+
   // console.log(competences)
 
   return (
@@ -70,21 +88,6 @@ export default function CompetenceSection({
           let dataPlanif = journeeType.liste_Competence.find(
             (value) => value.idCompetence === competence._id
           );
-          if (!dataPlanif) {
-            journeeType.liste_Competence.push({
-              idCompetence: competence._id,
-              nb_h_cible: 0,
-              nb_p_cible: 0,
-              nb_h_actuel: 0,
-              nb_p_actuel: 0,
-            });
-            setMaj(true);
-
-            dataPlanif = journeeType.liste_Competence.find(
-              (value) => value.idCompetence === competence._id
-            );
-            console.log(dataPlanif);
-          }
           if (dataPlanif) {
             return (
               <PlanificationCompetences

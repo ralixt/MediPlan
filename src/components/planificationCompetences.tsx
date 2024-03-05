@@ -17,74 +17,55 @@ export default function PlanificationCompetences({
   dataPlanif,
 }: PlanificationParcoursProps) {
   const [heuresRequises, setHeuresRequises] = useState<String>("0h");
-  const [heuresCible,setHeuresCible]=useState<number>(dataPlanif.nb_h_cible)
-  const [heuresActuel,setHeuresActuel]=useState<number>(dataPlanif.nb_h_actuel)
-  const [personnelCible,setPersonnelCible]=useState<number>(dataPlanif.nb_p_cible)
-  const [personnelActuel,setPersonnelActuel]=useState<number>(dataPlanif.nb_p_actuel)
+  const [heuresCible, setHeuresCible] = useState<number>(dataPlanif.nb_h_cible);
+  const [heuresActuel, setHeuresActuel] = useState<number>(
+    dataPlanif.nb_h_actuel
+  );
+  const [personnelCible, setPersonnelCible] = useState<number>(
+    dataPlanif.nb_p_cible
+  );
+  const [personnelActuel, setPersonnelActuel] = useState<number>(
+    dataPlanif.nb_p_actuel
+  );
 
   const handleHeureCiblePlusClick = () => {
-    setHeuresCible((i)=>i+1)
+    setHeuresCible((i) => i + 1);
   };
 
   const handleMinusHeureCibleClick = () => {
     if (heuresCible > 0) {
-      setHeuresCible((i)=>i-1)
+      setHeuresCible((i) => i - 1);
     }
   };
   const handleHeureActuelPlusClick = () => {
-    setHeuresActuel((i)=>i+1)
+    setHeuresActuel((i) => i + 1);
   };
 
   const handleMinusHeureActuelClick = () => {
     if (heuresActuel > 0) {
-      setHeuresActuel((i)=>i-1)
+      setHeuresActuel((i) => i - 1);
     }
   };
 
   const handlePersonnelCiblePlusClick = () => {
-    setPersonnelCible((i)=>i+1)
+    setPersonnelCible((i) => i + 1);
   };
 
   const handleMinusPersonnelCibleClick = () => {
     if (personnelCible > 0) {
-      setPersonnelCible((i)=>i-1)
+      setPersonnelCible((i) => i - 1);
     }
   };
 
   const handlePersonnelActuelPlusClick = () => {
-    setPersonnelActuel((i)=>i+1)
+    setPersonnelActuel((i) => i + 1);
   };
 
   const handleMinusPersonnelActuelClick = () => {
     if (personnelActuel > 0) {
-      setPersonnelActuel((i)=>i-1)
+      setPersonnelActuel((i) => i - 1);
     }
   };
-
-  // useEffect(() => {
-  //   let minutes = 0;
-  //   parcours.forEach((value) => {
-  //     if (value.sequencables) {
-  //       value.sequencables.forEach((element) => {
-  //         if (element.type === "EtapeType") {
-  //           element.Competence.forEach((comp) => {
-  //             if (comp._id === id) {
-  //               const parcour = journeeType.planificationParcours.find(
-  //                 (parc) => parc.idParcours === value._id
-  //               );
-  //               if (parcour) {
-  //                 console.log(element, name);
-  //                 minutes += element.duree * parcour?.nbParcours;
-  //               }
-  //             }
-  //           });
-  //         }
-  //       });
-  //     }
-  //   });
-
-  //   setHeuresRequises(minutes / 60);
-  // }, []);
 
   useEffect(() => {
     const totalMinutes = parcours
@@ -97,27 +78,25 @@ export default function PlanificationCompetences({
               element.Competence.some((comp) => comp._id === id)
           )
           .map((element) => ({ ...element, idParcours: value._id }));
-      })
-      .reduce((total, element) => {
-        if (element.type !== "EtapeType") {
-          return total;
-        }
-        const parcour = journeeType.planificationParcours.find(
-          (parc) => parc.idParcours === element.idParcours
-        );
-        return total + (parcour ? element.duree * parcour.nbParcours : 0);
-      }, 0);
-
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    setHeuresRequises(
-      totalMinutes === 0
-        ? "0h"
-        : `${hours}h${minutes < 10 ? "0" : ""}${minutes}`
-    );
-
-    
-  }, [parcours, journeeType]);
+      });
+    // .reduce((total, element) => {
+    //   if (element.type !== "EtapeType") {
+    //     return total;
+    //   }
+    //   const parcour = journeeType.planificationParcours.find(
+    //     (parc) => parc.idParcours === element.idParcours
+    //   );
+    //   return total + (parcour ? element.duree * parcour.nbParcours : 0);
+    // }, 0);
+      console
+    // const hours = Math.floor(totalMinutes / 60);
+    // const minutes = totalMinutes % 60;
+    // setHeuresRequises(
+    //   totalMinutes === 0
+    //     ? "0h"
+    //     : `${hours}h${minutes < 10 ? "0" : ""}${minutes}`
+    // );
+  }, [journeeType]);
 
   return (
     <div key={id} className="flex flex-row text-xl my-4">
@@ -147,21 +126,33 @@ export default function PlanificationCompetences({
           </div>
 
           <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md">
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handleMinusHeureCibleClick} >
+            <button
+              className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center"
+              onClick={handleMinusHeureCibleClick}
+            >
               <Minus size={20} />
             </button>
             <p>{heuresCible}</p>
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handleHeureCiblePlusClick}>
+            <button
+              className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center"
+              onClick={handleHeureCiblePlusClick}
+            >
               <Plus size={20} />
             </button>
           </div>
 
           <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md mx-12">
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center " onClick={handleMinusHeureActuelClick}>
+            <button
+              className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center "
+              onClick={handleMinusHeureActuelClick}
+            >
               <Minus size={20} />
             </button>
             <p>{heuresActuel}</p>
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handleHeureActuelPlusClick}>
+            <button
+              className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center"
+              onClick={handleHeureActuelPlusClick}
+            >
               <Plus size={20} />
             </button>
           </div>
@@ -177,21 +168,33 @@ export default function PlanificationCompetences({
           </div>
 
           <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md">
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handleMinusPersonnelCibleClick}>
+            <button
+              className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center"
+              onClick={handleMinusPersonnelCibleClick}
+            >
               <Minus size={20} />
             </button>
             <p>{personnelCible}</p>
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handlePersonnelCiblePlusClick}>
+            <button
+              className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center"
+              onClick={handlePersonnelCiblePlusClick}
+            >
               <Plus size={20} />
             </button>
           </div>
 
           <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md mx-12">
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handleMinusPersonnelActuelClick}>
+            <button
+              className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center"
+              onClick={handleMinusPersonnelActuelClick}
+            >
               <Minus size={20} />
             </button>
             <p>{personnelActuel}</p>
-            <button className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center" onClick={handlePersonnelActuelPlusClick}>
+            <button
+              className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center"
+              onClick={handlePersonnelActuelPlusClick}
+            >
               <Plus size={20} />
             </button>
           </div>

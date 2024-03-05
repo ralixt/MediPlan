@@ -13,20 +13,38 @@ import { Parachute } from "@phosphor-icons/react";
 import PlanificationParcours from "./planificationParcours";
 
 type props = {
-  Planification_id: string;
   journeeType: JourneeType;
-  setMaj: Dispatch<SetStateAction<boolean>>;
+  setJourneeType: React.Dispatch<React.SetStateAction<JourneeType | undefined>>;
   parcours: parcoursList;
 };
 
 export default function ParcoursTypeSection({
-  Planification_id,
   journeeType,
-  setMaj,
+  setJourneeType,
   parcours,
 }: props) {
   // console.log(parcours)
 
+  useEffect(() => {
+    parcours.map((parcour) => {
+      let dataPlanif = journeeType.planificationParcours.find(
+        (value) => value.idParcours === parcour._id
+      );
+      if (!dataPlanif) {
+        const nouvelleJT = { ...journeeType };
+        nouvelleJT.planificationParcours.push({
+          idParcours: parcour._id,
+          nbParcours: 0,
+          pourcentage_utilisation: 0,
+        });
+        setJourneeType(nouvelleJT);
+
+        dataPlanif = journeeType.planificationParcours.find(
+          (value) => value.idParcours === parcour._id
+        );
+      }
+    });
+  }, [parcours]);
   return (
     <div>
       <div className="flex items-start content-start justify-between flex-wrap gap-10">
@@ -34,29 +52,14 @@ export default function ParcoursTypeSection({
           let dataPlanif = journeeType.planificationParcours.find(
             (value) => value.idParcours === parcour._id
           );
-          if (!dataPlanif) {
-            journeeType.planificationParcours.push({
-              idParcours: parcour._id,
-              nbParcours: 0,
-              pourcentage_utilisation: 0,
-            });
-            setMaj(true);
-
-            dataPlanif = journeeType.planificationParcours.find(
-              (value) => value.idParcours === parcour._id
-            );
-            console.log(dataPlanif);
-          }
 
           if (dataPlanif) {
-            console.log("cc", dataPlanif);
             return (
               <PlanificationParcours
                 key={parcour._id}
                 id={parcour._id}
-                Planification_id={Planification_id}
-                JourneeType_id={journeeType._id}
                 JourneeType={journeeType}
+                setJourneeType={setJourneeType}
                 name={parcour.name}
                 dataPlanif={dataPlanif}
               />

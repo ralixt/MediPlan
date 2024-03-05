@@ -73,17 +73,14 @@ export async function createParcoursType(formData: FormData) {
     const name = formData.get("name") as string;
     const type = formData.get("type") as string;
 
-    const sequencablesIds =JSON.parse( formData.get("sequencables") as string);
-
-    const precedencesIds = JSON.parse(formData.get("precedences") as string);
 
 
 
     const newParcoursType = await ParcoursType.create({
       name,
       type,
-      sequencables: sequencablesIds,
-      precedences:precedencesIds,
+      sequencables: [],
+      precedences:[],
     });
 
     console.log("ParcoursType créé :", newParcoursType);

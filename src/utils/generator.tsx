@@ -31,15 +31,14 @@ const generate = (parcours: parcours) => {
     (sequencable): sequencable is GroupeEtapeType =>
       sequencable.type == "GroupeEtapeType"
   );
-  for (let groupeEtapeType of groupesEtapesType) {
-    const groupEtapeTypeIds = groupeEtapeType.Etapes.map((etape) => etape._id);
-    etapesTypes = etapesTypes.filter(
-      (etapeType) => !groupEtapeTypeIds.includes(etapeType._id)
-    );
-  }
+  // for (let groupeEtapeType of groupesEtapesType) {
+  //   const groupEtapeTypeIds = groupeEtapeType.Etapes.map((etape) => etape._id);
+  //   etapesTypes = etapesTypes.filter(
+  //     (etapeType) => !groupEtapeTypeIds.includes(etapeType._id)
+  //   );
+  // }
   let sequencables: (GroupeEtapeType | EtapeType)[] = etapesTypes;
   sequencables = sequencables.concat(groupesEtapesType);
-
   const precedences: Precedence[] = parcours.precedences;
   const groupes: Array<GroupeEtapeType | EtapeType | Precedence>[] = [];
 
@@ -60,13 +59,17 @@ const generate = (parcours: parcours) => {
         const indexASupprimer = sequencables.findIndex(
           (sequencable) => sequencable._id === successeur._id
         );
-        const indexASupprimer2 = sequencables.findIndex(
-          (sequencable) => sequencable._id === antecedant._id
-        );
 
-        if (indexASupprimer !== -1 && indexASupprimer2 !== 1) {
+
+        if (indexASupprimer > -1) {
           sequencables.splice(indexASupprimer, 1);
-          sequencables.splice(indexASupprimer2, 1);
+          const indexASupprimer2 = sequencables.findIndex(
+              (sequencable) => sequencable._id === antecedant._id
+          );
+          if(indexASupprimer2 > -1){
+            sequencables.splice(indexASupprimer2,1)
+          }
+          console.log(sequencables)
         }
       }
     } else if (indexS == -1 && indexA !== -1) {

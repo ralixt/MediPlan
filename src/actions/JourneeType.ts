@@ -5,7 +5,6 @@ export async function getJourneeTypeById(id:string){
     try {
         const Planif=await JourneeType.findById(id)
         return Planif;
-        console.log("Planification : ",Planif)
     }catch (e) {
         console.log(e)
     }
@@ -26,7 +25,6 @@ export async function updateCompetencesInJourneeType(id: string, newCompetences:
         journeeType.liste_JourneeType.liste_Competence = newCompetences;
 
         const updatedJourneeType = await journeeType.save();
-        console.log("JourneeType mis à jour avec les nouvelles compétences :", updatedJourneeType);
         return updatedJourneeType;
     } catch (error) {
         console.error("Erreur lors de la mise à jour de la JourneeType :", error);

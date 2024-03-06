@@ -4,11 +4,12 @@ import {
   updateHeuresActuel,
   updateHeuresCible,
   updateNumberParcours,
-  updatePersonnelActuel, updatePersonnelCible
+  updatePersonnelActuel,
+  updatePersonnelCible,
 } from "@/actions/Planification";
 
 type PlanificationParcoursProps = {
-  planificationId:string,
+  planificationId: string;
   id: string;
   name: string;
   journeeType: JourneeType;
@@ -17,7 +18,7 @@ type PlanificationParcoursProps = {
 };
 
 export default function PlanificationCompetences({
-                                                   planificationId,
+  planificationId,
   id,
   name,
   journeeType,
@@ -36,70 +37,61 @@ export default function PlanificationCompetences({
     dataPlanif.nb_p_actuel
   );
 
+  // useEffect(() => {
+  //   async function updateHeuresCibles() {
+  //     console.log("journne", journeeType._id);
+  //     await updateHeuresCible(
+  //       planificationId,
+  //       journeeType._id,
+  //       heuresCible,
+  //       dataPlanif.idCompetence
+  //     );
+  //   }
 
-  useEffect(() => {
-    async function updateHeuresCibles() {
-      console.log("journne",journeeType._id)
-      await updateHeuresCible(
-          planificationId,
-          journeeType._id,
-          heuresCible,
-          dataPlanif.idCompetence
+  //   updateHeuresCibles();
+  // }, [heuresCible]);
 
+  // useEffect(() => {
+  //   async function updateHeuresActuels() {
+  //     console.log("journne", journeeType._id);
+  //     await updateHeuresActuel(
+  //       planificationId,
+  //       journeeType._id,
+  //       heuresActuel,
+  //       dataPlanif.idCompetence
+  //     );
+  //   }
 
-      );
-    }
+  //   updateHeuresActuels();
+  // }, [heuresActuel]);
 
-    updateHeuresCibles();
-  }, [heuresCible]);
+  // useEffect(() => {
+  //   async function updatePersonelActuels() {
+  //     console.log("journne", journeeType._id);
+  //     await updatePersonnelActuel(
+  //       planificationId,
+  //       journeeType._id,
+  //       personnelActuel,
+  //       dataPlanif.idCompetence
+  //     );
+  //   }
 
- useEffect(() => {
-    async function updateHeuresActuels() {
-      console.log("journne",journeeType._id)
-      await updateHeuresActuel(
-          planificationId,
-          journeeType._id,
-          heuresActuel,
-          dataPlanif.idCompetence
+  //   updatePersonelActuels();
+  // }, [personnelActuel]);
 
+  // useEffect(() => {
+  //   async function updatePersonelCibles() {
+  //     console.log("journne", journeeType._id);
+  //     await updatePersonnelCible(
+  //       planificationId,
+  //       journeeType._id,
+  //       personnelCible,
+  //       dataPlanif.idCompetence
+  //     );
+  //   }
 
-      );
-    }
-
-    updateHeuresActuels();
-  }, [heuresActuel]);
-
-  useEffect(() => {
-    async function updatePersonelActuels() {
-      console.log("journne",journeeType._id)
-      await updatePersonnelActuel(
-          planificationId,
-          journeeType._id,
-          personnelActuel,
-          dataPlanif.idCompetence
-
-
-      );
-    }
-
-    updatePersonelActuels();
-  }, [personnelActuel]);
-
-  useEffect(() => {
-    async function updatePersonelCibles() {
-      console.log("journne",journeeType._id)
-      await updatePersonnelCible(
-          planificationId,
-          journeeType._id,
-          personnelCible,
-          dataPlanif.idCompetence
-
-
-      );
-    }
-
-    updatePersonelCibles();
-  }, [personnelCible]);
+  //   updatePersonelCibles();
+  // }, [personnelCible]);
 
   const handleHeureCiblePlusClick = () => {
     setHeuresCible((i) => i + 1);
@@ -141,34 +133,48 @@ export default function PlanificationCompetences({
   };
 
   useEffect(() => {
+    console.log(dataPlanif.idCompetence);
     const totalMinutes = parcours
       .filter((value) => value.sequencables)
       .flatMap((value) => {
         return value.sequencables
           .filter(
             (element) =>
-              element.type === "EtapeType" &&
-              element.Competence.some((comp) => comp._id === id)
+              element.type === "EtapeType" || element.type === "GroupeEtapeType"
           )
           .map((element) => ({ ...element, idParcours: value._id }));
-      });
-    // .reduce((total, element) => {
-    //   if (element.type !== "EtapeType") {
-    //     return total;
-    //   }
-    //   const parcour = journeeType.planificationParcours.find(
-    //     (parc) => parc.idParcours === element.idParcours
-    //   );
-    //   return total + (parcour ? element.duree * parcour.nbParcours : 0);
-    // }, 0);
-      console
-    // const hours = Math.floor(totalMinutes / 60);
-    // const minutes = totalMinutes % 60;
-    // setHeuresRequises(
-    //   totalMinutes === 0
-    //     ? "0h"
-    //     : `${hours}h${minutes < 10 ? "0" : ""}${minutes}`
-    // );
+      })
+      .reduce((total, element) => {
+        let totalElement = 0;
+        if (element.type === "GroupeEtapeType") {
+          element.Etapes.forEach((etape) => {
+            const competence = etape.Competence.find((comp) => {
+              return comp._id === dataPlanif.idCompetence;
+            });
+            if (competence) {
+              totalElement += etape.duree;
+            }
+          });
+        } else if (element.type === "EtapeType") {
+          totalElement += element.duree;
+        }
+        const parcour = journeeType.planificationParcours.find(
+          (parc) => parc.idParcours === element.idParcours
+        );
+        console.log(
+          totalElement,
+          parcour?.nbParcours,
+          parcour ? totalElement * parcour?.nbParcours : "null"
+        );
+        return total + (parcour ? totalElement * parcour.nbParcours : 0);
+      }, 0);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    setHeuresRequises(
+      totalMinutes === 0
+        ? "0h"
+        : `${hours}h${minutes < 10 ? "0" : ""}${minutes}`
+    );
   }, [journeeType]);
 
   return (

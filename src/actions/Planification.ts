@@ -161,10 +161,6 @@ export async function updateNumberParcours(id: string,idJourneeType:string, newN
       throw new Error('Planification non trouvée');
     }
 
-    console.log("Planification mise à jour avec succès :", updatedPlanification);
-    console.log("idParcours",idParcours)
-    console.log("num",newNumberParcours)
-    console.log(id)
 
    // return updatedPlanification;
   } catch (error) {
@@ -185,10 +181,6 @@ export async function updateHeuresCible(id: string,idJourneeType:string, newNumb
       throw new Error('Planification non trouvée');
     }
 
-    console.log("Planification mise à jour avec succès :", updatedPlanification);
-    console.log("idParcours",idCompetence)
-    console.log("num",newNumberHeuresCible)
-    console.log(id)
 
     // return updatedPlanification;
   } catch (error) {
@@ -209,11 +201,6 @@ export async function updateHeuresActuel(id: string,idJourneeType:string, newNum
       throw new Error('Planification non trouvée');
     }
 
-    console.log("Planification mise à jour avec succès :", updatedPlanification);
-    console.log("idParcours",idCompetence)
-    console.log("num",newNumberHeureActuel)
-    console.log(id)
-
     // return updatedPlanification;
   } catch (error) {
     console.error("Erreur lors de la mise à jour de la planification :", error);
@@ -233,10 +220,6 @@ export async function updatePersonnelCible(id: string,idJourneeType:string, newP
       throw new Error('Planification non trouvée');
     }
 
-    console.log("Planification mise à jour avec succès :", updatedPlanification);
-    console.log("idParcours",idCompetence)
-    console.log("num",newPersonnelCible)
-    console.log(id)
 
     // return updatedPlanification;
   } catch (error) {
@@ -257,10 +240,6 @@ export async function updatePersonnelActuel(id: string,idJourneeType:string, new
       throw new Error('Planification non trouvée');
     }
 
-    console.log("Planification mise à jour avec succès :", updatedPlanification);
-    console.log("idParcours",idCompetence)
-    console.log("num",newNumberPersonnelActuel)
-    console.log(id)
 
     // return updatedPlanification;
   } catch (error) {
@@ -391,7 +370,6 @@ export async function updatePlanification(id: string, formData: mongoose.UpdateQ
       formData
     );
     if (parcoursTypeUpdated) {
-      console.log("Planification mis à jour", parcoursTypeUpdated);
     } else {
       console.log("Aucun parcours type trouvé");
     }

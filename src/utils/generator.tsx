@@ -41,8 +41,8 @@ const generate = (parcours: parcours) => {
   sequencables = sequencables.concat(groupesEtapesType);
   const precedences: Precedence[] = parcours.precedences;
   const groupes: Array<GroupeEtapeType | EtapeType | Precedence>[] = [];
-
   for (let precedence of precedences) {
+    console.log(precedence);
     const indexS = findIndex(groupes, precedence.successeur);
     const indexA = findIndex(groupes, precedence.antecedent);
 
@@ -60,16 +60,15 @@ const generate = (parcours: parcours) => {
           (sequencable) => sequencable._id === successeur._id
         );
 
-
         if (indexASupprimer > -1) {
           sequencables.splice(indexASupprimer, 1);
           const indexASupprimer2 = sequencables.findIndex(
-              (sequencable) => sequencable._id === antecedant._id
+            (sequencable) => sequencable._id === antecedant._id
           );
-          if(indexASupprimer2 > -1){
-            sequencables.splice(indexASupprimer2,1)
+          if (indexASupprimer2 > -1) {
+            sequencables.splice(indexASupprimer2, 1);
           }
-          console.log(sequencables)
+          console.log(sequencables);
         }
       }
     } else if (indexS == -1 && indexA !== -1) {
@@ -113,6 +112,7 @@ const generate = (parcours: parcours) => {
       groupes.splice(indexS.indexG, 1);
     }
   }
+
   groupes.sort((a, b) => b.length - a.length);
   let groupeConcat: (GroupeEtapeType | EtapeType | Precedence | Border)[] =
     Array.prototype.concat.apply([], groupes);

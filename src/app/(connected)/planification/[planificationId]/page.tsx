@@ -22,12 +22,14 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
   useEffect(() => {
     const fetchParcours = async () => {
       try {
-        let data: Planification[];
-        const response = await fetch("/temporary/Planif.json");
-        const response2 = await getPlanification(params.planificationId);
-        data = await response.json();
+        //let data: Planification[];
+        //const response = await fetch("/temporary/Planif.json");
+        const response2: Planification = (await getPlanification(
+          params.planificationId
+        )) as Planification;
+        //data = await response.json();
 
-        setPlanification(response2 as Planification);
+        setPlanification(response2);
         console.log("data", response2);
         setSelectedJourneeType(
           (response2 as Planification).liste_JourneeType[0]
@@ -105,7 +107,7 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
           />
 
           <CompetenceSection
-              planificationId = {params.planificationId}
+            planificationId={params.planificationId}
             journeeType={selectedJourneeType}
             setMaj={setMaj}
             parcours={parcours}

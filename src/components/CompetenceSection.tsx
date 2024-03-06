@@ -14,7 +14,7 @@ import PlanificationParcours from "@/components/planificationParcours";
 import PlanificationCompetences from "@/components/planificationCompetences";
 
 type props = {
-  planificationId:string;
+  planificationId: string;
   journeeType: JourneeType;
   setMaj: Dispatch<SetStateAction<boolean>>;
   parcours: parcoursList;
@@ -26,7 +26,7 @@ const getCompBDD = cache(async () => {
 });
 
 export default function CompetenceSection({
-                                            planificationId,
+  planificationId,
   journeeType,
   setMaj,
   parcours,
@@ -86,14 +86,14 @@ export default function CompetenceSection({
       </div>
 
       <div className="flex flex-col">
-        {competences.map((competence) => {
-          let dataPlanif = journeeType.liste_Competence.find(
-            (value) => value.idCompetence === competence._id
+        {journeeType.liste_Competence.map((dataPlanif) => {
+          const competence = competences.find(
+            (value) => value._id === dataPlanif.idCompetence
           );
-          if (dataPlanif) {
+          if (competence) {
             return (
               <PlanificationCompetences
-                  planificationId={planificationId}
+                planificationId={planificationId}
                 key={competence._id}
                 id={competence._id}
                 name={competence.nom}

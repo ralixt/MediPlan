@@ -66,7 +66,7 @@ export default function CompetenceSection({
         setJourneeType(nouvelleComp);
       }
     });
-  }, [competences]);
+  }, [competences, journeeType]);
 
   // console.log(competences)
 

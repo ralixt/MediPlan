@@ -6,14 +6,14 @@ type props = {
   setConfirmDelete: Dispatch<SetStateAction<boolean>>;
   handleClick: () => void;
   confirmDelete: boolean;
-  parcours: parcours;
+  name: string;
 };
 
 export default function OptionMenuOverlay({
   setShowOptions,
   setConfirmDelete,
   confirmDelete,
-  parcours,
+  name,
   handleClick,
 }: props) {
   const handleSupprimerClick = () => {
@@ -38,7 +38,7 @@ export default function OptionMenuOverlay({
           <>
             <div className="flex flex-col items-center content-center justify-center">
               <h2 className="text-2xl font-bold mb-4">Supprimer le parcours</h2>
-              <p>Voulez vous supprimer La parcours {parcours.name} ?</p>
+              <p>Voulez vous supprimer La parcours {name} ?</p>
             </div>
 
             <button

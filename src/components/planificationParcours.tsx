@@ -39,11 +39,16 @@ export default function PlanificationParcours({
       const index = nouvellePlanification.planificationParcours.findIndex(
         (planifParcours) => planifParcours.idParcours === dataPlanif.idParcours
       );
-      nouvellePlanification.planificationParcours[index].nbParcours =
-        nbParcours;
-      setJourneeType(nouvellePlanification);
+      if (index !== -1) {
+        nouvellePlanification.planificationParcours[index].nbParcours =
+          nbParcours;
+        setJourneeType(nouvellePlanification);
+      } else {
+        console.error("index non trouvé", dataPlanif, nouvellePlanification);
+      }
     }
-  });
+  }, [maj, nbParcours]);
+
   useEffect(() => {
     setNbParcours(dataPlanif.nbParcours);
   }, [dataPlanif]);

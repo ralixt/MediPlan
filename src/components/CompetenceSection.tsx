@@ -16,7 +16,7 @@ import PlanificationCompetences from "@/components/planificationCompetences";
 type props = {
   planificationId: string;
   journeeType: JourneeType;
-  setMaj: Dispatch<SetStateAction<boolean>>;
+  setJourneeType: React.Dispatch<React.SetStateAction<JourneeType | undefined>>;
   parcours: parcoursList;
 };
 
@@ -26,9 +26,8 @@ const getCompBDD = cache(async () => {
 });
 
 export default function CompetenceSection({
-  planificationId,
   journeeType,
-  setMaj,
+  setJourneeType,
   parcours,
 }: props) {
   const [competences, setCompetences] = useState<competencesList>([]);
@@ -56,14 +55,15 @@ export default function CompetenceSection({
         (value) => value.idCompetence === competence._id
       );
       if (!dataPlanif) {
-        journeeType.liste_Competence.push({
+        const nouvelleComp = { ...journeeType };
+        nouvelleComp.liste_Competence.push({
           idCompetence: competence._id,
           nb_h_cible: 0,
           nb_p_cible: 0,
           nb_h_actuel: 0,
           nb_p_actuel: 0,
         });
-        setMaj(true);
+        setJourneeType(nouvelleComp);
       }
     });
   }, [competences]);
@@ -93,10 +93,9 @@ export default function CompetenceSection({
           if (competence) {
             return (
               <PlanificationCompetences
-                planificationId={planificationId}
                 key={competence._id}
-                id={competence._id}
-                name={competence.nom}
+                setJourneeType={setJourneeType}
+                competence={competence}
                 parcours={parcours}
                 journeeType={journeeType}
                 dataPlanif={dataPlanif}

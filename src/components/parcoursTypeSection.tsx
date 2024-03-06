@@ -38,10 +38,6 @@ export default function ParcoursTypeSection({
           pourcentage_utilisation: 0,
         });
         setJourneeType(nouvelleJT);
-
-        dataPlanif = journeeType.planificationParcours.find(
-          (value) => value.idParcours === parcour._id
-        );
       }
     });
   }, [parcours]);

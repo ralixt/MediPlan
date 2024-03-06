@@ -109,7 +109,7 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
           <CompetenceSection
             planificationId={params.planificationId}
             journeeType={selectedJourneeType}
-            setMaj={setMaj}
+            setJourneeType={setSelectedJourneeType}
             parcours={parcours}
           />
         </div>

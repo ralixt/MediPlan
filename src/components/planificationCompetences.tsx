@@ -24,6 +24,7 @@ export default function PlanificationCompetences({
   dataPlanif,
 }: PlanificationParcoursProps) {
   const [maj, setMaj] = useState<boolean>(false);
+  const [charge, setCharge] = useState<number>(0);
   const [heuresRequises, setHeuresRequises] = useState<String>("0h");
   const [heuresCible, setHeuresCible] = useState<number>(dataPlanif.nb_h_cible);
   const [heuresActuel, setHeuresActuel] = useState<number>(
@@ -159,6 +160,17 @@ export default function PlanificationCompetences({
         ? "0h"
         : `${hours}h${minutes < 10 ? "0" : ""}${minutes}`
     );
+    if (totalMinutes > 0) {
+      let minutesActuel = heuresActuel * personnelActuel * 60;
+      if (minutesActuel > 0) {
+        let charge = (totalMinutes / minutesActuel) * 100;
+        setCharge(charge);
+      } else {
+        setCharge(100);
+      }
+    } else {
+      setCharge(0);
+    }
   }, [journeeType]);
 
   // useEffect(() => {
@@ -171,9 +183,17 @@ export default function PlanificationCompetences({
         <div className="flex flex-row h-full">
           <div className="p-4 flex flex-col justify-center content-center items-center">
             <p className="text-[10px]">Charge</p>
-            <p className="text-2xl">45%</p>
+            <p className="text-2xl">{charge.toFixed(0)}%</p>
           </div>
-          <div className=" h-full border-4 border-positive rounded"></div>
+          <div
+            className={`h-full border-4 ${
+              charge > 75
+                ? "border-negative"
+                : charge > 50
+                ? "border-orange"
+                : "border-positive"
+            } rounded`}
+          ></div>
         </div>
 
         <div className="">{competence.nom}</div>

@@ -1,10 +1,10 @@
 "use client";
 import React, { cache, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import {MagnifyingGlass, Password, User} from "@phosphor-icons/react";
-import {Loader} from "@/components/loader";
-import {WorkshopButton, WorkshopButtonPlanif} from "@/components/buttons";
-import {usePathname} from "next/navigation";
+import { MagnifyingGlass, Password, User } from "@phosphor-icons/react";
+import { Loader } from "@/components/loader";
+import { WorkshopButton, WorkshopButtonPlanif } from "@/components/buttons";
+import { usePathname } from "next/navigation";
 import diacritics from "diacritics";
 import { AddPlanification } from "@/components/addPlanificationForm";
 import { getNamePlanification } from "@/actions/Planification";
@@ -19,7 +19,9 @@ export default function Planification() {
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const [searchPlanification, setSearchPlanification] = useState("");
-  const [planificationFiltre, setPlanificationFiltre] = useState<Planification[]>([]);
+  const [planificationFiltre, setPlanificationFiltre] = useState<
+    Planification[]
+  >([]);
 
   const userName = useRef("");
   const [searchBarFocused, setSearchBarFocused] = useState(false);
@@ -43,20 +45,18 @@ export default function Planification() {
     fetchParcours();
   }, [searchPlanification, planification]);
 
-    useEffect(() => {
-        setPlanificationFiltre(
-            planification.filter((planif) => {
-                if (planif.nom) {
-                    return diacritics
-                        .remove(planif.nom.toLowerCase())
-                        .includes(diacritics.remove(searchPlanification.toLowerCase()));
-                }
-                return false;
-            })
-        );
-    }, [searchPlanification, planification]);
-
-
+  useEffect(() => {
+    setPlanificationFiltre(
+      planification.filter((planif) => {
+        if (planif.nom) {
+          return diacritics
+            .remove(planif.nom.toLowerCase())
+            .includes(diacritics.remove(searchPlanification.toLowerCase()));
+        }
+        return false;
+      })
+    );
+  }, [searchPlanification, planification]);
 
   return (
     <div className="w-full">
@@ -75,64 +75,69 @@ export default function Planification() {
             <h1>Planifications</h1>
           </div>
 
-            <div className="flex flex-row justify-around items-center content-center w-full">
-                {/*<form*/}
-                {/*  method="POST"*/}
-                {/*  className="h-full flex flex-col justify-center items-center content-center"*/}
-                {/*>*/}
-                <div
-                    className={`bg-white mb-8 p-4 rounded-lg w-96 flex  ${searchBarFocused || userName.current ? 'border-black' : 'text-lightgrey'}`}>
-                    <input
-                        type="text"
-                        name="search-modeling-workshop"
-                        placeholder="Nom de la planification"
-                        className={`w-full outline-none bg-white border-b-2 ${searchBarFocused || userName.current ? 'border-black' : 'text-lightgrey'}`}
-                        // className="w-full outline-none bg-white"
-                        value={searchPlanification}
-                        onChange={(e) =>
-                            setSearchPlanification(e.target.value)}
-                        onFocus={() => setSearchBarFocused(true)}
-                        onBlur={() => setSearchBarFocused(false)}
-                    />
-                    <MagnifyingGlass size={32}/>
-                </div>
-                {/*</form>*/}
-                <AddPlanification
-                    setloading={setLoading}
-                    SetParcours={setPlanification}
-                />
+          <div className="flex flex-row justify-around items-center content-center w-full">
+            {/*<form*/}
+            {/*  method="POST"*/}
+            {/*  className="h-full flex flex-col justify-center items-center content-center"*/}
+            {/*>*/}
+            <div
+              className={`bg-white mb-8 p-4 rounded-lg w-96 flex  ${
+                searchBarFocused || userName.current
+                  ? "border-black"
+                  : "text-lightgrey"
+              }`}
+            >
+              <input
+                type="text"
+                name="search-modeling-workshop"
+                placeholder="Nom de la planification"
+                className={`w-full outline-none bg-white border-b-2 ${
+                  searchBarFocused || userName.current
+                    ? "border-black"
+                    : "text-lightgrey"
+                }`}
+                // className="w-full outline-none bg-white"
+                value={searchPlanification}
+                onChange={(e) => setSearchPlanification(e.target.value)}
+                onFocus={() => setSearchBarFocused(true)}
+                onBlur={() => setSearchBarFocused(false)}
+              />
+              <MagnifyingGlass size={32} />
             </div>
+            {/*</form>*/}
+            <AddPlanification setloading={setLoading} />
+          </div>
         </div>
 
-          <div className="w-[15%] h-full mt-16">
-              <Image
-                  src="/planification_vector_2.svg"
-                  alt="Arrow design"
-                  width={350}
-                  height={350}
-                  // className={}
-              ></Image>
-          </div>
+        <div className="w-[15%] h-full mt-16">
+          <Image
+            src="/planification_vector_2.svg"
+            alt="Arrow design"
+            width={350}
+            height={350}
+            // className={}
+          ></Image>
+        </div>
       </section>
 
-        <section
-            className={`w-[95%] m-auto min-h-[50vh] ${
-                loading ? "flex flex-col items-center justify-center" : ""
-            }`}
-        >
-            {loading ? (
-                <Loader/>
-            ) : (
-                planificationFiltre.map((planification, index) => (
-                    <WorkshopButtonPlanif
-                        key={index}
-                        index={index}
-                        planification={planification}
-                        href={pathname + "/" + planification._id}
-                    />
-                ))
-            )}
-        </section>
+      <section
+        className={`w-[95%] m-auto min-h-[50vh] ${
+          loading ? "flex flex-col items-center justify-center" : ""
+        }`}
+      >
+        {loading ? (
+          <Loader />
+        ) : (
+          planificationFiltre.map((planification, index) => (
+            <WorkshopButtonPlanif
+              key={index}
+              index={index}
+              planification={planification}
+              href={pathname + "/" + planification._id}
+            />
+          ))
+        )}
+      </section>
     </div>
   );
 }

@@ -43,7 +43,7 @@ export default function ParcoursTypeSection({
   }, [parcours, journeeType]);
   return (
     <div>
-      <div className="flex items-start content-start justify-between flex-wrap gap-10">
+      <div className="flex items-center content-center justify-center flex-wrap gap-10">
         {parcours.map((parcour) => {
           let dataPlanif = journeeType.planificationParcours.find(
             (value) => value.idParcours === parcour._id

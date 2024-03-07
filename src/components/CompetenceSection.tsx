@@ -73,8 +73,8 @@ export default function CompetenceSection({
   return (
     <div className="flex flex-col items-center content-center justify-center w-full">
       <div className="flex items-center content-center justify-center mt-8 mb-16 border-dashed border-lightlightgrey border-4 rounded-xl w-10/12 mx-auto"></div>
-      <div className="flex flex-row text-xl mb-6 w-full">
-        <div className="w-52 h-12 bg-positive flex items-center content-center justify-center rounded-xl ml-[470px]">
+      <div className="flex flex-row text-xl mb-6 w-full pl-[555px]">
+        <div className="w-52 h-12 bg-positive flex items-center content-center justify-center rounded-xl">
           Cible
         </div>
         <div className="w-52 h-12 bg-light-blue flex items-center content-center justify-center rounded-xl mx-4">

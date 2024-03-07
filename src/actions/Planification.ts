@@ -23,7 +23,7 @@ export async function createPlanification(formData: FormData) {
     const competence = await getComp()
 
       console.log("pp",parcoursType)
-
+    if(parcoursType){
       const JourneeTypesBase = [
         {
           nom: "Lundi" + name,
@@ -105,12 +105,18 @@ export async function createPlanification(formData: FormData) {
 
       console.log(JourneeTypesBase);
 
-  const newPlanification = await Planifications.create({
-        nom: name,
-        liste_JourneeType:JourneeTypesBase,
-    });
+      const newPlanification = await Planifications.create({
+            nom: name,
+            liste_JourneeType:JourneeTypesBase,
+        });
+    
+        console.log("Planification créés :", newPlanification);
+    }
+    else{
+      throw new Error("pas de parcours type")
+    }
 
-    console.log("Planification créés :", newPlanification);
+  
   } catch (error) {
     console.error("Erreur de création Planification :", error);
   }

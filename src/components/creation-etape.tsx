@@ -14,13 +14,14 @@ import {
   PersonSimple,
   PersonArmsSpread,
 } from "@phosphor-icons/react";
-import { createEtapeType } from "@/actions/EtapeType";
+import { createEtapeType, getEtapeTypeByName } from "@/actions/EtapeType";
 import "./creation-etape.css";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 type props = {
   fonctionClose: React.Dispatch<React.SetStateAction<boolean>>;
+  setEtapeType: React.Dispatch<React.SetStateAction<EtapeType[]>>;
 };
-export default function Creation({ fonctionClose }: props) {
+export default function Creation({ fonctionClose, setEtapeType }: props) {
   const [competence, setCompetence] = useState<competence[]>([]);
   const [nameEtapeType, setNameEtapeType] = useState("");
   const [lieu, setLieu] = useState<lieu[]>([]);
@@ -75,6 +76,17 @@ export default function Creation({ fonctionClose }: props) {
     formData.append("AJeun", AJeun.toString());
     formData.append("duree", Duree.toString());
     await createEtapeType(formData);
+    const newET: EtapeType = await getEtapeTypeByName(nameEtapeType);
+    if (newET) {
+      setEtapeType((etapes) => {
+        const data = [...etapes];
+        data.unshift(newET);
+        return data;
+      });
+    } else {
+      console.error("Not add to list");
+    }
+
     fonctionClose(false);
   };
 

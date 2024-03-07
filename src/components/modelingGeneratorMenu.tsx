@@ -67,7 +67,11 @@ export function ModelingGeneratorMenu({
 
   return (
     <div className="w-full pl-12 pr-8 mb-4">
-      {newET ? <Creation fonctionClose={setNewET} /> : ""}
+      {newET ? (
+        <Creation fonctionClose={setNewET} setEtapeType={setEtapeType} />
+      ) : (
+        ""
+      )}
       <div className="flex justify-end items-center content-center">
         <div
           className={`w-20 h-20 bg-light-blue rounded-3xl flex items-center justify-center mr-4 cursor-pointer hover:rounded-full ${

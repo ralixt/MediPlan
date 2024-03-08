@@ -42,7 +42,6 @@ const generate = (parcours: parcours) => {
   const precedences: Precedence[] = parcours.precedences;
   const groupes: Array<GroupeEtapeType | EtapeType | Precedence>[] = [];
   for (let precedence of precedences) {
-    console.log(precedence);
     const indexS = findIndex(groupes, precedence.successeur);
     const indexA = findIndex(groupes, precedence.antecedent);
 

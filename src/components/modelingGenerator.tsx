@@ -60,7 +60,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     []
   );
 
-  console.log(elements);
+  console.log("element : ", elements);
   useEffect(() => {
     const fetchParcours = async () => {
       try {
@@ -85,6 +85,18 @@ export default function ModelingGenerator({ element, parcour }: Props) {
       if (element.type === "EtapeType" || element.type === "GroupeEtapeType") {
         const idWithoutSuffix = element._id.slice(0, -5);
         successeurIds.push(idWithoutSuffix);
+        if (element.type === "GroupeEtapeType") {
+          const data = {
+            name: element.name,
+            type: element.type,
+            Etapes: element.Etapes.map((value) => {
+              const valueId = value._id.slice(0, -5);
+              return valueId;
+            }),
+          };
+          console.log("update :", element._id, data);
+          updateEtapeType(idWithoutSuffix, data);
+        }
       }
     });
 
@@ -93,6 +105,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
   useEffect(() => {
     if (modified) {
+      console.log("modified : ", elements);
       setModified(false);
       //setPrecedenceElements([]);
       setElements((element) => {
@@ -155,7 +168,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
         sequencables: successeur,
         precedences: precedenceElements,
       };
-
+      console.log("push : ", parcour._id, data);
       updateParcoursType(parcour._id, data);
     }
   }, [successeur, pushBDD, precedenceElements]);
@@ -175,11 +188,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
-  );
-  useEffect(() => console.log(successeur), [successeur]);
-  useEffect(
-    () => console.log("prec", precedenceElements),
-    [precedenceElements]
   );
   // Rendu du composant
   return (
@@ -380,9 +388,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
       console.log("annuler");
       return;
     }
-    console.log(active, over);
     if (isNew(active, over)) {
-      console.log("nouveau");
       if (isEtape(activeId)) {
         if (isGroupeEtape(overId)) {
           const activeIndex = etapeType.findIndex(
@@ -414,9 +420,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               }
               return items;
             });
-            setModified(true);
-            console.log("DragEnd - New - Etape - GET");
-            return;
           }
           return;
         } else if (isChild(overId)) {
@@ -451,9 +454,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
                 return items;
               });
-              setModified(true);
-              console.log("DragEnd - New - Etape - Child");
-              return;
             }
           }
           return;
@@ -499,9 +499,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
             }
             return items;
           });
-          setModified(true);
-          console.log("DragEnd - GET");
-          return;
         }
       } else if (isGroupeEtape(activeId)) {
         console.log("GET");
@@ -554,10 +551,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
           }
           return items;
         });
-
-        setModified(true);
-        console.log("DragEnd - GroupeEtape - GET");
-        return;
       } else if (isPrecedence(activeId)) {
         console.log("coucou");
         let edit = true;
@@ -582,7 +575,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
           }
           return items;
         });
-        setModified(true);
       }
     } else if (isChild(activeId)) {
       const parentParams = getParent(activeId);
@@ -613,41 +605,28 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
             return items;
           });
-          setModified(true);
-          console.log("DragEnd - Child - GET");
-          return;
         } else if (parentId !== overId) {
-          let edit = true;
-          setElements((data) => {
-            const items = [...data];
-            if (edit) {
-              edit = false;
-              const itemParent = items[indexParent];
-              if (itemParent.type === "GroupeEtapeType") {
-                items.push(itemParent.Etapes[indexChild]);
-                const activeIndex = items.findIndex(
-                  (item) => item._id === activeId
-                );
-                let overIndex = items.findIndex((item) => item._id === overId);
-                if (overIndex === -1 || activeIndex === -1) {
-                  console.error("child-other", activeId, overId);
-                  return [...data];
-                }
-                if (isEndBorder(overId)) {
-                  overIndex -= 1;
-                } else if (isStartBorder(overId)) {
-                  overIndex += 1;
-                }
-                const newItem = arrayMove(items, activeIndex, overIndex);
-                itemParent.Etapes.splice(indexChild, 1);
-                return newItem;
-              }
+          const items = [...elements];
+          const itemParent = items[indexParent];
+          if (itemParent.type === "GroupeEtapeType") {
+            items.push(itemParent.Etapes[indexChild]);
+            const activeIndex = items.findIndex(
+              (item) => item._id === activeId
+            );
+            let overIndex = items.findIndex((item) => item._id === overId);
+            if (overIndex === -1 || activeIndex === -1) {
+              console.error("child-other", activeId, overId);
+              return;
             }
-            return items;
-          });
-          setModified(true);
-          console.log("DragEnd - Child - !GET");
-          return;
+            if (isEndBorder(overId)) {
+              overIndex -= 1;
+            } else if (isStartBorder(overId)) {
+              overIndex += 1;
+            }
+            const newItem = arrayMove(items, activeIndex, overIndex);
+            itemParent.Etapes.splice(indexChild, 1);
+            setElements(newItem);
+          }
         }
       }
     } else if (!isGroupeEtape(activeId)) {
@@ -735,9 +714,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
             return items;
           });
-          setModified(true);
-          console.log("DragEnd - !GET - GET");
-          return;
         }
       } else if (isChild(overId)) {
         const parentParams = getParent(overId);
@@ -769,9 +745,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
               return items;
             });
-            setModified(true);
-            console.log("DragEnd - !GET - Child");
-            return;
           }
         }
       } else {
@@ -800,9 +773,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
           }
           return items;
         });
-        setModified(true);
-        console.log("DragEnd - !GET - !GET/Child");
-        return;
       }
     } else {
       const activeIndex = elements.findIndex((item) => item._id === activeId);
@@ -828,10 +798,8 @@ export default function ModelingGenerator({ element, parcour }: Props) {
         }
         return items;
       });
-      setModified(true);
-      console.log("DragEnd - GET");
-      return;
     }
+    setModified(true);
     return;
   }
 }

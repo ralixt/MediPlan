@@ -254,6 +254,7 @@ export async function searchParcoursType(phrase: string){
 
 export async function updateParcoursType(id: string, formData: mongoose.UpdateQuery<any> | undefined) {
   try {
+    
     const parcoursTypeUpdated = await ParcoursType.findByIdAndUpdate(
       id,
       formData

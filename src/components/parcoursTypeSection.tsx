@@ -28,10 +28,10 @@ export default function ParcoursTypeSection({
   useEffect(() => {
     parcours.map((parcour) => {
       let dataPlanif = journeeType.planificationParcours.find(
-        (value) => value.idParcours === parcour._id
+          (value) => value.idParcours === parcour._id
       );
       if (!dataPlanif) {
-        const nouvelleJT = { ...journeeType };
+        const nouvelleJT = {...journeeType};
         nouvelleJT.planificationParcours.push({
           idParcours: parcour._id,
           nbParcours: 0,
@@ -42,29 +42,29 @@ export default function ParcoursTypeSection({
     });
   }, [parcours, journeeType]);
   return (
-    <div>
-      <div className="flex items-center content-center justify-center flex-wrap gap-10">
-        {parcours.map((parcour) => {
-          let dataPlanif = journeeType.planificationParcours.find(
-            (value) => value.idParcours === parcour._id
-          );
-
-          if (dataPlanif) {
-            return (
-              <PlanificationParcours
-                key={parcour._id}
-                id={parcour._id}
-                JourneeType={journeeType}
-                setJourneeType={setJourneeType}
-                name={parcour.name}
-                dataPlanif={dataPlanif}
-              />
+      <div>
+        <div className="flex items-center content-center justify-center flex-wrap gap-10">
+          {parcours.map((parcour) => {
+            let dataPlanif = journeeType.planificationParcours.find(
+                (value) => value.idParcours === parcour._id
             );
-          } else {
-            return "";
-          }
-        })}
+
+            if (dataPlanif) {
+              return (
+                  <PlanificationParcours
+                      key={parcour._id}
+                      id={parcour._id}
+                      JourneeType={journeeType}
+                      setJourneeType={setJourneeType}
+                      name={parcour.name}
+                      dataPlanif={dataPlanif}
+                  />
+              );
+            } else {
+              return "";
+            }
+          })}
+        </div>
       </div>
-    </div>
   );
 }

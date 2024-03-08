@@ -212,7 +212,7 @@ export default function PlanificationCompetences({
             <Clock size={25} />
           </div>
 
-          <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md">
+          <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md mx-5">
             <button
               className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center"
               onClick={handleMinusHeureCibleClick}
@@ -228,7 +228,7 @@ export default function PlanificationCompetences({
             </button>
           </div>
 
-          <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md mx-12">
+          <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md mx-8">
             <button
               className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center "
               onClick={handleMinusHeureActuelClick}
@@ -244,7 +244,7 @@ export default function PlanificationCompetences({
             </button>
           </div>
 
-          <div className="w-[170px] h-12 flex items-center justify-around rounded-xl shadow-md">
+          <div className="w-[170px] h-12 flex items-center justify-around rounded-xl shadow-md mx-5">
             <p>{heuresCible - heuresActuel}</p>
           </div>
         </div>
@@ -254,7 +254,7 @@ export default function PlanificationCompetences({
             <Users size={25} />
           </div>
 
-          <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md">
+          <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md mx-5">
             <button
               className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center"
               onClick={handleMinusPersonnelCibleClick}
@@ -270,7 +270,7 @@ export default function PlanificationCompetences({
             </button>
           </div>
 
-          <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md mx-12">
+          <div className="w-[170px] h-12 flex flex-row items-center justify-around rounded-xl shadow-md mx-8">
             <button
               className="w-6 h-6 bg-lightlightgrey rounded flex items-center justify-center"
               onClick={handleMinusPersonnelActuelClick}
@@ -286,7 +286,7 @@ export default function PlanificationCompetences({
             </button>
           </div>
 
-          <div className="w-[170px] h-12 flex items-center justify-around rounded-xl shadow-md">
+          <div className="w-[170px] h-12 flex items-center justify-around rounded-xl shadow-md mx-5">
             <p>{personnelCible - personnelActuel}</p>
           </div>
         </div>

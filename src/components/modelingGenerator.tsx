@@ -59,8 +59,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
   const [precedenceElements, setPrecedenceElements] = useState<Precedence[]>(
     []
   );
-
-  console.log("element : ", elements);
   useEffect(() => {
     const fetchParcours = async () => {
       try {
@@ -94,7 +92,6 @@ export default function ModelingGenerator({ element, parcour }: Props) {
               return valueId;
             }),
           };
-          console.log("update :", element._id, data);
           updateEtapeType(idWithoutSuffix, data);
         }
       }

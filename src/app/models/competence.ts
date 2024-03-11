@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface ICompetence extends Document {
+export interface ICompetence extends Document {
     nom: string;
 }
 

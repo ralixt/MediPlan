@@ -1,7 +1,8 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { Types } from 'mongoose';
-import {Ressource} from './ressource';
-import {Competence} from './competence';
+import {IResource} from "@/app/models/ressource";
+import {ICompetence} from "@/app/models/competence";
+
 
 
 interface IEtapeType extends Document {
@@ -9,9 +10,9 @@ interface IEtapeType extends Document {
   name: string;
   type: string;
   duree: number;
-  Competence: Competence['_id'][];
-  Lieu: Ressource['_id'][];
-  Materiel: Ressource['_id'][]; // materiel dépend du type
+  Competence: ICompetence;
+  Lieu: IResource;
+  Materiel: IResource; // materiel dépend du type
   a_jeun: boolean;
   Etapes : Types.ObjectId[];
 }

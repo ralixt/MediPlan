@@ -375,6 +375,7 @@ export async function updatePlanification(id: string, formData: mongoose.UpdateQ
       formData
     );
     if (parcoursTypeUpdated) {
+      console.log(parcoursTypeUpdated)
     } else {
       console.log("Aucun parcours type trouvé");
     }

@@ -81,7 +81,9 @@ export default function Creation({
     formData.append("AJeun", AJeun.toString());
     formData.append("duree", Duree.toString());
     await createEtapeType(formData);
-    const newET: EtapeType = await getEtapeTypeByName(nameEtapeType);
+    const newET: EtapeType = (await getEtapeTypeByName(
+      nameEtapeType
+    )) as EtapeType;
     if (newET) {
       const data = [...etapeType];
       data.unshift(newET);

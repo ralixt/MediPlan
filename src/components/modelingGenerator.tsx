@@ -521,7 +521,9 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
             const fetchData = async () => {
               try {
-                const result = await getEtapeTypeByName(idNewGroupeEtapeType);
+                const result = (await getEtapeTypeByName(
+                  idNewGroupeEtapeType
+                )) as EtapeType;
                 if (result) {
                   newGroupeEtapeType._id = result._id;
                   newGroupeEtapeType._id = ajouterUidAleatoireCinq(
@@ -679,15 +681,18 @@ export default function ModelingGenerator({ element, parcour }: Props) {
 
                 const fetchData = async () => {
                   try {
-                    const result = await getEtapeTypeByName(itemOver.name);
+                    const result = (await getEtapeTypeByName(
+                      itemOver.name
+                    )) as EtapeType;
                     // Mettre à jour l'état lorsque la promesse est résolue
                     /*result.then(function(GroupeEtape) {
                     setGroupeEtape(GroupeEtape)
                   });*/
-
-                    console.log("dans", result._id);
-
-                    await updateEtapeType(result._id, datas);
+                    if (result) {
+                      await updateEtapeType(result._id, datas);
+                    } else {
+                      console.error("pas de result");
+                    }
                   } catch (error) {
                     // Gérer les erreurs éventuelles
                     console.error(

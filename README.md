@@ -11,7 +11,7 @@ npm i #pour installer les dépendances
 
 puis
 
-npm run build  #pour lancer le serveur
+npm run build
 
 ensuite
 

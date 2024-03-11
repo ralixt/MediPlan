@@ -16,7 +16,6 @@ type props = {
 export default function PlanificationPage({ params }: NextPageProps<props>) {
   const [planification, setPlanification] = useState<Planification>();
   const [selectedJourneeType, setSelectedJourneeType] = useState<JourneeType>();
-  const [maj, setMaj] = useState<boolean>(false);
   const [parcours, setParcours] = useState<parcoursList>();
 
   useEffect(() => {
@@ -62,7 +61,7 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
         selectedJourneeType as JourneeType; // Nouveau nombre de parcours
       setPlanification(nouvellePlanification);
     }
-  }, [selectedJourneeType, planification]);
+  }, [selectedJourneeType]);
 
   useEffect(() => {
     if (planification) {
@@ -77,7 +76,7 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
       updatePlanification(planification?._id, data);
     }
   }, [planification]);
-
+  console.log(planification, selectedJourneeType, parcours);
   return planification && selectedJourneeType && parcours ? (
     <div className="">
       <div className="h-32 w-full text-center flex items-center justify-around font-bold text-2xl bg-light-blue pl-5">

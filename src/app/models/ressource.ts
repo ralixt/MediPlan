@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 
-interface IResource extends Document {
+export interface IResource extends Document {
     nom: string;
     type: string;
 }

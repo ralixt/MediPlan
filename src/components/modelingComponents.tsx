@@ -75,7 +75,7 @@ export function EtapeType({ etapeType, SetEtapes }: propsET) {
           <div className="my-2">
             <div className="flex flex-row items-center">
               <Clock size={25} />
-              <p className="ml-2 text-lg">{etapeType.duree}</p>'
+              <p className="ml-2 text-lg">{etapeType.duree}&apos;</p>
             </div>
 
             {etapeType.a_jeun && (
@@ -151,7 +151,7 @@ export function GroupeEtapeType({ groupeEtapeType }: propsGET) {
     >
       <></>
       <p className="text-grey text-2xl flex items-center content-center justify-center mb-5 w-64 mx-auto">
-        Bloc d'étapes
+        Bloc d&apos;étapes
       </p>
       <div
         ref={droppable.setNodeRef}
@@ -269,7 +269,7 @@ export function EtapeTypeCompact({ etape, setEtapes }: propsETC) {
           <div className="text-xs ml-4 mr-12">
             <div className="flex flex-row items-center">
               <Clock size={15} />
-              <p className="ml-2">{etape.duree}</p>'
+              <p className="ml-2">{etape.duree}&apos;</p>
             </div>
 
             {/*{etapeType.aJeun && (*/}
@@ -330,7 +330,7 @@ export function IconGroupeEtape() {
       ref={setNodeRef}
       className="flex items-center content-center justify-center border-4 border-dashed h-20 border-grey rounded-3xl p-6 text-grey w-full mr-4"
     >
-      <p className="text-bold text-3xl">Bloc d'étapes</p>
+      <p className="text-bold text-3xl">Bloc d&apos;étapes</p>
     </div>
   );
 }

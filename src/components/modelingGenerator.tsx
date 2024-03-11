@@ -168,7 +168,7 @@ export default function ModelingGenerator({ element, parcour }: Props) {
       console.log("push : ", parcour._id, data);
       updateParcoursType(parcour._id, data);
     }
-  }, [successeur, pushBDD, precedenceElements]);
+  }, [successeur, pushBDD, precedenceElements, parcour]);
 
   // Gestion de l'événement de défilement horizontal
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
@@ -522,10 +522,12 @@ export default function ModelingGenerator({ element, parcour }: Props) {
             const fetchData = async () => {
               try {
                 const result = await getEtapeTypeByName(idNewGroupeEtapeType);
-                newGroupeEtapeType._id = result._id;
-                newGroupeEtapeType._id = ajouterUidAleatoireCinq(
-                  newGroupeEtapeType._id
-                );
+                if (result) {
+                  newGroupeEtapeType._id = result._id;
+                  newGroupeEtapeType._id = ajouterUidAleatoireCinq(
+                    newGroupeEtapeType._id
+                  );
+                }
               } catch (error) {
                 // Gérer les erreurs éventuelles
                 console.error(

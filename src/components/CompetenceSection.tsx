@@ -66,7 +66,7 @@ export default function CompetenceSection({
         setJourneeType(nouvelleComp);
       }
     });
-  }, [competences, journeeType]);
+  }, [competences, journeeType, setJourneeType]);
 
   // console.log(competences)
 
@@ -74,9 +74,7 @@ export default function CompetenceSection({
     <div className="flex flex-col items-center content-center justify-center w-full">
       <div className="flex items-center content-center justify-center mt-8 mb-16 border-dashed border-lightlightgrey border-4 rounded-xl w-10/12 mx-auto"></div>
 
-
       <div className="flex flex-col">
-
         <div className="flex flex-row text-xl mb-6 w-full justify-end">
           <div className="w-52 h-12 bg-positive flex items-center content-center justify-center rounded-xl">
             Cible
@@ -91,18 +89,18 @@ export default function CompetenceSection({
 
         {journeeType.liste_Competence.map((dataPlanif) => {
           const competence = competences.find(
-              (value) => value._id === dataPlanif.idCompetence
+            (value) => value._id === dataPlanif.idCompetence
           );
           if (competence) {
             return (
-                <PlanificationCompetences
-                    key={competence._id}
-                    setJourneeType={setJourneeType}
-                    competence={competence}
-                    parcours={parcours}
-                    journeeType={journeeType}
-                    dataPlanif={dataPlanif}
-                />
+              <PlanificationCompetences
+                key={competence._id}
+                setJourneeType={setJourneeType}
+                competence={competence}
+                parcours={parcours}
+                journeeType={journeeType}
+                dataPlanif={dataPlanif}
+              />
             );
           } else {
             return "";

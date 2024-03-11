@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
-import { EtapeType } from './etapeType';
 
 interface IParcoursType extends Document {
     name: string;

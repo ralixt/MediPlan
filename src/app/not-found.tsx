@@ -14,8 +14,8 @@ export default async function NotFound() {
         <NavBar></NavBar>
         <div className="ml-5 flex flex-col items-center justify-around h-full">
           <h2 className='text-5xl'>Erreur 404</h2>
-          <p>La page demandé n'a pas été trouvé</p>
-          <Link href="/home">Retour à l'accueil</Link>
+          <p>La page demandé n&apos;a pas été trouvé</p>
+          <Link href="/home">Retour à l&apos;accueil</Link>
         </div>
         
       </section>

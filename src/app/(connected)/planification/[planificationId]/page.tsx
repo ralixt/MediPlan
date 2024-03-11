@@ -8,7 +8,7 @@ import JourneeType from "@/app/models/journeeType";
 import { JourneeTypeButton } from "@/components/buttons";
 import Image from "next/image";
 import { getAllParcoursType } from "@/actions/ParcoursType";
-import { getPlanification } from "@/actions/Planification";
+import { getPlanification, updatePlanification } from "@/actions/Planification";
 
 type props = {
   planificationId: string;
@@ -47,7 +47,7 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
     };
 
     fetchParcours();
-  }, []);
+  }, [params]);
 
   useEffect(() => {
     if (planification) {
@@ -62,10 +62,20 @@ export default function PlanificationPage({ params }: NextPageProps<props>) {
         selectedJourneeType as JourneeType; // Nouveau nombre de parcours
       setPlanification(nouvellePlanification);
     }
-  }, [selectedJourneeType]);
+  }, [selectedJourneeType, planification]);
 
   useEffect(() => {
-    console.log(planification);
+    if (planification) {
+      planification?.liste_JourneeType;
+      const data = {
+        nom: planification?.nom,
+        liste_JourneeType: planification?.liste_JourneeType.map(
+          (value) => value
+        ),
+      };
+
+      updatePlanification(planification?._id, data);
+    }
   }, [planification]);
 
   return planification && selectedJourneeType && parcours ? (

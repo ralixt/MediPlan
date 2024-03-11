@@ -117,7 +117,9 @@ export async function createGroupeEtapeType(formData: FormData) {
 }
 
 export async function getEtapeTypeByName(name:string){
-  return EtapeType.findOne({name: name});
+  return EtapeType.findOne({name: name}).lean()      .populate({ path: "Competence" })
+  .populate({ path: "Lieu" })
+  .populate({ path: "Materiel" });
 }
 
 export async function getEtapeTypeById(id:string){

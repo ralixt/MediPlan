@@ -68,7 +68,11 @@ export function ModelingGeneratorMenu({
   return (
     <div className="w-full pl-12 pr-8 mb-4">
       {newET ? (
-        <Creation fonctionClose={setNewET} setEtapeType={setEtapeType} />
+        <Creation
+          fonctionClose={setNewET}
+          setEtapeType={setEtapeType}
+          etapeType={EtapeType}
+        />
       ) : (
         ""
       )}

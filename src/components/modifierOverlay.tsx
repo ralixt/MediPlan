@@ -207,7 +207,9 @@ export default function ModifierOverlay({ etape, setShowModifierForm }: props) {
                   Sélectionnez un materiel
                 </option>
                 {materiel.map((m) => (
-                  <option value={m._id}>{m.nom}</option>
+                  <option key={m._id} value={m._id}>
+                    {m.nom}
+                  </option>
                 ))}
               </select>
             </div>

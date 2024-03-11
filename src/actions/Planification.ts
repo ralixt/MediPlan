@@ -368,10 +368,9 @@ export async function searchPlanification(phrase: string){
   }
 }
 
-
 export async function updatePlanification(id: string, formData: mongoose.UpdateQuery<any> | undefined) {
   try {
-    const parcoursTypeUpdated = await ParcoursType.findByIdAndUpdate(
+    const parcoursTypeUpdated = await Planifications.findByIdAndUpdate(
       id,
       formData
     );

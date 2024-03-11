@@ -40,7 +40,7 @@ export default function ParcoursTypeSection({
         setJourneeType(nouvelleJT);
       }
     });
-  }, [parcours, journeeType]);
+  }, [parcours, journeeType, setJourneeType]);
   return (
       <div>
         <div className="flex items-center content-center justify-center flex-wrap gap-10">

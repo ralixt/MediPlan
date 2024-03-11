@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  node:
+    image: node:alpine
+    ports:
+      - 3000:3000
+    volumes: 
+      - ./:/app
+    stdin_open : true
+    tty: true
+
+    command: sh -c "npm install && npm run start" 
+    environment:
+      - NEXTAUTH_SECRET=my_ultra_secure_nextauth_secret
+      - NEXTAUTH_URL=http://localhost:3000/
+      - MONGO_URI=mongodb+srv://letscodebutinfo:6tRWAVN7DoVwtGKk@cluster0.vihedg3.mongodb.net/
+    working_dir: /app

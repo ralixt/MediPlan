@@ -10,7 +10,7 @@ services:
     stdin_open : true
     tty: true
 
-    command: sh -c "npm install && npm run start" 
+    command: sh -c "npm install && npm run build && npm run start" 
     environment:
       - NEXTAUTH_SECRET=my_ultra_secure_nextauth_secret
       - NEXTAUTH_URL=http://localhost:3000/

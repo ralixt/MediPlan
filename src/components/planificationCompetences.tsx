@@ -180,7 +180,7 @@ export default function PlanificationCompetences({
   return (
     <div key={competence._id} className="flex flex-row text-xl my-4">
       <div className="w-96 h-24 flex items-center content-center justify-between rounded-xl shadow-md px-4 py-2">
-        <div className="flex flex-row h-full">
+        <div className="w-24 flex flex-row justify-between h-full">
           <div className="p-4 flex flex-col justify-center content-center items-center">
             <p className="text-[10px]">Charge</p>
             <p className="text-2xl">{charge.toFixed(0)}%</p>
@@ -196,8 +196,8 @@ export default function PlanificationCompetences({
           ></div>
         </div>
 
-        <div className="">{competence.nom}</div>
-        <div className="flex flex-row h-full">
+        <div className="w-40 flex items-center content-center justify-center text-center px-2">{competence.nom}</div>
+        <div className="w-24 flex flex-row h-full">
           <div className=" h-full border-2 border-lightlightgrey rounded mr-4"></div>
           <div className="flex flex-col justify-center content-center items-center">
             <p className="text-[10px]">Heures Requises</p>

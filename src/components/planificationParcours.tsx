@@ -56,7 +56,7 @@ export default function PlanificationParcours({
   return (
     <div key={id} className="text-xl my-4">
       <div className="flex flex-row mr-10">
-        <div className="w-52 h-20 bg-lightlightgrey shadow-md rounded-xl flex items-center content-center justify-center p-4">
+        <div className="w-52 h-20 bg-lightlightgrey shadow-md rounded-xl flex items-center content-center justify-center text-center p-4">
           <p>{name}</p>
         </div>
         {/*<div className="w-20 h-20 bg-lightlightgrey ml-12 mr-6 flex items-center shadow-md rounded-xl p-4">*/}
